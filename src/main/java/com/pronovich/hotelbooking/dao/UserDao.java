@@ -1,15 +1,16 @@
 package com.pronovich.hotelbooking.dao;
 
+import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
 
-import java.util.Map;
-
 public interface UserDao {
 
-    void addUser(Map<String, String> userValues);
+    void addUser(RequestContent requestContent)throws DaoException;
 
     User findUserByEmailAndPassword(String email, String password) throws DaoException;
+
+    Integer getRoleIdByName(String role) throws DaoException;
 
 //    UserEntity getUserByEmail(String email);
 

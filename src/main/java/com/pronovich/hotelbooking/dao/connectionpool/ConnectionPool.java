@@ -1,11 +1,12 @@
 package com.pronovich.hotelbooking.dao.connectionpool;
 
-import com.pronovich.hotelbooking.configuration.ConfigManager;
-
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
 
@@ -13,29 +14,34 @@ public class ConnectionPool {
 
     private static ArrayBlockingQueue<ProxyConnection> connectionQueue;
 
+    private static ReentrantLock lock = new ReentrantLock();
+
     private ConnectionPool() {
         initConnectionPool();
     }
 
     public static ConnectionPool getPool() {
         if (pool == null) {
-            pool = new ConnectionPool();
+            lock.lock();
+            try {
+                pool = new ConnectionPool();
+            } finally {
+                lock.unlock();
+            }
         }
         return pool;
     }
 
     private static void initConnectionPool() {
-        String url = ConfigManager.getProperty(ConfigManager.DB_URL);
-        String user = ConfigManager.getProperty(ConfigManager.DB_USER);
-        String password = ConfigManager.getProperty(ConfigManager.DB_PASSWORD);
-        int poolSize = Integer.parseInt(ConfigManager.getProperty(ConfigManager.DB_MAX_CONNECTIONS));
-
+//        String url = ConfigManager.getProperty(ConfigManager.DB_URL);
+//        String user = ConfigManager.getProperty(ConfigManager.DB_USER);
+//        String password = ConfigManager.getProperty(ConfigManager.DB_PASSWORD);
+        int poolSize = ConnectionUtils.definePoolSize();
         connectionQueue = new ArrayBlockingQueue<>(poolSize);
         try {
-            //TODO register driver???
-//            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             for (int i = 0; i < poolSize; i++) {
-                Connection connection = DriverManager.getConnection(url, user, password);
+                Connection connection = ConnectionUtils.createConnection();
                 connectionQueue.offer(new ProxyConnection(connection));
             }
         } catch (SQLException e) {
@@ -45,16 +51,61 @@ public class ConnectionPool {
     }
 
     public ProxyConnection getConnection() {
+        lock.lock();
         ProxyConnection connection = null;
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
             //TODO Log or Exception???
+        } finally {
+            lock.unlock();
         }
         return connection;
     }
 
     public void closeConnection(ProxyConnection connection) {
-        connectionQueue.offer(connection);
+        lock.lock();
+        try {
+            connectionQueue.offer(connection);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void closeAllConnections() {
+        try {
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+            while (drivers.hasMoreElements()) {
+                Driver driver = drivers.nextElement();
+                DriverManager.deregisterDriver(driver);
+            }
+        } catch (SQLException e) {
+            // TODO add log
+        }
+
+        //TODO release all connections??
+/*        lock.lock();
+        try {
+            Connection connection = null;
+            int poolSize = Integer.parseInt(ConfigManager.getProperty(ConfigManager.DB_POOL_SIZE));
+            for (int i = 0; i < poolSize; i++) {
+                try {
+                    connection = connectionQueue.take();
+                } catch (InterruptedException e) {
+                    //TODO add log
+                }
+                if (connection != null) {
+                    try {
+                        if (!connection.isClosed()) {
+                            connection.close();
+                        }
+                    } catch (SQLException e) {
+                        //TODO add log
+                    }
+                }
+            }
+        } finally {
+            lock.unlock();
+        }*/
     }
 }

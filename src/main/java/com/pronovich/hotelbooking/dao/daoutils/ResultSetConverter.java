@@ -1,4 +1,4 @@
-package com.pronovich.hotelbooking.dao.dbutils;
+package com.pronovich.hotelbooking.dao.daoutils;
 
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;

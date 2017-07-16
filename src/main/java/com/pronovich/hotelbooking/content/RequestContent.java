@@ -23,11 +23,12 @@ public class RequestContent {
     public void extractValues() {
 
     }
+
     public void insertAttributes() {
 
     }
 
-    public Map<String, String> getRequestParameters() {
+    public Map<String, String> getParameters() {
         return requestParameters;
     }
     public void setRequestParameters(Map<String, String> requestParameters) {

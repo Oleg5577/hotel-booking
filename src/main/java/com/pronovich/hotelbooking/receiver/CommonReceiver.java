@@ -5,5 +5,5 @@ import com.pronovich.hotelbooking.content.RequestContent;
 
 public interface CommonReceiver extends Receiver {
 
-    public void signUp(RequestContent content);
+//    public void signUp(RequestContent content);
 }

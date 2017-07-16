@@ -14,40 +14,38 @@ public class SignInCommand extends AbstractCommand {
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
 
-    public SignInCommand(Receiver receiver) {
+    SignInCommand(Receiver receiver) {
         super(receiver);
     }
 
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        Map<String,String> requestValues = new HashMap<>();
-        Map<String,String> wrongValues = new HashMap<>();
+        Map<String,String> correctRequestValues = new HashMap<>();
+        Map<String,String> wrongRequestValues = new HashMap<>();
 
         String email = request.getParameter(EMAIL_PARAM).trim();
         String password = request.getParameter(PASSWORD_PARAM).trim();
 
         if (StringUtils.isEmpty(email)) {
-            wrongValues.put("email", "Please enter a email");
+            wrongRequestValues.put("email", "Please enter a email");
         }
-        requestValues.put("email", email);
+        correctRequestValues.put("email", email);
 
         if ( StringUtils.isEmpty(password)) {
-            wrongValues.put("password", "Please, enter a Password");
+            wrongRequestValues.put("password", "Please, enter a Password");
         } else {
-            requestValues.put("password", password);
+            correctRequestValues.put("password", password);
         }
-        //TODO add message email and password don't match
+        //TODO add message email and password don't match??
 
-        if ( !wrongValues.isEmpty() ) {
-            request.setAttribute("requestValues", requestValues);
-            request.setAttribute("wrongValues", wrongValues);
+        if ( !wrongRequestValues.isEmpty() ) {
+            request.setAttribute("correctRequestValues", correctRequestValues);
+            request.setAttribute("wrongRequestValues", wrongRequestValues);
 //            forwardToView(SIGN_IN_VIEW, request, response);
-        }
-        RequestContent content = new RequestContent(requestValues);
-        super.getReceiver().action(CommandType.SIGN_IN, content);
+        } else {
+            RequestContent content = new RequestContent(correctRequestValues);
+            super.getReceiver().action(CommandType.SIGN_IN, content);
 //            response.sendRedirect(HOME_CONTROLLER)
-        // валидация данных запроса Sign In
-        System.out.println("in SignIn Command");
-//        super.execute(content);
-        // принятие решения о переходе
+            // принятие решения о переходе
+        }
     }
 }

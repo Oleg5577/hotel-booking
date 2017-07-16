@@ -4,7 +4,9 @@ import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
 import com.pronovich.hotelbooking.exception.DaoException;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 abstract class AbstractBaseDao {
 
