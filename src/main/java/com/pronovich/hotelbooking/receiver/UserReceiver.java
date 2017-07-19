@@ -5,7 +5,7 @@ import com.pronovich.hotelbooking.content.RequestContent;
 
 public interface UserReceiver extends Receiver {
 
-    void signUp(RequestContent content);
-    void signIn(RequestContent content);
-    void signOut(RequestContent content);
+    RequestContent signUp(RequestContent content);
+    RequestContent signIn(RequestContent content);
+    RequestContent signOut(RequestContent content);
 }

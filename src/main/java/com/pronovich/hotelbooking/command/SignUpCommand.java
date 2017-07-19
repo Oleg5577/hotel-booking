@@ -2,7 +2,6 @@ package com.pronovich.hotelbooking.command;
 
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.receiver.Receiver;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,14 +17,16 @@ public class SignUpCommand extends AbstractCommand {
     private static final String SURNAME_PARAM = "surname";
     private static final String PHONE_NUMBER_PARAM = "phone-number";
 
+    private static final String DEFAULT_USER_ROLE = "user";
+
+    private static final String SIGN_UP_PAGE = ""; //TODO fill
+    private static final String SIGN_IN_PAGE = ""; //TODO fill
+
     SignUpCommand(Receiver receiver) {
         super(receiver);
     }
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) {
-        Map<String,String> correctRequestValues = new HashMap<>();
-        Map<String,String> wrongRequestValues = new HashMap<>();
-
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter(EMAIL_PARAM).trim();
         String password = request.getParameter(PASSWORD_PARAM).trim();
         String repeatPassword = request.getParameter(REPEAT_PASSWORD_PARAM).trim();
@@ -33,53 +34,28 @@ public class SignUpCommand extends AbstractCommand {
         String surname = request.getParameter(SURNAME_PARAM).trim();
         String phoneNumber = request.getParameter(PHONE_NUMBER_PARAM).trim();
 
-        // TODO добавить валидацию данных запроса Sign Up
-        //TODO add localization messages
+        HashMap<String, String> requestValues = new HashMap<>();
 
-        if (StringUtils.isEmpty(email)) {
-            wrongRequestValues.put("email", "Please enter a email");
-        }
-        correctRequestValues.put("email", email);
+        requestValues.put("email", email);
+        requestValues.put("password", password);
+        requestValues.put("repeatPassword", repeatPassword);
+        requestValues.put("name", name);
+        requestValues.put("surname", surname);
+        requestValues.put("phoneNumber", phoneNumber);
+        requestValues.put("role", DEFAULT_USER_ROLE);
 
-        if ( StringUtils.isEmpty(password)) {
-            wrongRequestValues.put("password", "Please, enter a Password");
+        RequestContent content = new RequestContent(requestValues);
+
+        content = getReceiver().action(CommandType.SIGN_UP, content);
+
+        Map<String, String> wrongValues = content.getWrongValues();
+        String page;
+        if ( !wrongValues.isEmpty()) {
+            request.setAttribute("wrongValues", wrongValues);
+            page = SIGN_UP_PAGE;
         } else {
-            correctRequestValues.put("password", password);
+            page = SIGN_IN_PAGE;
         }
-
-        if ( StringUtils.isEmpty(repeatPassword)) {
-            wrongRequestValues.put("repeatPassword", "Please, repeat Password");
-        } else {
-            correctRequestValues.put("repeatPassword", repeatPassword);
-        }
-
-        if (StringUtils.isEmpty(name)) {
-            wrongRequestValues.put("name", "Please enter a Name");
-        }
-        correctRequestValues.put("name", name);
-
-        if (StringUtils.isEmpty(surname)) {
-            wrongRequestValues.put("surname", "Please enter a Surname");
-        }
-        correctRequestValues.put("surname", surname);
-
-        if (StringUtils.isEmpty(phoneNumber)) {
-            wrongRequestValues.put("phoneNumber", "Please enter a Phone number");
-        }
-        correctRequestValues.put("phoneNumber", phoneNumber);
-
-        correctRequestValues.put("role", "user");
-
-        if ( !wrongRequestValues.isEmpty()) {
-            request.setAttribute("correctRequestValues", correctRequestValues);
-            request.setAttribute("wrongRequestValues", wrongRequestValues);
-//            forwardToView(SIGN_IN_VIEW, request, response);
-        } else {
-            RequestContent content = new RequestContent(correctRequestValues);
-            super.getReceiver().action(CommandType.SIGN_UP, content);
-
-//        super.execute(request);
-            // принятие решения о переходе
-        }
-        }
+        return page;
+    }
 }

@@ -17,7 +17,7 @@ public class CommandFactoryClient {
             command = type.getCommand();
         } catch (IllegalArgumentException e) {
             //TODO log??
-            e.printStackTrace();
+            // TODO command = Default command or redirect tot error page???
         }
         return command;
     }

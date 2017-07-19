@@ -4,6 +4,7 @@ import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.factory.CommandFactoryClient;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,10 +27,15 @@ public class ServletInvoker extends HttpServlet {
         handleRequest(request, response);
     }
 
-    private void handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        AbstractCommand executionCommand;
-        executionCommand = new CommandFactoryClient().initCommand(request);
-        executionCommand.execute(request, response);
+    private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        AbstractCommand executionCommand = new CommandFactoryClient().initCommand(request);
+        String page = executionCommand.execute(request, response);
+        forwardToView(page, request, response);
+    }
+
+    private void forwardToView(String page, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
+        requestDispatcher.forward(request, response);
     }
 
     @Override

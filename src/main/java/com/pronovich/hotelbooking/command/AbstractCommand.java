@@ -13,10 +13,7 @@ public  abstract class AbstractCommand {
         this.receiver = receiver;
     }
 
-    public abstract void execute(HttpServletRequest request, HttpServletResponse response);
-//    {
-//        receiver.action(CommandType.takeCommandType(this), content);
-//    }
+    public abstract String execute(HttpServletRequest request, HttpServletResponse response);
 
     public Receiver getReceiver() {
         return receiver;

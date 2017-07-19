@@ -2,6 +2,8 @@ package com.pronovich.hotelbooking.command;
 
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.receiver.Receiver;
+import com.pronovich.hotelbooking.receiver.UserReceiver;
+import com.pronovich.hotelbooking.receiver.impl.UserReceiverImpl;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +16,13 @@ public class SignInCommand extends AbstractCommand {
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
 
+    private UserReceiver userReceiver = new UserReceiverImpl();
+
     SignInCommand(Receiver receiver) {
         super(receiver);
     }
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         Map<String,String> correctRequestValues = new HashMap<>();
         Map<String,String> wrongRequestValues = new HashMap<>();
 
@@ -47,5 +51,6 @@ public class SignInCommand extends AbstractCommand {
 //            response.sendRedirect(HOME_CONTROLLER)
             // принятие решения о переходе
         }
+        return null;
     }
 }
