@@ -6,8 +6,10 @@ import java.util.Map;
 public class RequestContent {
 
     private Map<String, String> requestParameters = new HashMap<>();
+    private Map<String, Object> sessionAttributes = new HashMap<>();
+
     private Map<String, String> wrongValues = new HashMap<>();
-//    private HashMap<String, Object> sessionAttributes;
+
 //    private HashMap<String, Object> requestAttributes;
 //    private HashMap<String, String[]> requestParameters;
 
@@ -28,19 +30,15 @@ public class RequestContent {
         return wrongValues;
     }
 
-    public void extractValues() {
-
-    }
-
-    public void insertAttributes() {
-
-    }
-
     public Map<String, String> getParameters() {
         return requestParameters;
     }
 
-    public void setRequestParameters(Map<String, String> requestParameters) {
-        this.requestParameters = requestParameters;
+    public void addSessionAttribute(String key, Object value) {
+        this.sessionAttributes.put(key, value);
+    }
+
+    public Map<String, Object> getSessionAttributes() {
+        return sessionAttributes;
     }
 }

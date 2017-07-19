@@ -1,7 +1,6 @@
 package com.pronovich.hotelbooking.command;
 
 
-import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,14 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public class SignOutCommand extends AbstractCommand {
 
-    public SignOutCommand(Receiver receiver) {
+    private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
+
+    SignOutCommand(Receiver receiver) {
         super(receiver);
     }
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) {
-        // валидация данных запроса Sign Out
-        System.out.println("in SignOut Command");
-//        super.execute(request);
-        // принятие решения о переходе
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().invalidate();
+        return SIGN_IN_PAGE;
     }
 }

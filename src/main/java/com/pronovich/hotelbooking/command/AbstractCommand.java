@@ -9,7 +9,7 @@ public  abstract class AbstractCommand {
 
     private Receiver receiver;
 
-    public AbstractCommand(Receiver receiver) {
+    AbstractCommand(Receiver receiver) {
         this.receiver = receiver;
     }
 

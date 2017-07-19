@@ -13,19 +13,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<jsp:include page="section/header.jsp"/>
-<form method="post" action="controller">
-    <input type="hidden" name="command" value="sign_in">
-    <label for="email"><fmt:message key="login.label.email"/>:</label>
-    <input type="text" id="email" name="email">
-    <br>
-    <label for="password"><fmt:message key="login.label.password"/>:</label>
-    <input type="password" id="password" name="password">
-    <br>
-    <fmt:message key="login.button.submit" var="buttonValue"/>
-    <input type="submit" name="submit" value="${buttonValue}">
-</form>
-<a href="signup.jsp">Go to sign up</a>
+    <jsp:include page="section/header.jsp"/>
+    <form method="post" action="controller">
+        <input type="hidden" name="command" value="sign_in">
+        <label for="email"><fmt:message key="login.label.email"/>:</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <label for="password"><fmt:message key="login.label.password"/>:</label>
+        <input type="password" id="password" name="password">
+        <br>
+        <fmt:message key="login.button.submit" var="buttonValue"/>
+        <input type="submit" name="submit" value="${buttonValue}">
+    </form>
 </body>
 </html>
 

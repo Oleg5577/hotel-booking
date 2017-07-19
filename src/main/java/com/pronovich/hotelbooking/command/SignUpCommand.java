@@ -19,8 +19,8 @@ public class SignUpCommand extends AbstractCommand {
 
     private static final String DEFAULT_USER_ROLE = "user";
 
-    private static final String SIGN_UP_PAGE = ""; //TODO fill
-    private static final String SIGN_IN_PAGE = ""; //TODO fill
+    private static final String SIGN_UP_PAGE = "jsp/signup.jsp";
+    private static final String SIGN_IN_PAGE = "jsp/signin.jsp";
 
     SignUpCommand(Receiver receiver) {
         super(receiver);
@@ -46,12 +46,13 @@ public class SignUpCommand extends AbstractCommand {
 
         RequestContent content = new RequestContent(requestValues);
 
-        content = getReceiver().action(CommandType.SIGN_UP, content);
+        getReceiver().action(CommandType.SIGN_UP, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
         String page;
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
+            request.setAttribute("correctValues", content.getParameters());
             page = SIGN_UP_PAGE;
         } else {
             page = SIGN_IN_PAGE;

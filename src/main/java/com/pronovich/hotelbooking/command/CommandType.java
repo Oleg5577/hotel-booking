@@ -1,29 +1,30 @@
 package com.pronovich.hotelbooking.command;
 
 import com.pronovich.hotelbooking.content.RequestContent;
+import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.impl.UserReceiverImpl;
 
 public enum CommandType {
 
     SIGN_IN(new SignInCommand(new UserReceiverImpl())) {
 
-            public RequestContent doReceiver(RequestContent content){
-            return ( (UserReceiverImpl) getCommand().getReceiver() ).signIn(content);
-                // добавление результатов метода signIn в content
+        public void doReceiver(RequestContent content) {
+            User user = ((UserReceiverImpl) getCommand().getReceiver()).signIn(content);
+            content.addSessionAttribute("user", user);
         }
     },
 
     SIGN_UP(new SignUpCommand(new UserReceiverImpl())) {
 
-        public RequestContent doReceiver(RequestContent content) {
-            return ( (UserReceiverImpl) getCommand().getReceiver() ).signUp(content);
-            // добавление результатов метода signUp в content
+        public void doReceiver(RequestContent content) {
+            ((UserReceiverImpl) getCommand().getReceiver()).signUp(content);
         }
     },
 
     SIGN_OUT(new SignOutCommand(new UserReceiverImpl())) {
-        public RequestContent doReceiver(RequestContent content) {
-            return ( (UserReceiverImpl) getCommand().getReceiver() ).signOut(content);
+
+        public void doReceiver(RequestContent content) {
+            ((UserReceiverImpl) getCommand().getReceiver()).signOut(content);
             // добавление результатов метода signOut в content
         }
     };
@@ -32,13 +33,13 @@ public enum CommandType {
 
     CommandType(AbstractCommand command) {
         this.command = command;
-
     }
+
     public AbstractCommand getCommand() {
         return command;
     }
 
-    public abstract RequestContent doReceiver(RequestContent content);
+    public abstract void doReceiver(RequestContent content);
 
 //    public static CommandType takeCommandType(AbstractCommand command) {
 //        ArrayList<CommandType> result = new ArrayList<>();

@@ -9,5 +9,4 @@ import com.pronovich.hotelbooking.receiver.CommonReceiver;
 
 public class CommonReceiverImpl implements CommonReceiver {
 
-
 }

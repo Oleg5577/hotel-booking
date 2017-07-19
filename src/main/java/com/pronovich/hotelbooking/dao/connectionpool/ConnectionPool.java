@@ -33,9 +33,6 @@ public class ConnectionPool {
     }
 
     private static void initConnectionPool() {
-//        String url = ConfigManager.getProperty(ConfigManager.DB_URL);
-//        String user = ConfigManager.getProperty(ConfigManager.DB_USER);
-//        String password = ConfigManager.getProperty(ConfigManager.DB_PASSWORD);
         int poolSize = ConnectionUtils.definePoolSize();
         connectionQueue = new ArrayBlockingQueue<>(poolSize);
         try {

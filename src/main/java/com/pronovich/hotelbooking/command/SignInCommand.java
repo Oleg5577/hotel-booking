@@ -1,10 +1,8 @@
 package com.pronovich.hotelbooking.command;
 
 import com.pronovich.hotelbooking.content.RequestContent;
+import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.Receiver;
-import com.pronovich.hotelbooking.receiver.UserReceiver;
-import com.pronovich.hotelbooking.receiver.impl.UserReceiverImpl;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,41 +14,38 @@ public class SignInCommand extends AbstractCommand {
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
 
-    private UserReceiver userReceiver = new UserReceiverImpl();
+    //TODO page path from properties;
+    private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
+    private static final String WELCOME_PAGE = "/jsp/welcome.jsp";
 
     SignInCommand(Receiver receiver) {
         super(receiver);
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        Map<String,String> correctRequestValues = new HashMap<>();
-        Map<String,String> wrongRequestValues = new HashMap<>();
-
         String email = request.getParameter(EMAIL_PARAM).trim();
         String password = request.getParameter(PASSWORD_PARAM).trim();
 
-        if (StringUtils.isEmpty(email)) {
-            wrongRequestValues.put("email", "Please enter a email");
-        }
-        correctRequestValues.put("email", email);
+        HashMap<String, String> requestValues = new HashMap<>();
+        requestValues.put("email", email);
+        requestValues.put("password", password);
 
-        if ( StringUtils.isEmpty(password)) {
-            wrongRequestValues.put("password", "Please, enter a Password");
-        } else {
-            correctRequestValues.put("password", password);
-        }
-        //TODO add message email and password don't match??
+        RequestContent content = new RequestContent(requestValues);
 
-        if ( !wrongRequestValues.isEmpty() ) {
-            request.setAttribute("correctRequestValues", correctRequestValues);
-            request.setAttribute("wrongRequestValues", wrongRequestValues);
-//            forwardToView(SIGN_IN_VIEW, request, response);
+        getReceiver().action(CommandType.SIGN_IN, content);
+
+        Map<String, String> wrongValues = content.getWrongValues();
+
+        String page;
+        if ( !wrongValues.isEmpty()) {
+            request.setAttribute("wrongValues", wrongValues);
+            request.setAttribute("correctValues", content.getParameters());
+            page = SIGN_IN_PAGE;
         } else {
-            RequestContent content = new RequestContent(correctRequestValues);
-            super.getReceiver().action(CommandType.SIGN_IN, content);
-//            response.sendRedirect(HOME_CONTROLLER)
-            // принятие решения о переходе
+            User user = (User) content.getSessionAttributes().get("user");
+            request.getSession().setAttribute("user", user);
+            page = WELCOME_PAGE;
         }
-        return null;
+        return page;
     }
 }

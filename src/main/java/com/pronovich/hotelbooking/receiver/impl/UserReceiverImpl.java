@@ -14,13 +14,13 @@ import java.util.Map;
 public class UserReceiverImpl implements UserReceiver {
 
     @Override
-    public RequestContent signUp(RequestContent requestContent) {
-        String email = requestContent.getParameters().get("email");
-        String password = requestContent.getParameters().get("password");
-        String repeatPassword = requestContent.getParameters().get("repeatPassword");
-        String name = requestContent.getParameters().get("name");
-        String surname = requestContent.getParameters().get("surname");
-        String phoneNumber = requestContent.getParameters().get("phoneNumber");
+    public void signUp(RequestContent content) {
+        String email = content.getParameters().get("email");
+        String password = content.getParameters().get("password");
+        String repeatPassword = content.getParameters().get("repeatPassword");
+        String name = content.getParameters().get("name");
+        String surname = content.getParameters().get("surname");
+        String phoneNumber = content.getParameters().get("phoneNumber");
 
         // TODO добавить валидацию данных запроса Sign Up
         //TODO add localization messages
@@ -30,25 +30,20 @@ public class UserReceiverImpl implements UserReceiver {
         if (StringUtils.isEmpty(email)) {
             wrongRequestValues.put("email", "Please enter a email");
         }
-
         if ( StringUtils.isEmpty(password)) {
             wrongRequestValues.put("password", "Please, enter a Password");
         }
-
         if ( StringUtils.isEmpty(repeatPassword)) {
             wrongRequestValues.put("repeatPassword", "Please, repeat Password");
         } else if ( !password.equals(repeatPassword)) {
             wrongRequestValues.put("repeatPassword", "Passwords don't match");
         }
-
         if (StringUtils.isEmpty(name)) {
             wrongRequestValues.put("name", "Please enter a Name");
         }
-
         if (StringUtils.isEmpty(surname)) {
             wrongRequestValues.put("surname", "Please enter a Surname");
         }
-
         if (StringUtils.isEmpty(phoneNumber)) {
             wrongRequestValues.put("phoneNumber", "Please enter a Phone number");
         }
@@ -56,45 +51,46 @@ public class UserReceiverImpl implements UserReceiver {
         //TODO Encrypt password!!
 
         if ( !wrongRequestValues.isEmpty()) {
-            requestContent.addWrongValues(wrongRequestValues);
+            content.addWrongValues(wrongRequestValues);
         } else {
             UserDao userDao = new UserDaoImpl();
             try {
-                userDao.addUser(requestContent);
+                userDao.addUser(content);
             } catch (DaoException e) {
                 //TODO add log??
             }
         }
-        return requestContent;
     }
 
     @Override
-    public RequestContent signIn(RequestContent content) {
+    public User signIn(RequestContent content) {
         String email = content.getParameters().get("email");
         String password = content.getParameters().get("password");
+
+        //TODO add validation and localization for wrong messages
+        Map<String,String> wrongRequestValues = new HashMap<>();
+        if (StringUtils.isEmpty(email)) {
+            wrongRequestValues.put("email", "Please enter a email");
+        }
+        if ( StringUtils.isEmpty(password)) {
+            wrongRequestValues.put("password", "Please, enter a Password");
+        }
+
         //TODO Encrypt password!!
 
-        String emailInDB = "email1";
-        String passInDB = "pass1";
-
-        boolean emailPass = email.equals(emailInDB);
-        boolean passwordPass = passInDB.equals(passInDB);
-
-        UserDao userDao = new UserDaoImpl();
         User user = null;
-        try {
-            user = userDao.findUserByEmailAndPassword(email, password);
-        } catch (DaoException e) {
-            //TODO add log??
-        }
 
-        //TODO success sign in or not
-        if (user != null) {
-
+        if ( !wrongRequestValues.isEmpty()) {
+            content.addWrongValues(wrongRequestValues);
         } else {
-
+            UserDao userDao = new UserDaoImpl();
+            try {
+                user = userDao.findUserByEmailAndPassword(email, password);
+            } catch (DaoException e) {
+                //TODO add log??
+            }
         }
-        return content;
+        return user;
     }
 
     public RequestContent signOut(RequestContent content) {

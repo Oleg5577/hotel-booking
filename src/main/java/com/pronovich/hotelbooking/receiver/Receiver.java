@@ -5,7 +5,7 @@ import com.pronovich.hotelbooking.content.RequestContent;
 
 public interface Receiver {
 
-    default RequestContent action(CommandType type, RequestContent content) {
-        return type.doReceiver(content);
+    default void action(CommandType type, RequestContent content) {
+        type.doReceiver(content);
     }
 }

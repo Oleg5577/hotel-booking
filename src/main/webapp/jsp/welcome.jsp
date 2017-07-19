@@ -4,6 +4,6 @@
     <title>Title</title>
 </head>
 <body>
-
+WELCOME ${user.name}
 </body>
 </html>
