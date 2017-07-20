@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class ResultSetConverter {
 
     public static User createUserEntity(ResultSet resultSet) throws DaoException {
-        User userEntity = new User();
+        User user = new User();
         try {
             Integer userId = resultSet.getInt("user_id");
             String email = resultSet.getString("email");
@@ -19,17 +19,17 @@ public class ResultSetConverter {
             String phoneNumber = resultSet.getString("phone_number");
             String role = resultSet.getString("role_name");
 
-            userEntity.setId(userId);
-            userEntity.setEmail(email);
-            userEntity.setPassword(password);
-            userEntity.setName(name);
-            userEntity.setSurname(surname);
-            userEntity.setPhoneNumber(phoneNumber);
-            userEntity.setRole(role);
+            user.setId(userId);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setName(name);
+            user.setSurname(surname);
+            user.setPhoneNumber(phoneNumber);
+            user.setRole(role);
 
         } catch (SQLException e) {
             throw new DaoException();
         }
-        return userEntity;
+        return user;
     }
 }

@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
@@ -15,16 +16,20 @@ public class ConnectionPool {
     private static ArrayBlockingQueue<ProxyConnection> connectionQueue;
 
     private static ReentrantLock lock = new ReentrantLock();
+    private static AtomicBoolean instanceExists = new AtomicBoolean(false);
 
     private ConnectionPool() {
         initConnectionPool();
     }
 
     public static ConnectionPool getPool() {
-        if (pool == null) {
+        if (!instanceExists.get()) {
             lock.lock();
             try {
-                pool = new ConnectionPool();
+                if (pool == null) {
+                    pool = new ConnectionPool();
+                    instanceExists.set(true);
+                }
             } finally {
                 lock.unlock();
             }
@@ -48,25 +53,17 @@ public class ConnectionPool {
     }
 
     public ProxyConnection getConnection() {
-        lock.lock();
         ProxyConnection connection = null;
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
             //TODO Log or Exception???
-        } finally {
-            lock.unlock();
         }
         return connection;
     }
 
     public void closeConnection(ProxyConnection connection) {
-        lock.lock();
-        try {
-            connectionQueue.offer(connection);
-        } finally {
-            lock.unlock();
-        }
+        connectionQueue.offer(connection);
     }
 
     public void closeAllConnections() {
@@ -79,30 +76,5 @@ public class ConnectionPool {
         } catch (SQLException e) {
             // TODO add log
         }
-
-        //TODO release all connections??
-/*        lock.lock();
-        try {
-            Connection connection = null;
-            int poolSize = Integer.parseInt(ConfigManager.getProperty(ConfigManager.DB_POOL_SIZE));
-            for (int i = 0; i < poolSize; i++) {
-                try {
-                    connection = connectionQueue.take();
-                } catch (InterruptedException e) {
-                    //TODO add log
-                }
-                if (connection != null) {
-                    try {
-                        if (!connection.isClosed()) {
-                            connection.close();
-                        }
-                    } catch (SQLException e) {
-                        //TODO add log
-                    }
-                }
-            }
-        } finally {
-            lock.unlock();
-        }*/
     }
 }

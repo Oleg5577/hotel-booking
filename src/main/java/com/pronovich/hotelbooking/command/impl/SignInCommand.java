@@ -1,15 +1,18 @@
-package com.pronovich.hotelbooking.command;
+package com.pronovich.hotelbooking.command.impl;
 
+import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.CommandType;
+import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
+import com.pronovich.hotelbooking.content.RequestResult;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignInCommand extends AbstractCommand {
+public class SignInCommand implements Command {
 
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
@@ -18,11 +21,19 @@ public class SignInCommand extends AbstractCommand {
     private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
     private static final String WELCOME_PAGE = "/jsp/welcome.jsp";
 
-    SignInCommand(Receiver receiver) {
-        super(receiver);
+    private Receiver receiver;
+
+    public SignInCommand(Receiver receiver) {
+        this.receiver = receiver;
     }
 
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    @Override
+    public Receiver getReceiver() {
+        return receiver;
+    }
+
+    @Override
+    public RequestResult execute(HttpServletRequest request) {
         String email = request.getParameter(EMAIL_PARAM).trim();
         String password = request.getParameter(PASSWORD_PARAM).trim();
 
@@ -32,20 +43,21 @@ public class SignInCommand extends AbstractCommand {
 
         RequestContent content = new RequestContent(requestValues);
 
-        getReceiver().action(CommandType.SIGN_IN, content);
+        receiver.action(CommandType.SIGN_IN, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
 
-        String page;
+        RequestResult requestResult;
+
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
             request.setAttribute("correctValues", content.getParameters());
-            page = SIGN_IN_PAGE;
+            requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
         } else {
             User user = (User) content.getSessionAttributes().get("user");
             request.getSession().setAttribute("user", user);
-            page = WELCOME_PAGE;
+            requestResult = new RequestResult(WELCOME_PAGE, NavigationType.FORWARD);
         }
-        return page;
+        return requestResult;
     }
 }

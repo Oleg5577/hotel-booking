@@ -1,17 +1,14 @@
-package com.pronovich.hotelbooking.factory;
-
-import com.pronovich.hotelbooking.command.AbstractCommand;
-import com.pronovich.hotelbooking.command.CommandType;
+package com.pronovich.hotelbooking.command;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class CommandFactoryClient {
+public class CommandFactory {
 
     private final static String COMMAND_PARAMETER = "command";
 
-    public AbstractCommand initCommand(HttpServletRequest request) {
+    public Command initCommand(HttpServletRequest request) {
         String commandName = request.getParameter(COMMAND_PARAMETER);
-        AbstractCommand command = null;
+        Command command = null;
         try {
             CommandType type = CommandType.valueOf(commandName.toUpperCase());
             command = type.getCommand();

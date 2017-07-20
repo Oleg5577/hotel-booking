@@ -1,7 +1,5 @@
 package com.pronovich.hotelbooking.dao.connectionpool;
 
-import com.pronovich.hotelbooking.configuration.ConfigManager;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

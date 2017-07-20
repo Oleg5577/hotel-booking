@@ -14,6 +14,10 @@
 </head>
 <body>
     <jsp:include page="section/header.jsp"/>
+    <a href="signup.jsp">Go to sign up</a>
+    <br>
+    <a href="signin.jsp">Go to sign in</a>
+    <br>
     <form method="post" action="controller">
         <input type="hidden" name="command" value="sign_in">
         <label for="email"><fmt:message key="login.label.email"/>:</label>

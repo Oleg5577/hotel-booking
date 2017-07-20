@@ -18,10 +18,10 @@
             <option value="ru_RU" ${language == "ru_RU" ? "selected" : ""}>Русский</option>
         </select>
     </form>
-    <a href="/jsp/signup.jsp">Go to sign up</a>
+<%--    <a href="signup.jsp">Go to sign up</a>
     <br>
-    <a href="/jsp/signin.jsp">Go to sign in</a>
-    <br>
+    <a href="signin.jsp">Go to sign in</a>
+    <br>--%>
     <form method="post" action="controller">
         <input type="hidden" name="command" value="sign_out">
         <fmt:message key="signout.button.submit" var="buttonValue"/>

@@ -80,7 +80,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
         try {
             connection = ConnectionPool.getPool().getConnection();
 
-            String sql = "SELECT email, password, name, surname, phone_number, role_name FROM hotel_booking_db.user " +
+            String sql = "SELECT user_id, email, password, name, surname, phone_number, role_name FROM hotel_booking_db.user " +
                     "INNER JOIN hotel_booking_db.role ON user.fk_role_id = role.role_id WHERE user.email = ? AND user.password = ?";
 
             statement = connection.prepareStatement(sql);
