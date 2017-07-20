@@ -6,6 +6,7 @@
        scope="session"/>
 <fmt:setLocale value="${language}" scope="session"/>
 <fmt:setBundle basename="property.bundler"/>
+<fmt:setBundle basename="property.page" var="path"/>
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
@@ -14,10 +15,13 @@
 </head>
 <body>
     <jsp:include page="section/header.jsp"/>
-    <a href=".signup.jsp">Go to sign up</a>
+    <form action="<fmt:message key="path.page.signup" bundle="${ path }"/>">
+        <input type="submit" value="Go to sign up">
+    </form>
     <br>
-    <a href=".signin.jsp">Go to sign in</a>
-    <br>
+    <form action="<fmt:message key="path.page.signin" bundle="${ path }"/>">
+        <input type="submit" value="Go to sign in">
+    </form>
     <form method="post" action="controller">
         <input type="hidden" name="command" value="sign_up">
         <label for="email"><fmt:message key="signup.label.email"/>:</label>

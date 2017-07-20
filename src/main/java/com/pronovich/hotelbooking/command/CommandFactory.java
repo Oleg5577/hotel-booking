@@ -14,7 +14,7 @@ public class CommandFactory {
             command = type.getCommand();
         } catch (IllegalArgumentException e) {
             //TODO log??
-            // TODO command = Default command or redirect tot error page???
+            // TODO command = Default command or redirect to error page???
         }
         return command;
     }
