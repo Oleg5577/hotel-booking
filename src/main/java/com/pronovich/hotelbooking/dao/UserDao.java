@@ -10,7 +10,7 @@ public interface UserDao {
 
     User findUserByEmailAndPassword(String email, String password) throws DaoException;
 
-    Integer getRoleIdByName(String role) throws DaoException;
+    Integer findRoleIdByName(String role) throws DaoException;
 
 //    UserEntity getUserByEmail(String email);
 

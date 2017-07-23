@@ -10,7 +10,6 @@ import com.pronovich.hotelbooking.receiver.impl.UserReceiverImpl;
 public enum CommandType {
 
     SIGN_IN(new SignInCommand(new UserReceiverImpl())) {
-
         public void doReceiver(RequestContent content) {
             User user = ((UserReceiverImpl) getCommand().getReceiver()).signIn(content);
             content.addSessionAttribute("user", user);
@@ -18,16 +17,14 @@ public enum CommandType {
     },
 
     SIGN_UP(new SignUpCommand(new UserReceiverImpl())) {
-
         public void doReceiver(RequestContent content) {
             ((UserReceiverImpl) getCommand().getReceiver()).signUp(content);
         }
     },
 
     SIGN_OUT(new SignOutCommand(new UserReceiverImpl())) {
-
         public void doReceiver(RequestContent content) {
-            ((UserReceiverImpl) getCommand().getReceiver()).signOut(content);
+//            ((UserReceiverImpl) getCommand().getReceiver()).signOut(content);
         }
     };
 

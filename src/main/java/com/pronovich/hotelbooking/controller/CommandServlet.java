@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/jsp/controller")
+@WebServlet("/controller")
 public class CommandServlet extends HttpServlet {
 
     @Override

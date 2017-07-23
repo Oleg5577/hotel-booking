@@ -15,6 +15,15 @@ import java.util.Map;
 
 public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
+    private static final String ADD_USER_SQL = "INSERT INTO hotel_booking_db.user " +
+            "(email, password, name, surname, phone_number, fk_role_id) VALUES (?, ?, ?, ?, ?, ?)";
+
+    private static final String FIND_ROLE_ID_SQL = "SELECT role_id FROM hotel_booking_db.role WHERE role_name=?";
+
+    private static final String FIND_USER_SQL = "SELECT user_id, email, password, name, surname, phone_number, role_name " +
+            "FROM hotel_booking_db.user INNER JOIN hotel_booking_db.role ON user.fk_role_id = role.role_id " +
+            "WHERE user.email = ? AND user.password = ?";
+
     @Override
     public void addUser(RequestContent requestContent) throws DaoException {
         ProxyConnection connection = null;
@@ -22,10 +31,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
         try {
             connection = ConnectionPool.getPool().getConnection();
 
-            String sql = "INSERT INTO hotel_booking_db.user (email, password, name, surname, phone_number, fk_role_id)" +
-                    " VALUES (?, ?, ?, ?, ?, ?)";
-
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(ADD_USER_SQL);
 
             Map<String, String> requestParameters = requestContent.getParameters();
 
@@ -34,7 +40,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
             statement.setString(3, requestParameters.get("name"));
             statement.setString(4, requestParameters.get("surname"));
             statement.setString(5, requestParameters.get("phoneNumber"));
-            statement.setInt(6, getRoleIdByName(requestParameters.get("role")));
+            statement.setInt(6, findRoleIdByName(requestParameters.get("role")));
 
             statement.executeUpdate();
 
@@ -46,7 +52,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
     }
 
     @Override
-    public Integer getRoleIdByName(String role) throws DaoException {
+    public Integer findRoleIdByName(String role) throws DaoException {
         ProxyConnection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -54,7 +60,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
         try {
             connection = ConnectionPool.getPool().getConnection();
 
-            statement = connection.prepareStatement("SELECT role_id FROM hotel_booking_db.role WHERE role_name=?");
+            statement = connection.prepareStatement(FIND_ROLE_ID_SQL);
             statement.setString(1, role);
 
             resultSet = statement.executeQuery();
@@ -80,10 +86,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
         try {
             connection = ConnectionPool.getPool().getConnection();
 
-            String sql = "SELECT user_id, email, password, name, surname, phone_number, role_name FROM hotel_booking_db.user " +
-                    "INNER JOIN hotel_booking_db.role ON user.fk_role_id = role.role_id WHERE user.email = ? AND user.password = ?";
-
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(FIND_USER_SQL);
             statement.setString(1, email);
             statement.setString(2, password);
 

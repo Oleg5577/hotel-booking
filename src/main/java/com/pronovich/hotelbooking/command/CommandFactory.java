@@ -10,8 +10,8 @@ public class CommandFactory {
         String commandName = request.getParameter(COMMAND_PARAMETER);
         Command command = null;
         try {
-            CommandType type = CommandType.valueOf(commandName.toUpperCase());
-            command = type.getCommand();
+            CommandType commandType = CommandType.valueOf(commandName.toUpperCase());
+            command = commandType.getCommand();
         } catch (IllegalArgumentException e) {
             //TODO log??
             // TODO command = Default command or redirect to error page???

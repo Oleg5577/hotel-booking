@@ -13,7 +13,7 @@ public class ConnectionPool {
 
     private static ConnectionPool pool;
 
-    private static ArrayBlockingQueue<ProxyConnection> connectionQueue;
+    private  ArrayBlockingQueue<ProxyConnection> connectionQueue;
 
     private static ReentrantLock lock = new ReentrantLock();
     private static AtomicBoolean instanceExists = new AtomicBoolean(false);
@@ -37,7 +37,7 @@ public class ConnectionPool {
         return pool;
     }
 
-    private static void initConnectionPool() {
+    private  void initConnectionPool() {
         int poolSize = ConnectionUtils.definePoolSize();
         connectionQueue = new ArrayBlockingQueue<>(poolSize);
         try {
@@ -57,7 +57,7 @@ public class ConnectionPool {
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
-            //TODO Log or Exception???
+            //TODO Log
         }
         return connection;
     }

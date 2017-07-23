@@ -15,15 +15,13 @@
 </head>
 <body>
     <jsp:include page="section/header.jsp"/>
-    <form action="<fmt:message key="path.page.signup" bundle="${ path }"/>">
-        <input type="submit" value="Go to sign up">
-    </form>
+    <a href="<fmt:message key="path.page.add-room-request" bundle="${ path }"/>">Add room request</a>
     <br>
-    <form action="<fmt:message key="path.page.signin" bundle="${ path }"/>">
-        <input type="submit" value="Go to sign in">
-    </form>
+    <a href="<fmt:message key="path.page.signup" bundle="${ path }"/>">Go to sign up</a>
     <br>
-    <form method="post" action="controller">
+    <a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go to sign in</a>
+    <br>
+    <form method="post" action="/controller">
         <input type="hidden" name="command" value="sign_in">
         <label for="email"><fmt:message key="login.label.email"/>:</label>
         <input type="text" id="email" name="email">
