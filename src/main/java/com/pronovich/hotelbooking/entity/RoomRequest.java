@@ -1,7 +1,7 @@
 package com.pronovich.hotelbooking.entity;
 
-import com.pronovich.hotelbooking.entity.entityproperties.RequestStatus;
-import com.pronovich.hotelbooking.entity.entityproperties.RoomType;
+import com.pronovich.hotelbooking.entity.propertyenum.RequestStatus;
+import com.pronovich.hotelbooking.entity.propertyenum.RoomType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,7 +14,7 @@ public class RoomRequest implements Serializable {
     //TODO Date or String
     private Date checkInDate;
 
-    private String checkOutDate;
+    private Date checkOutDate;
 
     private RoomType roomType;
 
@@ -22,7 +22,7 @@ public class RoomRequest implements Serializable {
 
     private RequestStatus requestStatus;
 
-    private Integer userId;
+    private User user;
 
     public RoomRequest() {
     }
@@ -43,11 +43,11 @@ public class RoomRequest implements Serializable {
         this.checkInDate = checkInDate;
     }
 
-    public String getCheckOutDate() {
+    public Date getCheckOutDate() {
         return checkOutDate;
     }
 
-    public void setCheckOutDate(String checkOutDate) {
+    public void setCheckOutDate(Date checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 
@@ -75,12 +75,12 @@ public class RoomRequest implements Serializable {
         this.requestStatus = requestStatus;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class RoomRequest implements Serializable {
         if (roomType != that.roomType) return false;
         if (roomSize != null ? !roomSize.equals(that.roomSize) : that.roomSize != null) return false;
         if (requestStatus != that.requestStatus) return false;
-        return userId != null ? userId.equals(that.userId) : that.userId == null;
+        return user != null ? user.equals(that.user) : that.user == null;
     }
 
     @Override
@@ -107,16 +107,17 @@ public class RoomRequest implements Serializable {
         result = 31 * result + (roomType != null ? roomType.hashCode() : 0);
         result = 31 * result + (roomSize != null ? roomSize.hashCode() : 0);
         result = 31 * result + (requestStatus != null ? requestStatus.hashCode() : 0);
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "checkInDate=" + checkInDate +
-                ", checkOutDate=" + checkOutDate +
-                ", roomType=" + roomType +
-                ", roomSize=" + roomSize +
-                ", requestStatus=" + requestStatus;
+        return  "check-in : " + checkInDate +
+                ", check-out : " + checkOutDate +
+                ", room type: " + roomType +
+                ", room size: " + roomSize + " guests" +
+                ", status: " + requestStatus +
+                ", client: " + user;
     }
 }

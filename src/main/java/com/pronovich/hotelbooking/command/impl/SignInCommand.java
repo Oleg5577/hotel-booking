@@ -5,11 +5,15 @@ import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
+import com.pronovich.hotelbooking.entity.RoomOrder;
+import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SignInCommand implements Command {
@@ -55,7 +59,15 @@ public class SignInCommand implements Command {
             requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
         } else {
             User user = (User) content.getSessionAttributes().get("user");
-            request.getSession().setAttribute("user", user);
+            //TODO Raw type GENERIC?????
+            List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getSessionAttributes().get("listRoomRequest");
+            List<RoomOrder> listRoomOrders = (List<RoomOrder>) content.getSessionAttributes().get("listRoomRequest");
+
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+            session.setAttribute("listRoomRequest", listRoomRequest);
+            session.setAttribute("listRoomOrders", listRoomOrders);
+
             requestResult = new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
         }
         return requestResult;

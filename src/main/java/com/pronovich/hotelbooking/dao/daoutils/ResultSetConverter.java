@@ -1,6 +1,7 @@
 package com.pronovich.hotelbooking.dao.daoutils;
 
 import com.pronovich.hotelbooking.entity.User;
+import com.pronovich.hotelbooking.entity.propertyenum.Role;
 import com.pronovich.hotelbooking.exception.DaoException;
 
 import java.sql.ResultSet;
@@ -25,8 +26,7 @@ public class ResultSetConverter {
             user.setName(name);
             user.setSurname(surname);
             user.setPhoneNumber(phoneNumber);
-            user.setRole(role);
-
+            user.setRole(Role.valueOf(role));
         } catch (SQLException e) {
             throw new DaoException();
         }

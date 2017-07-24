@@ -17,40 +17,20 @@
 <jsp:include page="/jsp/section/header.jsp"/>
 <table class="room-request-list">
     <tr>
-        <th>
-            Check-in date
-        </th>
-        <th>
-            Check-out date
-        </th>
-        <th>
-            Room size
-        </th>
-        <th>
-            Room type
-        </th>
-        <th>
-            Request status
-        </th>
+        <th>Check-in date</th>
+        <th>Check-out date</th>
+        <th>Room size</th>
+        <th>Room type</th>
+        <th>Request status</th>
     </tr>
-    <jsp:useBean id="listRoomRequest" scope="request" type="java.util.List"/>
+    <jsp:useBean id="listRoomRequest" scope="session" type="java.util.List"/>
     <c:forEach items="${listRoomRequest}" var="roomRequest">
         <tr>
-            <td>
-                    ${roomRequest.countryFrom},
-            </td>
-            <td>
-                    ${roomRequest.countryTo},
-            </td>
-            <td>
-                    ${roomRequest.dateLoadingFrom} -
-            </td>
-            <td>
-                    ${roomRequest.transportType}
-            </td>
-            <td>
-                    ${roomRequest.transportType}
-            </td>
+            <td>${roomRequest.countryFrom}</td>
+            <td>${roomRequest.countryTo}</td>
+            <td>${roomRequest.dateLoadingFrom}</td>
+            <td>${roomRequest.transportType}</td>
+            <td>${roomRequest.transportType}</td>
         </tr>
     </c:forEach>
 </table>

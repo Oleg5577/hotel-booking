@@ -1,5 +1,7 @@
 package com.pronovich.hotelbooking.entity;
 
+import com.pronovich.hotelbooking.entity.propertyenum.Role;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -18,7 +20,7 @@ public class User implements Serializable {
 
     private String phoneNumber;
 
-    private String role;
+    private Role role;
 
     public User() {
     }
@@ -71,11 +73,11 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -92,7 +94,7 @@ public class User implements Serializable {
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
         if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
-        return role != null ? role.equals(user.role) : user.role == null;
+        return role == user.role;
     }
 
     @Override
@@ -109,6 +111,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "email: " + email + " name: " + name + " " + surname;
+        return name + " " + surname;
     }
 }
