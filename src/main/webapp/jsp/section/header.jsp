@@ -6,6 +6,7 @@
        scope="session"/>
 <fmt:setLocale value="${language}" scope="session"/>
 <fmt:setBundle basename="property.bundler"/>
+<fmt:setBundle basename="property.page" var="path"/>
 <html>
 <head>
     <title>Title</title>
@@ -18,15 +19,17 @@
             <option value="ru_RU" ${language == "ru_RU" ? "selected" : ""}>Русский</option>
         </select>
     </form>
-<%--    <a href="signup.jsp">Go to sign up</a>
-    <br>
-    <a href="signin.jsp">Go to sign in</a>
-    <br>--%>
     <form method="post" action="controller">
         <input type="hidden" name="command" value="sign_out">
         <fmt:message key="signout.button.submit" var="buttonValue"/>
         <input type="submit" name="submit" value="${buttonValue}">
     </form>
+    <br>
+    <a href="<fmt:message key="path.page.add-room-request" bundle="${ path }"/>">Add room request</a>
+    <br>
+    <a href="<fmt:message key="path.page.signup" bundle="${ path }"/>">Go to sign up</a>
+    <br>
+    <a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go to sign in</a>
     <br>
 </header>
 </body>

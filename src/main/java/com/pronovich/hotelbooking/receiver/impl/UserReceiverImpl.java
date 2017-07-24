@@ -1,7 +1,9 @@
 package com.pronovich.hotelbooking.receiver.impl;
 
 import com.pronovich.hotelbooking.content.RequestContent;
+import com.pronovich.hotelbooking.dao.RoomRequestDao;
 import com.pronovich.hotelbooking.dao.UserDao;
+import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.UserDaoImpl;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
@@ -93,8 +95,34 @@ public class UserReceiverImpl implements UserReceiver {
         return user;
     }
 
+    @Override
     public RequestContent signOut(RequestContent content) {
+        //TODO ???? remove method??
         System.out.println("SignOut dao");
         return content;
+    }
+
+    @Override
+    public void addRoomRequest(RequestContent content) {
+        String checkInRequest = content.getParameters().get("checkInRequest");
+        String checkOutRequest = content.getParameters().get("checkOutRequest");
+        String roomSizeRequest = content.getParameters().get("roomSizeRequest");
+        String roomTypeRequest = content.getParameters().get("roomTypeRequest");
+        User user = (User) content.getSessionAttributes().get("user");
+
+        Map<String,String> wrongRequestValues = new HashMap<>();
+        //TODO add validation and localization for wrong messages
+
+        if ( !wrongRequestValues.isEmpty()) {
+            content.addWrongValues(wrongRequestValues);
+        } else {
+            RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
+            try {
+                roomRequestDao.addRoomRequest(content);
+            } catch (DaoException e) {
+                //TODO add log??
+            }
+        }
+
     }
 }

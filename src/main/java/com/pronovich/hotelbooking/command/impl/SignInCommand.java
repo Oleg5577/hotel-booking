@@ -56,7 +56,7 @@ public class SignInCommand implements Command {
         } else {
             User user = (User) content.getSessionAttributes().get("user");
             request.getSession().setAttribute("user", user);
-            requestResult = new RequestResult(WELCOME_PAGE, NavigationType.FORWARD);
+            requestResult = new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
         }
         return requestResult;
     }

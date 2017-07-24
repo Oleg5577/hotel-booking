@@ -31,9 +31,9 @@ public class CommandServlet extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Command executionCommand = new CommandFactory().initCommand(request);
-        RequestResult requestResult = executionCommand.execute(request);
-        if (isSignOutCommand(executionCommand)) {
+        Command command = new CommandFactory().initCommand(request);
+        RequestResult requestResult = command.execute(request);
+        if (isSignOutCommand(command)) {
             request.getSession().invalidate();
         }
         navigateToPage(requestResult, request, response);
@@ -53,6 +53,8 @@ public class CommandServlet extends HttpServlet {
             requestDispatcher.forward(request, response);
         } else if (navigationType == NavigationType.REDIRECT) {
             response.sendRedirect(page);
+        } else {
+            //TODO log???
         }
     }
 

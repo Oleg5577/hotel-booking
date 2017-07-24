@@ -14,17 +14,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-    <jsp:include page="section/header.jsp"/>
-    <%--<a href="<c:redirect url="/jsp/signin.jsp">"/>to sign in--%>
-    <%--<form action="<fmt:message key="path.page.signup" bundle="${ path }"/>">--%>
-        <%--<input type="submit" value="Go to sign up">--%>
-    <%--</form>--%>
-    <a href="<fmt:message key="path.page.add-room-request" bundle="${ path }"/>">Add room request</a>
-    <br>
-    <a href="<fmt:message key="path.page.signup" bundle="${ path }"/>">Go to sign up</a>
-    <br>
-    <a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go to sign in</a>
-    <br>
+    <jsp:include page="/jsp/section/header.jsp"/>
     <form action="<fmt:message key="path.page.signin" bundle="${ path }"/>">
         <input type="submit" value="Go to sign in">
     </form>

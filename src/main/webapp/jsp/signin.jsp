@@ -14,13 +14,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-    <jsp:include page="section/header.jsp"/>
-    <a href="<fmt:message key="path.page.add-room-request" bundle="${ path }"/>">Add room request</a>
-    <br>
-    <a href="<fmt:message key="path.page.signup" bundle="${ path }"/>">Go to sign up</a>
-    <br>
-    <a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go to sign in</a>
-    <br>
+    <jsp:include page="/jsp/section/header.jsp"/>
     <form method="post" action="/controller">
         <input type="hidden" name="command" value="sign_in">
         <label for="email"><fmt:message key="login.label.email"/>:</label>

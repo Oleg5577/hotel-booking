@@ -30,7 +30,6 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getPool().getConnection();
-
             statement = connection.prepareStatement(ADD_USER_SQL);
 
             Map<String, String> requestParameters = requestContent.getParameters();
@@ -43,7 +42,6 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
             statement.setInt(6, findRoleIdByName(requestParameters.get("role")));
 
             statement.executeUpdate();
-
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -59,7 +57,6 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
         Integer roleId = null;
         try {
             connection = ConnectionPool.getPool().getConnection();
-
             statement = connection.prepareStatement(FIND_ROLE_ID_SQL);
             statement.setString(1, role);
 
