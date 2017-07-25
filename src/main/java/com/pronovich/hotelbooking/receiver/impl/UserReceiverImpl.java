@@ -10,6 +10,7 @@ import com.pronovich.hotelbooking.dao.impl.UserDaoImpl;
 import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
+import com.pronovich.hotelbooking.entity.characteristic.Role;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.UserReceiver;
 import org.apache.commons.lang3.StringUtils;
@@ -94,9 +95,17 @@ public class UserReceiverImpl implements UserReceiver {
             RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
             try {
                 user = userDao.findUserByEmailAndPassword(email, password);
-                List<RoomOrder> roomOrders = orderDao.findAllOrdersByUser(user);
-                List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
 
+                List<RoomOrder> roomOrders;
+                List<RoomRequest> roomRequests;
+
+                if (user.getRole() == Role.ADMIN) {
+                    roomOrders = orderDao.findAllOrdersForAllUsers();
+                    roomRequests = roomRequestDao.findAllRequestsForAllUser();
+                } else {
+                    roomOrders = orderDao.findAllOrdersByUser(user);
+                    roomRequests = roomRequestDao.findAllRequestsByUser(user);
+                }
                 content.addSessionAttribute("listRoomOrders", roomOrders);
                 content.addSessionAttribute("listRoomRequests", roomRequests);
             } catch (DaoException e) {

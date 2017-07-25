@@ -10,11 +10,21 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title>Welcome</title>
+    <title>Find room by request</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
-    WELCOME ${user.name} ${user.surname}
+    <table class="room-list">
+        <tr>
+            <th>Room number</th>
+            <th>Room size, persons</th>
+            <th>Price</th>
+            <th>Room type</th>
+        </tr>
+    <jsp:useBean id="roomList" scope="request" class="com.pronovich.hotelbooking.entity.Room"/>
+    <c:forEach items="${roomList}" var="room">
+
+    </c:forEach>
 </body>
 </html>

@@ -12,8 +12,6 @@ public interface UserDao {
 
     Integer findRoleIdByName(String role) throws DaoException;
 
-//    UserEntity getUserByEmail(String email);
-
-//    UserEntity getUserById(Integer userId);
+    User findUserById(Integer userId) throws DaoException;
 
 }

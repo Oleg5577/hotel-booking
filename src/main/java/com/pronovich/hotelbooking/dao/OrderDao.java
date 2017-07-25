@@ -9,4 +9,6 @@ import java.util.List;
 public interface OrderDao {
 
     List<RoomOrder> findAllOrdersByUser(User user) throws DaoException;
+
+    List<RoomOrder> findAllOrdersForAllUsers() throws DaoException;
 }

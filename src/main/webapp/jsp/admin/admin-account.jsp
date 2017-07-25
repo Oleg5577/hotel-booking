@@ -15,5 +15,47 @@
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
+    <table class="room-request-list">
+        <tr>
+            <th>Check-in date</th>
+            <th>Check-out date</th>
+            <th>Room type</th>
+            <th>Room size</th>
+            <th>Request status</th>
+            <th>User</th>
+        </tr>
+        <jsp:useBean id="listRoomRequests" scope="session" class="com.pronovich.hotelbooking.entity.RoomRequest"/>
+        <c:forEach items="${listRoomRequests}" var="roomRequest">
+            <tr>
+                <td>${roomRequest.checkInDate}</td>
+                <td>${roomRequest.checkOutDate}</td>
+                <td>${roomRequest.roomType}</td>
+                <td>${roomRequest.roomSize}</td>
+                <td>${roomRequest.requestStatus}</td>
+                <td>${roomRequest.user}</td>
+            </tr>
+        </c:forEach>
+    </table>
+    <table class="room-order-list">
+        <tr>
+            <th>Check-in date</th>
+            <th>Check-out date</th>
+            <th>Amount</th>
+            <th>Room</th>
+            <th>Order status</th>
+            <th>User</th><%--TODO add link to full info about the user--%>
+        </tr>
+        <jsp:useBean id="listRoomOrders" scope="session" type="com.pronovich.hotelbooking.entity.RoomOrder"/>
+        <c:forEach items="${listRoomOrders}" var="roomOrder">
+            <tr>
+                <td>${roomOrder.checkInDate}</td>
+                <td>${roomOrder.checkOutDate}</td>
+                <td>${roomOrder.amount}</td>
+                <td>${roomOrder.room}</td>
+                <td>${roomOrder.orderStatus}</td>
+                <td>${roomOrder.user}</td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>

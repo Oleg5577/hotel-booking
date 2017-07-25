@@ -1,11 +1,9 @@
 package com.pronovich.hotelbooking.command;
 
-import com.pronovich.hotelbooking.command.impl.AddRoomRequestCommand;
-import com.pronovich.hotelbooking.command.impl.SignInCommand;
-import com.pronovich.hotelbooking.command.impl.SignOutCommand;
-import com.pronovich.hotelbooking.command.impl.SignUpCommand;
+import com.pronovich.hotelbooking.command.impl.*;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.entity.User;
+import com.pronovich.hotelbooking.receiver.impl.AdminReceiverImpl;
 import com.pronovich.hotelbooking.receiver.impl.UserReceiverImpl;
 
 public enum CommandType {
@@ -37,7 +35,15 @@ public enum CommandType {
         public void doReceiver(RequestContent content) {
             ( (UserReceiverImpl) getCommand().getReceiver() ).addRoomRequest(content);
         }
-    };
+    },
+
+    FIND_ROOM( new FindRoomCommand( new AdminReceiverImpl()) ) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (AdminReceiverImpl) getCommand().getReceiver() ).findRoomByRequest(content);
+        }
+    }
+    ;
 
     private Command command;
 
@@ -50,5 +56,4 @@ public enum CommandType {
     }
 
     public abstract void doReceiver(RequestContent content);
-
 }
