@@ -14,7 +14,6 @@ import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.UserReceiver;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +95,7 @@ public class UserReceiverImpl implements UserReceiver {
             OrderDao orderDao = new OrderDaoImpl();
             try {
                 user = userDao.findUserByEmailAndPassword(email, password);
-                roomOrders = orderDao.findAllOrdersByUserId(user.getId());
+                roomOrders = orderDao.findAllOrdersByUser(user);
 
                 content.addSessionAttribute("roomOrders", roomOrders);
             } catch (DaoException e) {
