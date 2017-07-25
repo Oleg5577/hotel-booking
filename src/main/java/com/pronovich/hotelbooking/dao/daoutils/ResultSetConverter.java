@@ -1,5 +1,6 @@
 package com.pronovich.hotelbooking.dao.daoutils;
 
+import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.entity.propertyenum.Role;
 import com.pronovich.hotelbooking.exception.DaoException;
@@ -31,5 +32,8 @@ public class ResultSetConverter {
             throw new DaoException();
         }
         return user;
+    }
+
+    public static RoomOrder createOrderEntity(ResultSet resultSet) {
     }
 }
