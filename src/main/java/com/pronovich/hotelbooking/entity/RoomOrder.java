@@ -11,7 +11,7 @@ public class RoomOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    //TODO Date or String
+
     private Date checkInDate;
 
     private Date checkOutDate;

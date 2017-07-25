@@ -31,6 +31,8 @@
     <br>
     <a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go to sign in</a>
     <br>
+    <a href="<fmt:message key="path.page.personal-account" bundle="${ path }"/>">Personal-account</a>
+    <br>
 </header>
 </body>
 </html>

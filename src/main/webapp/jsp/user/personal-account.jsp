@@ -10,29 +10,48 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title>Add room request</title>
+    <title>Personal-account</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<jsp:include page="/jsp/section/header.jsp"/>
-<table class="room-request-list">
-    <tr>
-        <th>Check-in date</th>
-        <th>Check-out date</th>
-        <th>Room size</th>
-        <th>Room type</th>
-        <th>Request status</th>
-    </tr>
-    <jsp:useBean id="listRoomRequest" scope="session" type="java.util.List"/>
-    <c:forEach items="${listRoomRequest}" var="roomRequest">
+    <jsp:include page="/jsp/section/header.jsp"/>
+    <table class="room-request-list">
         <tr>
-            <td>${roomRequest.countryFrom}</td>
-            <td>${roomRequest.countryTo}</td>
-            <td>${roomRequest.dateLoadingFrom}</td>
-            <td>${roomRequest.transportType}</td>
-            <td>${roomRequest.transportType}</td>
+            <th>Check-in date</th>
+            <th>Check-out date</th>
+            <th>Room type</th>
+            <th>Room size</th>
+            <th>Request status</th>
         </tr>
-    </c:forEach>
-</table>
+            <jsp:useBean id="listRoomRequests" scope="session" type="java.util.List"/>
+            <c:forEach items="${listRoomRequests}" var="roomRequest">
+                <tr>
+                    <td>${roomRequest.checkInDate}</td>
+                    <td>${roomRequest.checkOutDate}</td>
+                    <td>${roomRequest.roomType}</td>
+                    <td>${roomRequest.roomSize}</td>
+                    <td>${roomRequest.requestStatus}</td>
+                </tr>
+            </c:forEach>
+    </table>
+    <table class="room-order-list">
+        <tr>
+            <th>Check-in date</th>
+            <th>Check-out date</th>
+            <th>Amount</th>
+            <th>Room</th>
+            <th>Order status</th>
+        </tr>
+            <jsp:useBean id="listRoomOrders" scope="session" type="java.util.List"/>
+            <c:forEach items="${listRoomOrders}" var="roomOrder">
+                <tr>
+                    <td>${roomOrder.checkInDate}</td>
+                    <td>${roomOrder.checkOutDate}</td>
+                    <td>${roomOrder.amount}</td>
+                    <td>${roomOrder.room}</td>
+                    <td>${roomOrder.orderStatus}</td>
+                </tr>
+            </c:forEach>
+    </table>
 </body>
 </html>

@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `hotel_booking_db`.`order` (
   `fk_room_id` SMALLINT UNSIGNED NOT NULL COMMENT 'reference to the booked room',
   `fk_user_id` INT UNSIGNED NOT NULL COMMENT 'reference to user who requested or booked a room\n\ncсылка на пользователя, который забронировал номер',
   `is_paid` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'указатель оплачен или не оплачен заказ',
-  `order_status` ENUM('expect_guest_arrival', 'checked-in', 'checked-out', 'canceled') NOT NULL DEFAULT 'expect_guest_arrival',
+  `order_status` ENUM('expect_guest_arrival', 'checked_in', 'checked_out', 'canceled') NOT NULL DEFAULT 'expect_guest_arrival',
   PRIMARY KEY (`order_id`),
   INDEX `fk_order_room1_idx` (`fk_room_id` ASC),
   INDEX `fk_order_user1_idx` (`fk_user_id` ASC),
@@ -113,18 +113,18 @@ CREATE TABLE IF NOT EXISTS `hotel_booking_db`.`room_request` (
   `check_out` DATE NOT NULL COMMENT 'requested check-out date in a client\'s request\n\nзапрашиваемая дата выезда из отеля в заявке клиента',
   `room_size` TINYINT UNSIGNED NOT NULL COMMENT 'requested number of places in the hotel room\n\nзапрашиваемое количество мест в гостиничном номере',
   `request_status` ENUM('in_progress', 'confirmed', 'denied') NOT NULL DEFAULT 'in_progress' COMMENT 'request_status.\n    \'in progress\' - запрос находится в списке на обработку\n     \'confirmed\' - запрос подтвержден и сформирован заказ\n     \'rejected\' - отказано в запросе (например нет свободных номеров)',
-  `user_id` INT UNSIGNED NOT NULL,
-  `room_type_id` TINYINT UNSIGNED NOT NULL,
+  `fk_user_id` INT UNSIGNED NOT NULL,
+  `fk_room_type_id` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`request_id`),
-  INDEX `fk_room_request_user1_idx` (`user_id` ASC),
-  INDEX `fk_room_request_room_type1_idx` (`room_type_id` ASC),
+  INDEX `fk_room_request_user1_idx` (`fk_user_id` ASC),
+  INDEX `fk_room_request_room_type1_idx` (`fk_room_type_id` ASC),
   CONSTRAINT `fk_room_request_user1`
-  FOREIGN KEY (`user_id`)
+  FOREIGN KEY (`fk_user_id`)
   REFERENCES `hotel_booking_db`.`user` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_room_request_room_type1`
-  FOREIGN KEY (`room_type_id`)
+  FOREIGN KEY (`fk_room_type_id`)
   REFERENCES `hotel_booking_db`.`room_type` (`room_type_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

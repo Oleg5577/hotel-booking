@@ -86,23 +86,23 @@ public class UserReceiverImpl implements UserReceiver {
         //TODO Encrypt password!!
 
         User user = null;
-        List<RoomRequest> roomRequests = null;
-        List<RoomOrder> roomOrders = null;
         if ( !wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
             UserDao userDao = new UserDaoImpl();
             OrderDao orderDao = new OrderDaoImpl();
+            RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
             try {
                 user = userDao.findUserByEmailAndPassword(email, password);
-                roomOrders = orderDao.findAllOrdersByUser(user);
+                List<RoomOrder> roomOrders = orderDao.findAllOrdersByUser(user);
+                List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
 
-                content.addSessionAttribute("roomOrders", roomOrders);
+                content.addSessionAttribute("listRoomOrders", roomOrders);
+                content.addSessionAttribute("listRoomRequests", roomRequests);
             } catch (DaoException e) {
                 //TODO add log??
             }
         }
-
         return user;
     }
 
@@ -124,7 +124,7 @@ public class UserReceiverImpl implements UserReceiver {
         Map<String,String> wrongRequestValues = new HashMap<>();
         //TODO add validation and localization for wrong messages
 
-        if ( !wrongRequestValues.isEmpty()) {
+        if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
             RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
@@ -134,6 +134,5 @@ public class UserReceiverImpl implements UserReceiver {
                 //TODO add log??
             }
         }
-
     }
 }

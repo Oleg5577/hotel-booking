@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OrderDaoImpl extends AbstractBaseDao implements OrderDao {
 
-    private static final String FIND_ALL_ORDERS_BY_USER_ID_SQL = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
+    private static final String FIND_ALL_ORDERS_BY_USER_SQL = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
             "`room_id`, `number`, `size`, `price`, " +
             "`room_type_id`, `type_name`, `is_paid`, `order_status` FROM `order` " +
             "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
@@ -31,14 +31,12 @@ public class OrderDaoImpl extends AbstractBaseDao implements OrderDao {
         List<RoomOrder> roomOrders = new ArrayList<>();
         try {
             connection = ConnectionPool.getPool().getConnection();
-            statement = connection.prepareStatement(FIND_ALL_ORDERS_BY_USER_ID_SQL);
+            statement = connection.prepareStatement(FIND_ALL_ORDERS_BY_USER_SQL);
             statement.setInt(1, user.getId());
 
             resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                while (resultSet.next()) {
-                    roomOrders.add(ResultSetConverter.createOrderEntity(resultSet, user));
-                }
+            while (resultSet.next()) {
+                roomOrders.add(ResultSetConverter.createOrderEntity(resultSet, user));
             }
             return roomOrders;
         } catch (SQLException e) {

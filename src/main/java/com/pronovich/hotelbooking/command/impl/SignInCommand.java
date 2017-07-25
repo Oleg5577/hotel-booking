@@ -60,13 +60,13 @@ public class SignInCommand implements Command {
         } else {
             User user = (User) content.getSessionAttributes().get("user");
             //TODO Raw type GENERIC?????
-            List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getSessionAttributes().get("listRoomRequest");
-            List<RoomOrder> listRoomOrders = (List<RoomOrder>) content.getSessionAttributes().get("listRoomRequest");
+            List<RoomOrder> listRoomOrders = (List<RoomOrder>) content.getSessionAttributes().get("listRoomOrders");
+            List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getSessionAttributes().get("listRoomRequests");
 
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            session.setAttribute("listRoomRequest", listRoomRequest);
             session.setAttribute("listRoomOrders", listRoomOrders);
+            session.setAttribute("listRoomRequests", listRoomRequest);
 
             requestResult = new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
         }

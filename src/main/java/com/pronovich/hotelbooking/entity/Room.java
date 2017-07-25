@@ -89,6 +89,6 @@ public class Room  implements Serializable {
     @Override
     public String toString() {
         return "Room № " + roomNumber +
-                ", type=" + roomType;
+                ", type: " + roomType;
     }
 }
