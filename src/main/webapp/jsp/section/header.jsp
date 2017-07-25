@@ -19,20 +19,33 @@
             <option value="ru_RU" ${language == "ru_RU" ? "selected" : ""}>Русский</option>
         </select>
     </form>
-    <form method="post" action="controller">
-        <input type="hidden" name="command" value="sign_out">
-        <fmt:message key="signout.button.submit" var="buttonValue"/>
-        <input type="submit" name="submit" value="${buttonValue}">
-    </form>
-    <br>
-    <a href="<fmt:message key="path.page.add-room-request" bundle="${ path }"/>">Add room request</a>
-    <br>
-    <a href="<fmt:message key="path.page.signup" bundle="${ path }"/>">Go to sign up</a>
-    <br>
-    <a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go to sign in</a>
-    <br>
-    <a href="<fmt:message key="path.page.personal-account" bundle="${ path }"/>">Personal-account</a>
-    <br>
+    <jsp:useBean id="user" scope="session" class="com.pronovich.hotelbooking.entity.User"/>
+    <c:if test="${user.id != null}">
+        <form method="post" action="controller">
+            <input type="hidden" name="command" value="sign_out">
+            <fmt:message key="signout.button.submit" var="buttonValue"/>
+            <input type="submit" name="submit" value="${buttonValue}">
+        </form>
+    </c:if>
+    <c:if test="${user.id == null}">
+        <br>
+        <a href="<fmt:message key="path.page.signup" bundle="${ path }"/>">Go to sign up</a>
+        <br>
+        <a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go to sign in</a>
+        <br>
+    </c:if>
+    <c:choose>
+        <c:when test="${user.role == 'ADMIN'}">
+            <a href="<fmt:message key="path.page.admin.admin-account" bundle="${ path }"/>">Admin account</a>
+            <br>
+        </c:when>
+        <c:when test="${user.role == 'USER'}">
+            <a href="<fmt:message key="path.page.user.add-room-request" bundle="${ path }"/>">Add room request</a>
+            <br>
+            <a href="<fmt:message key="path.page.user.personal-account" bundle="${ path }"/>">Personal-account</a>
+            <br>
+        </c:when>
+    </c:choose>
 </header>
 </body>
 </html>

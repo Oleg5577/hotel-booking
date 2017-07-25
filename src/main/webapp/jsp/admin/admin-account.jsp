@@ -10,11 +10,10 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title>Welcome</title>
+    <title>Admin account</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
-WELCOME ${user.name} ${user.surname}
 </body>
 </html>

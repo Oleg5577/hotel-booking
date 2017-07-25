@@ -15,9 +15,6 @@
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
-    <form action="<fmt:message key="path.page.signin" bundle="${ path }"/>">
-        <input type="submit" value="Go to sign in">
-    </form>
     <form method="post" action="/controller">
         <input type="hidden" name="command" value="add_room_request">
         <label for="check-in-request"><fmt:message key="add-room-request.label.check-in"/>:</label>

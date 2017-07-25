@@ -15,9 +15,6 @@
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
-    <form action="<fmt:message key="path.page.signin" bundle="${ path }"/>">
-        <input type="submit" value="Go to sign in">
-    </form>
     <form method="post" action="/controller">
         <input type="hidden" name="command" value="sign_up">
         <label for="email"><fmt:message key="signup.label.email"/>:</label>
