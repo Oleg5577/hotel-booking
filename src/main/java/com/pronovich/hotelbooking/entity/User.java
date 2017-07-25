@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.entity;
 
-import com.pronovich.hotelbooking.entity.propertyenum.Role;
+import com.pronovich.hotelbooking.entity.characteristic.Role;
 
 import java.io.Serializable;
 

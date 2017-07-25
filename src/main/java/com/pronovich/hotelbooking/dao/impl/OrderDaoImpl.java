@@ -17,8 +17,8 @@ import java.util.List;
 public class OrderDaoImpl extends AbstractBaseDao implements OrderDao {
 
     private static final String FIND_ALL_ORDERS_BY_USER_ID_SQL = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
-            "`number` AS `room_number`, `size` AS `room_size`, `price` AS `room_size`, " +
-            "`room_type_id`, `type_name` AS `room_type_name`, `is_paid`, `order_status` FROM `order` " +
+            "`room_id`, `number`, `size`, `price`, " +
+            "`room_type_id`, `type_name`, `is_paid`, `order_status` FROM `order` " +
             "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
             "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` " +
             "WHERE `fk_user_id` = ?";

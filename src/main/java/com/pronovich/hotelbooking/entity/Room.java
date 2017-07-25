@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.entity;
 
-import com.pronovich.hotelbooking.entity.propertyenum.RoomType;
+import com.pronovich.hotelbooking.entity.characteristic.RoomType;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

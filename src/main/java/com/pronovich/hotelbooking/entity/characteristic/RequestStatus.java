@@ -1,4 +1,4 @@
-package com.pronovich.hotelbooking.entity.propertyenum;
+package com.pronovich.hotelbooking.entity.characteristic;
 
 public enum RequestStatus {
 

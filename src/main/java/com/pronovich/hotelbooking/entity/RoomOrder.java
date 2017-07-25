@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.entity;
 
-import com.pronovich.hotelbooking.entity.propertyenum.OrderStatus;
+import com.pronovich.hotelbooking.entity.characteristic.OrderStatus;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

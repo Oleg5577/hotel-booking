@@ -3,8 +3,9 @@ package com.pronovich.hotelbooking.dao.daoutils;
 import com.pronovich.hotelbooking.entity.Room;
 import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.User;
-import com.pronovich.hotelbooking.entity.propertyenum.OrderStatus;
-import com.pronovich.hotelbooking.entity.propertyenum.Role;
+import com.pronovich.hotelbooking.entity.characteristic.OrderStatus;
+import com.pronovich.hotelbooking.entity.characteristic.Role;
+import com.pronovich.hotelbooking.entity.characteristic.RoomType;
 import com.pronovich.hotelbooking.exception.DaoException;
 
 import java.math.BigDecimal;
@@ -45,19 +46,18 @@ public class ResultSetConverter {
             Date checkInDate = resultSet.getDate("check_in");
             Date checkOutDate = resultSet.getDate("check_out");
             BigDecimal amount = resultSet.getBigDecimal("amount");
-            Room room = createRoomEntity(resultSet);
-            OrderStatus orderStatus = OrderStatus.valueOf(resultSet.getString("order_status"));
+            OrderStatus orderStatus = OrderStatus.valueOf(resultSet.getString("order_status").toUpperCase());
             boolean isPaid = resultSet.getBoolean("is_paid");
+            Room room = createRoomEntity(resultSet);
 
             roomOrder.setId(orderId);
             roomOrder.setCheckInDate(checkInDate);
             roomOrder.setCheckOutDate(checkOutDate);
             roomOrder.setAmount(amount);
-            roomOrder.setRoom(room);
-            roomOrder.setUser(user);
             roomOrder.setOrderStatus(orderStatus);
             roomOrder.setPaid(isPaid);
-
+            roomOrder.setRoom(room);
+            roomOrder.setUser(user);
         } catch (SQLException e) {
             throw new DaoException();
         }
@@ -65,7 +65,22 @@ public class ResultSetConverter {
     }
 
     private static Room createRoomEntity(ResultSet resultSet) throws DaoException {
-        //TODO implement
-        return null;
+        Room room = new Room();
+        try {
+            Integer roomId = resultSet.getInt("room_id");
+            Integer roomNumber = resultSet.getInt("number");
+            Integer size = resultSet.getInt("size");
+            BigDecimal price = resultSet.getBigDecimal("price");
+            RoomType roomType = RoomType.valueOf(resultSet.getString("type_name").toUpperCase());
+
+            room.setId(roomId);
+            room.setRoomNumber(roomNumber);
+            room.setSize(size);
+            room.setPrice(price);
+            room.setRoomType(roomType);
+        } catch (SQLException e) {
+            throw new DaoException();
+        }
+        return room;
     }
 }
