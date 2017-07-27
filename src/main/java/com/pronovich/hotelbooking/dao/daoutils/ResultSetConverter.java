@@ -13,7 +13,7 @@ import com.pronovich.hotelbooking.exception.DaoException;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ResultSetConverter {
 
@@ -45,8 +45,9 @@ public class ResultSetConverter {
         RoomOrder roomOrder = new RoomOrder();
         try {
             Integer orderId = resultSet.getInt("order_id");
-            Date checkInDate = resultSet.getDate("check_in");
-            Date checkOutDate = resultSet.getDate("check_out");
+            //TODO check if work java.util.Date or LocalDate
+            LocalDate checkInDate = resultSet.getDate("check_in").toLocalDate();
+            LocalDate checkOutDate = resultSet.getDate("check_out").toLocalDate();
             BigDecimal amount = resultSet.getBigDecimal("amount");
             OrderStatus orderStatus = OrderStatus.valueOf(resultSet.getString("order_status").toUpperCase());
             boolean isPaid = resultSet.getBoolean("is_paid");
@@ -66,7 +67,7 @@ public class ResultSetConverter {
         return roomOrder;
     }
 
-    private static Room createRoomEntity(ResultSet resultSet) throws DaoException {
+    public static Room createRoomEntity(ResultSet resultSet) throws DaoException {
         Room room = new Room();
         try {
             Integer roomId = resultSet.getInt("room_id");
@@ -90,8 +91,8 @@ public class ResultSetConverter {
         RoomRequest roomRequest = new RoomRequest();
         try {
             Integer requestId = resultSet.getInt("request_id");
-            Date checkInDate = resultSet.getDate("check_in");
-            Date checkOutDate = resultSet.getDate("check_out");
+            LocalDate checkInDate = resultSet.getDate("check_in").toLocalDate();
+            LocalDate checkOutDate = resultSet.getDate("check_out").toLocalDate();
             RoomType roomType = RoomType.valueOf(resultSet.getString("type_name").toUpperCase());
             Integer roomSize = resultSet.getInt("room_size");
             RequestStatus requestStatus = RequestStatus.valueOf(resultSet.getString("request_status").toUpperCase());

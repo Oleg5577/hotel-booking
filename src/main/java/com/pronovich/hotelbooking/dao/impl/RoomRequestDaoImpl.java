@@ -11,10 +11,7 @@ import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +30,11 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             "`request_status`, `type_name` FROM `hotel_booking_db`.`room_request` " +
             "LEFT JOIN `room_type` ON `room_request`.`fk_room_type_id` = `room_type`.`room_type_id`";
 
+    private static final String FIND_ROOM_REQUEST_BY_ID_SQL = "SELECT request_id, check_in, check_out, room_size," +
+            " request_status, fk_user_id, type_name FROM room_request " +
+            "LEFT JOIN room_type ON room_request.fk_room_type_id = room_type.room_type_id " +
+            "WHERE request_id = ?";
+
     @Override
     public void addRoomRequest(RequestContent requestContent) throws DaoException {
         ProxyConnection connection = null;
@@ -50,7 +52,8 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             statement.setDate(2, Date.valueOf( requestParameters.get("checkOutRequest")) );
             statement.setInt(3, Integer.valueOf(requestParameters.get("roomSizeRequest")) );
             statement.setInt(4, user.getId());
-            statement.setInt(5, roomDao.findRoomTypeIdByName(requestParameters.get("roomTypeRequest")));
+            int roomId = roomDao.findRoomTypeIdByName(requestParameters.get("roomTypeRequest"));
+            statement.setInt(5, roomId);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -100,6 +103,30 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
                 roomRequests.add(ResultSetConverter.createRequestEntity(resultSet, user));
             }
             return roomRequests;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement, resultSet);
+        }
+    }
+
+    @Override
+    public RoomRequest findRequestById(Integer requestId) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        RoomRequest roomRequest = null;
+        UserDao userDao = new UserDaoImpl();
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(FIND_ROOM_REQUEST_BY_ID_SQL);
+            statement.setInt(1, requestId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                User user = userDao.findUserById(resultSet.getInt("fk_user_id"));
+                roomRequest = ResultSetConverter.createRequestEntity(resultSet, user);
+            }
+            return roomRequest;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {

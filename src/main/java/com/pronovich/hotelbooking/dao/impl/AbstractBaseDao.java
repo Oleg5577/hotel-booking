@@ -11,7 +11,8 @@ import java.sql.Statement;
 abstract class AbstractBaseDao {
 
     void closeDbResources(ProxyConnection connection, Statement statement) throws DaoException {
-        closeDbResources(connection, statement, null);
+        closeStatement(statement);
+        releaseConnection(connection);
     }
 
     void closeDbResources(ProxyConnection connection, Statement statement, ResultSet resultSet) throws DaoException {

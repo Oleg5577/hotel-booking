@@ -5,11 +5,13 @@ import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
+import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddRoomRequestCommand implements Command {
@@ -58,6 +60,9 @@ public class AddRoomRequestCommand implements Command {
         } else {
             //TODO or send redirect???
             requestResult = new RequestResult(PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+
+            List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getSessionAttributes().get("listRoomRequests");
+            request.getSession().setAttribute("listRoomRequests", listRoomRequest);
         }
         return requestResult;
     }

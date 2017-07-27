@@ -4,6 +4,7 @@ import com.pronovich.hotelbooking.entity.characteristic.RequestStatus;
 import com.pronovich.hotelbooking.entity.characteristic.RoomType;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class RoomRequest implements Serializable {
@@ -12,9 +13,9 @@ public class RoomRequest implements Serializable {
 
     private Integer id;
     //TODO Date or String
-    private Date checkInDate;
+    private LocalDate checkInDate;
 
-    private Date checkOutDate;
+    private LocalDate checkOutDate;
 
     private RoomType roomType;
 
@@ -35,19 +36,19 @@ public class RoomRequest implements Serializable {
         this.id = id;
     }
 
-    public Date getCheckInDate() {
+    public LocalDate getCheckInDate() {
         return checkInDate;
     }
 
-    public void setCheckInDate(Date checkInDate) {
+    public void setCheckInDate(LocalDate checkInDate) {
         this.checkInDate = checkInDate;
     }
 
-    public Date getCheckOutDate() {
+    public LocalDate getCheckOutDate() {
         return checkOutDate;
     }
 
-    public void setCheckOutDate(Date checkOutDate) {
+    public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 

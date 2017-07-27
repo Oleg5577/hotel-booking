@@ -139,6 +139,9 @@ public class UserReceiverImpl implements UserReceiver {
             RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
             try {
                 roomRequestDao.addRoomRequest(content);
+
+                List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
+                content.addSessionAttribute("listRoomRequests", roomRequests);
             } catch (DaoException e) {
                 //TODO add log??
             }

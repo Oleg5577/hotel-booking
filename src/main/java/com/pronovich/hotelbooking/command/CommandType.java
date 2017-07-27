@@ -40,7 +40,7 @@ public enum CommandType {
     FIND_ROOM( new FindRoomCommand( new AdminReceiverImpl()) ) {
         @Override
         public void doReceiver(RequestContent content) {
-            ( (AdminReceiverImpl) getCommand().getReceiver() ).findRoomByRequest(content);
+            ( (AdminReceiverImpl) getCommand().getReceiver() ).findAllRoomsAccordingRequest(content);
         }
     }
     ;

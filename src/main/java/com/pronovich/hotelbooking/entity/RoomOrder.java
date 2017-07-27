@@ -4,6 +4,7 @@ import com.pronovich.hotelbooking.entity.characteristic.OrderStatus;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class RoomOrder implements Serializable {
@@ -12,9 +13,9 @@ public class RoomOrder implements Serializable {
 
     private Integer id;
 
-    private Date checkInDate;
+    private LocalDate checkInDate;
 
-    private Date checkOutDate;
+    private LocalDate checkOutDate;
 
     private BigDecimal amount;
 
@@ -37,19 +38,19 @@ public class RoomOrder implements Serializable {
         this.id = id;
     }
 
-    public Date getCheckInDate() {
+    public LocalDate getCheckInDate() {
         return checkInDate;
     }
 
-    public void setCheckInDate(Date checkInDate) {
+    public void setCheckInDate(LocalDate checkInDate) {
         this.checkInDate = checkInDate;
     }
 
-    public Date getCheckOutDate() {
+    public LocalDate getCheckOutDate() {
         return checkOutDate;
     }
 
-    public void setCheckOutDate(Date checkOutDate) {
+    public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 

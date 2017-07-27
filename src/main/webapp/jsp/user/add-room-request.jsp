@@ -33,7 +33,7 @@
         <label for="room-type"><fmt:message key="add-room-request.label.room-type"/>:</label>
         <select id="room-type" name="room-type" required>
             <option value=""></option>
-            <option value="standart" ${roomRequestValues.roomType == 'standart' ? 'selected' : ''}>standart</option>
+            <option value="standard" ${roomRequestValues.roomType == 'standard' ? 'selected' : ''}>standart</option>
             <option value="semilux" ${roomRequestValues.roomType == 'semilux' ? 'selected' : ''}>semilux</option>
             <option value="lux" ${roomRequestValues.roomType == 'lux' ? 'selected' : ''}>lux</option>
             <option value="president" ${roomRequestValues.roomType == 'president' ? 'selected' : ''}>president</option>

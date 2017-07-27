@@ -14,4 +14,6 @@ public interface RoomRequestDao {
     List<RoomRequest> findAllRequestsByUser(User user) throws DaoException;
 
     List<RoomRequest> findAllRequestsForAllUser() throws DaoException;
+
+    RoomRequest findRequestById(Integer requestId) throws DaoException;
 }
