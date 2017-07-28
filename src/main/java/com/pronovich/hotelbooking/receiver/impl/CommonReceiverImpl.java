@@ -1,10 +1,10 @@
 package com.pronovich.hotelbooking.receiver.impl;
 
 import com.pronovich.hotelbooking.content.RequestContent;
-import com.pronovich.hotelbooking.dao.OrderDao;
+import com.pronovich.hotelbooking.dao.RoomOrderDao;
 import com.pronovich.hotelbooking.dao.RoomRequestDao;
 import com.pronovich.hotelbooking.dao.UserDao;
-import com.pronovich.hotelbooking.dao.impl.OrderDaoImpl;
+import com.pronovich.hotelbooking.dao.impl.RoomOrderDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.UserDaoImpl;
 import com.pronovich.hotelbooking.entity.RoomOrder;
@@ -91,7 +91,7 @@ public class CommonReceiverImpl implements CommonReceiver {
             content.addWrongValues(wrongRequestValues);
         } else {
             UserDao userDao = new UserDaoImpl();
-            OrderDao orderDao = new OrderDaoImpl();
+            RoomOrderDao orderDao = new RoomOrderDaoImpl();
             RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
             try {
                 user = userDao.findUserByEmailAndPassword(email, password);

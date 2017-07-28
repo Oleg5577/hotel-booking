@@ -1,10 +1,10 @@
 package com.pronovich.hotelbooking.receiver.impl;
 
 import com.pronovich.hotelbooking.content.RequestContent;
-import com.pronovich.hotelbooking.dao.OrderDao;
+import com.pronovich.hotelbooking.dao.RoomOrderDao;
 import com.pronovich.hotelbooking.dao.RoomDao;
 import com.pronovich.hotelbooking.dao.RoomRequestDao;
-import com.pronovich.hotelbooking.dao.impl.OrderDaoImpl;
+import com.pronovich.hotelbooking.dao.impl.RoomOrderDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
 import com.pronovich.hotelbooking.entity.Room;
@@ -32,7 +32,7 @@ public class AdminReceiverImpl implements AdminReceiver {
 
     @Override
     public void findInfoForAdminAccount(RequestContent content) {
-        OrderDao orderDao = new OrderDaoImpl();
+        RoomOrderDao orderDao = new RoomOrderDaoImpl();
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
 
         try {
@@ -47,12 +47,15 @@ public class AdminReceiverImpl implements AdminReceiver {
     }
 
     @Override
-    public void assignRoomToRequest(RequestContent content) {
+    public void createOrder(RequestContent content) {
         //TODO
-        OrderDao orderDao = new OrderDaoImpl();
+        String roomId = content.getRequestParameters().get("roomId");
+        String requestId = content.getRequestParameters().get("requestId");
+        RoomOrderDao orderDao = new RoomOrderDaoImpl();
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
         try {
 
+//            orderDao.createOrder();
 
             List<RoomOrder>  roomOrders = orderDao.findAllOrdersForAllUsers();
             List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsForAllUser();

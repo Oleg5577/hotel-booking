@@ -61,7 +61,7 @@ public enum CommandType {
     CREATE_ORDER(new CreateOrderCommand(new AdminReceiverImpl() ) ){
         @Override
         public void doReceiver(RequestContent content) {
-            ((AdminReceiverImpl) getCommand().getReceiver() ).assignRoomToRequest(content);
+            ((AdminReceiverImpl) getCommand().getReceiver() ).createOrder(content);
         }
     }
     ;

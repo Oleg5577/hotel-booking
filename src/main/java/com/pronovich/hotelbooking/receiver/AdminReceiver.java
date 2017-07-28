@@ -8,5 +8,5 @@ public interface AdminReceiver extends Receiver {
 
     void findInfoForAdminAccount(RequestContent content);
 
-    void assignRoomToRequest(RequestContent content);
+    void createOrder(RequestContent content);
 }

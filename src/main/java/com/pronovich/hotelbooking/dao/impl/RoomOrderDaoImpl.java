@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.dao.impl;
 
-import com.pronovich.hotelbooking.dao.OrderDao;
+import com.pronovich.hotelbooking.dao.RoomOrderDao;
 import com.pronovich.hotelbooking.dao.UserDao;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDaoImpl extends AbstractBaseDao implements OrderDao {
+public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
 
     private static final String FIND_ALL_ORDERS_BY_USER_SQL = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
             "`room_id`, `number`, `size`, `price`, " +

@@ -1,19 +1,12 @@
 package com.pronovich.hotelbooking.receiver.impl;
 
 import com.pronovich.hotelbooking.content.RequestContent;
-import com.pronovich.hotelbooking.dao.OrderDao;
 import com.pronovich.hotelbooking.dao.RoomRequestDao;
-import com.pronovich.hotelbooking.dao.UserDao;
-import com.pronovich.hotelbooking.dao.impl.OrderDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
-import com.pronovich.hotelbooking.dao.impl.UserDaoImpl;
-import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
-import com.pronovich.hotelbooking.entity.characteristic.Role;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.ClientReceiver;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;

@@ -35,7 +35,7 @@
                         <input hidden name="command" value="create_order">
                         <input hidden name="roomId" value="${room.id}">
                         <input hidden name="requestId" value="${requestId}">
-                        <fmt:message key="admin.assign-room.button.submit" var="buttonValue"/>
+                        <fmt:message key="admin.create-order.button.submit" var="buttonValue"/>
                         <input type="submit" name="submit" value="${buttonValue}">
                     </form>
                 </td>
