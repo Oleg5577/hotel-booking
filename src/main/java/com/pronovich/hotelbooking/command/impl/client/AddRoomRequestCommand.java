@@ -1,4 +1,4 @@
-package com.pronovich.hotelbooking.command.impl;
+package com.pronovich.hotelbooking.command.impl.client;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;

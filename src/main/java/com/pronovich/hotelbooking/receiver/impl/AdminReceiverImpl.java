@@ -49,5 +49,18 @@ public class AdminReceiverImpl implements AdminReceiver {
     @Override
     public void assignRoomToRequest(RequestContent content) {
         //TODO
+        OrderDao orderDao = new OrderDaoImpl();
+        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
+        try {
+
+
+            List<RoomOrder>  roomOrders = orderDao.findAllOrdersForAllUsers();
+            List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsForAllUser();
+
+            content.addRequestAttributes("listRoomOrders", roomOrders);
+            content.addRequestAttributes("listRoomRequests", roomRequests);
+        } catch (DaoException e) {
+            //TODO add log??
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.pronovich.hotelbooking.controller;
 
 import com.pronovich.hotelbooking.command.Command;
-import com.pronovich.hotelbooking.command.impl.SignOutCommand;
+import com.pronovich.hotelbooking.command.impl.common.SignOutCommand;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestResult;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/controller")
-public class CommandServlet extends HttpServlet {
+public class CommandController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

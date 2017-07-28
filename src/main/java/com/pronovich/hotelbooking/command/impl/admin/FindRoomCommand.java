@@ -1,4 +1,4 @@
-package com.pronovich.hotelbooking.command.impl;
+package com.pronovich.hotelbooking.command.impl.admin;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class FindRoomCommand implements Command {
 
-    private static final String FIND_ROOM_PAGE = "jsp/admin/find-room-by-request.jsp";
+    private static final String FIND_ROOM_PAGE = "jsp/admin/rooms-according-request.jsp";
     private Receiver receiver;
 
     public FindRoomCommand(Receiver receiver) {
@@ -36,7 +36,7 @@ public class FindRoomCommand implements Command {
         receiver.action(CommandType.FIND_ROOM, content);
 
         request.setAttribute("allRoomsAccordingRequest", content.getRequestAttributes().get("allRoomsAccordingRequest"));
-//        request.setAttribute("requestId", requestId);
+        request.setAttribute("requestId", requestId);
         return new RequestResult(FIND_ROOM_PAGE, NavigationType.FORWARD);
     }
 }

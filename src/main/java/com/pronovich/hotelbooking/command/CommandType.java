@@ -1,40 +1,46 @@
 package com.pronovich.hotelbooking.command;
 
-import com.pronovich.hotelbooking.command.impl.*;
 import com.pronovich.hotelbooking.command.impl.admin.AssignRoomToRequestCommand;
+import com.pronovich.hotelbooking.command.impl.admin.FindInfoForAdminAccountCommand;
+import com.pronovich.hotelbooking.command.impl.admin.FindRoomCommand;
+import com.pronovich.hotelbooking.command.impl.client.AddRoomRequestCommand;
+import com.pronovich.hotelbooking.command.impl.common.SignInCommand;
+import com.pronovich.hotelbooking.command.impl.common.SignOutCommand;
+import com.pronovich.hotelbooking.command.impl.common.SignUpCommand;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.impl.AdminReceiverImpl;
-import com.pronovich.hotelbooking.receiver.impl.UserReceiverImpl;
+import com.pronovich.hotelbooking.receiver.impl.ClientReceiverImpl;
+import com.pronovich.hotelbooking.receiver.impl.CommonReceiverImpl;
 
 public enum CommandType {
 
-    SIGN_IN( new SignInCommand(new UserReceiverImpl()) ) {
+    SIGN_IN( new SignInCommand(new CommonReceiverImpl()) ) {
         @Override
         public void doReceiver(RequestContent content) {
-            User user = ((UserReceiverImpl) getCommand().getReceiver()).signIn(content);
+            User user = ((CommonReceiverImpl) getCommand().getReceiver()).signIn(content);
             content.addSessionAttribute("user", user);
         }
     },
 
-    SIGN_UP( new SignUpCommand(new UserReceiverImpl()) ) {
+    SIGN_UP( new SignUpCommand(new CommonReceiverImpl()) ) {
         @Override
         public void doReceiver(RequestContent content) {
-            ( (UserReceiverImpl) getCommand().getReceiver() ).signUp(content);
+            ( (CommonReceiverImpl) getCommand().getReceiver() ).signUp(content);
         }
     },
 
-    SIGN_OUT( new SignOutCommand(new UserReceiverImpl()) ) {
+    SIGN_OUT( new SignOutCommand(new CommonReceiverImpl()) ) {
         @Override
         public void doReceiver(RequestContent content) {
-//            ((UserReceiverImpl) getCommand().getReceiver()).signOut(content);
+//            ((ClientReceiverImpl) getCommand().getReceiver()).signOut(content);
         }
     },
 
-    ADD_ROOM_REQUEST(new AddRoomRequestCommand(new UserReceiverImpl()) ) {
+    ADD_ROOM_REQUEST(new AddRoomRequestCommand(new ClientReceiverImpl()) ) {
         @Override
         public void doReceiver(RequestContent content) {
-            ( (UserReceiverImpl) getCommand().getReceiver() ).addRoomRequest(content);
+            ( (ClientReceiverImpl) getCommand().getReceiver() ).addRoomRequest(content);
         }
     },
 

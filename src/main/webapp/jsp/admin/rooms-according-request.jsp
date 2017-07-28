@@ -30,14 +30,16 @@
                 <td>${room.size}</td>
                 <td>${room.price}</td>
                 <td>${room.roomType}</td>
-                <form action="/controller" method="post">
-                    <input hidden name="command" value="assign_room_to_request">
-                    <input hidden name="roomId" value="${room.id}">
-                    <input hidden name="requestId" value="${requestId}">
-                    <fmt:message key="admin.assign-room.button.submit" var="buttonValue"/>
-                    <input type="submit" name="submit" value="${buttonValue}">
-                </form>
-                <td><a href="/controller?command=assign_room_to_request&=room" Assign to request</td>
+                <td>
+                    <form action="/controller" method="post">
+                        <input hidden name="command" value="assign_room_to_request">
+                        <input hidden name="roomId" value="${room.id}">
+                        <input hidden name="requestId" value="${requestId}">
+                        <fmt:message key="admin.assign-room.button.submit" var="buttonValue"/>
+                        <input type="submit" name="submit" value="${buttonValue}">
+                    </form>
+                </td>
+                <%--<td><a href="/controller?command=assign_room_to_request&=room" Assign to request</td>--%>
             </tr>
         </c:forEach>
     </table>
