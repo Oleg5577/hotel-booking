@@ -22,7 +22,6 @@ public class ResultSetConverter {
         try {
             Integer userId = resultSet.getInt("user_id");
             String email = resultSet.getString("email");
-            String password = resultSet.getString("password");
             String name = resultSet.getString("name");
             String surname = resultSet.getString("surname");
             String phoneNumber = resultSet.getString("phone_number");
@@ -30,7 +29,6 @@ public class ResultSetConverter {
 
             user.setId(userId);
             user.setEmail(email);
-            user.setPassword(password);
             user.setName(name);
             user.setSurname(surname);
             user.setPhoneNumber(phoneNumber);

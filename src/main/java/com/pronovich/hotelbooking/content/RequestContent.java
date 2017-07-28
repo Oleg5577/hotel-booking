@@ -6,14 +6,12 @@ import java.util.Map;
 public class RequestContent {
 
     private Map<String, String> requestParameters = new HashMap<>();
+    private HashMap<String, Object> requestAttributes = new HashMap<>();
     private Map<String, Object> sessionAttributes = new HashMap<>();
-
     private Map<String, String> wrongValues = new HashMap<>();
 
-//    private HashMap<String, Object> requestAttributes;
 //    private HashMap<String, String[]> requestParameters;
 
-    // поля для атрибутов сессии и запроса
 
     public RequestContent() {
     }
@@ -22,23 +20,31 @@ public class RequestContent {
         this.requestParameters = requestParameters;
     }
 
-    public void addWrongValues(Map<String, String> wrongValues) {
-        this.wrongValues.putAll(wrongValues);
-    }
-
-    public Map<String, String> getWrongValues() {
-        return wrongValues;
-    }
-
-    public Map<String, String> getParameters() {
+    public Map<String, String> getRequestParameters() {
         return requestParameters;
+    }
+
+    public HashMap<String, Object> getRequestAttributes() {
+        return requestAttributes;
+    }
+
+    public void addRequestAttributes(String key, Object value) {
+        this.requestAttributes.put(key, value);
+    }
+
+    public Map<String, Object> getSessionAttributes() {
+        return sessionAttributes;
     }
 
     public void addSessionAttribute(String key, Object value) {
         this.sessionAttributes.put(key, value);
     }
 
-    public Map<String, Object> getSessionAttributes() {
-        return sessionAttributes;
+    public Map<String, String> getWrongValues() {
+        return wrongValues;
+    }
+
+    public void addWrongValues(Map<String, String> wrongValues) {
+        this.wrongValues.putAll(wrongValues);
     }
 }

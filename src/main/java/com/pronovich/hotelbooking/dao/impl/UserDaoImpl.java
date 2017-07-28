@@ -35,7 +35,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
             connection = ConnectionPool.getPool().getConnection();
             statement = connection.prepareStatement(ADD_USER_SQL);
 
-            Map<String, String> requestParameters = requestContent.getParameters();
+            Map<String, String> requestParameters = requestContent.getRequestParameters();
 
             statement.setString(1, requestParameters.get("email"));
             statement.setString(2, requestParameters.get("password"));

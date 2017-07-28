@@ -23,8 +23,9 @@
             <th>Room size</th>
             <th>Request status</th>
             <th>User</th>
+            <th></th>
         </tr>
-        <jsp:useBean id="listRoomRequests" scope="session" class="com.pronovich.hotelbooking.entity.RoomRequest"/>
+        <%--<jsp:useBean id="listRoomRequests" scope="session" class="com.pronovich.hotelbooking.entity.RoomRequest"/>--%>
         <c:forEach items="${listRoomRequests}" var="roomRequest">
             <tr>
                 <td>${roomRequest.checkInDate}</td>
@@ -33,6 +34,7 @@
                 <td>${roomRequest.roomSize}</td>
                 <td>${roomRequest.requestStatus}</td>
                 <td>${roomRequest.user}</td>
+                <td><a href="/controller?command=find_room&requestId=${roomRequest.id}">Find room</a></td>
             </tr>
         </c:forEach>
     </table>
@@ -45,7 +47,7 @@
             <th>Order status</th>
             <th>User</th><%--TODO add link to full info about the user--%>
         </tr>
-        <jsp:useBean id="listRoomOrders" scope="session" type="com.pronovich.hotelbooking.entity.RoomOrder"/>
+        <%--<jsp:useBean id="listRoomOrders" scope="session" class="com.pronovich.hotelbooking.entity.RoomOrder"/>--%>
         <c:forEach items="${listRoomOrders}" var="roomOrder">
             <tr>
                 <td>${roomOrder.checkInDate}</td>

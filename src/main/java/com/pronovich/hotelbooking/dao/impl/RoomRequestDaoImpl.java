@@ -21,14 +21,14 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
     private static final String ADD_ROOM_REQUEST_SQL = "INSERT INTO hotel_booking_db.room_request " +
             "(check_in, check_out, room_size, fk_user_id, fk_room_type_id) VALUES (?, ?, ?, ?, ?)";
 
-    private static final String FIND_ALL_REQUESTS_BY_USER_SQL = "SELECT `request_id`, `check_in`, `check_out`, `room_size`, " +
+    private static final String FIND_ALL_ROOM_REQUESTS_BY_USER_SQL = "SELECT `request_id`, `check_in`, `check_out`, `room_size`, " +
             "`request_status`, `type_name` FROM `hotel_booking_db`.`room_request` " +
             "LEFT JOIN `room_type` ON `room_request`.`fk_room_type_id` = `room_type`.`room_type_id` " +
             "WHERE `fk_user_id` = ?;";
 
-    private static final String FIND_ALL_REQUESTS_FOR_ALL_USERS_SQL = "SELECT `request_id`, `check_in`, `check_out`, `room_size`, " +
-            "`request_status`, `type_name` FROM `hotel_booking_db`.`room_request` " +
-            "LEFT JOIN `room_type` ON `room_request`.`fk_room_type_id` = `room_type`.`room_type_id`";
+    private static final String FIND_ALL_ROOM_REQUESTS_FOR_ALL_USERS_SQL = "SELECT `request_id`, `check_in`, `check_out`, `room_size`, " +
+            "`request_status`, `type_name`, `fk_user_id` FROM `hotel_booking_db`.`room_request` " +
+            "LEFT JOIN `room_type` ON `room_request`.`fk_room_type_id` = `room_type`.`room_type_id` ORDER BY `request_status`";
 
     private static final String FIND_ROOM_REQUEST_BY_ID_SQL = "SELECT request_id, check_in, check_out, room_size," +
             " request_status, fk_user_id, type_name FROM room_request " +
@@ -43,7 +43,7 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             connection = ConnectionPool.getPool().getConnection();
             statement = connection.prepareStatement(ADD_ROOM_REQUEST_SQL);
 
-            Map<String, String> requestParameters = requestContent.getParameters();
+            Map<String, String> requestParameters = requestContent.getRequestParameters();
             User user = (User) requestContent.getSessionAttributes().get("user");
 
             RoomDao roomDao = new RoomDaoImpl();
@@ -71,7 +71,7 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
         List<RoomRequest> roomRequests = new ArrayList<>();
         try {
             connection = ConnectionPool.getPool().getConnection();
-            statement = connection.prepareStatement(FIND_ALL_REQUESTS_BY_USER_SQL);
+            statement = connection.prepareStatement(FIND_ALL_ROOM_REQUESTS_BY_USER_SQL);
             statement.setInt(1, user.getId());
 
             resultSet = statement.executeQuery();
@@ -95,7 +95,7 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
         UserDao userDao = new UserDaoImpl();
         try {
             connection = ConnectionPool.getPool().getConnection();
-            statement = connection.prepareStatement(FIND_ALL_REQUESTS_FOR_ALL_USERS_SQL);
+            statement = connection.prepareStatement(FIND_ALL_ROOM_REQUESTS_FOR_ALL_USERS_SQL);
 
             resultSet = statement.executeQuery();
             while (resultSet.next()) {

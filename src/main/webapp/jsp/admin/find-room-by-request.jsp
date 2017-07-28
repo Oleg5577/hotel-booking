@@ -21,10 +21,25 @@
             <th>Room size, persons</th>
             <th>Price</th>
             <th>Room type</th>
+            <th></th>
         </tr>
-    <jsp:useBean id="roomList" scope="request" class="com.pronovich.hotelbooking.entity.Room"/>
-    <c:forEach items="${roomList}" var="room">
-
-    </c:forEach>
+        <%--<jsp:useBean id="allRoomsAccordingRequest" scope="request" class="com.pronovich.hotelbooking.entity.Room"/>--%>
+        <c:forEach items="${allRoomsAccordingRequest}" var="room">
+            <tr>
+                <td>${room.roomNumber}</td>
+                <td>${room.size}</td>
+                <td>${room.price}</td>
+                <td>${room.roomType}</td>
+                <form action="/controller" method="post">
+                    <input hidden name="command" value="assign_room_to_request">
+                    <input hidden name="roomId" value="${room.id}">
+                    <input hidden name="requestId" value="${requestId}">
+                    <fmt:message key="admin.assign-room.button.submit" var="buttonValue"/>
+                    <input type="submit" name="submit" value="${buttonValue}">
+                </form>
+                <td><a href="/controller?command=assign_room_to_request&=room" Assign to request</td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>

@@ -36,7 +36,13 @@
     </c:if>
     <c:choose>
         <c:when test="${user.role == 'ADMIN'}">
-            <a href="<fmt:message key="path.page.admin.admin-account" bundle="${ path }"/>">Admin account</a>
+<%--            <form action="/controller" method="get">
+                <input type="hidden" name="command" value="get_info_for_admin_account">
+                <fmt:message key="admin.account.button.submit" var="buttonValue"/>
+                <input type="submit" name="submit" value="${buttonValue}">
+            </form>--%>
+            <%--<a href="<fmt:message key="path.page.admin.admin-account" bundle="${ path }"/>">Admin account</a>--%>
+            <a href="/controller?command=find_info_for_admin_account">Admin account</a>
             <br>
         </c:when>
         <c:when test="${user.role == 'USER'}">

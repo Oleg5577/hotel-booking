@@ -34,6 +34,9 @@ public class FindRoomCommand implements Command {
         RequestContent content = new RequestContent(requestValues);
 
         receiver.action(CommandType.FIND_ROOM, content);
+
+        request.setAttribute("allRoomsAccordingRequest", content.getRequestAttributes().get("allRoomsAccordingRequest"));
+//        request.setAttribute("requestId", requestId);
         return new RequestResult(FIND_ROOM_PAGE, NavigationType.FORWARD);
     }
 }

@@ -5,15 +5,11 @@ import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
-import com.pronovich.hotelbooking.entity.RoomOrder;
-import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SignInCommand implements Command {
@@ -21,7 +17,7 @@ public class SignInCommand implements Command {
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
 
-    //TODO page path from properties;
+    //TODO page path from properties??;
     private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
     private static final String WELCOME_PAGE = "/jsp/welcome.jsp";
 
@@ -52,22 +48,13 @@ public class SignInCommand implements Command {
         Map<String, String> wrongValues = content.getWrongValues();
 
         RequestResult requestResult;
-
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
-            request.setAttribute("correctValues", content.getParameters());
+            request.setAttribute("correctValues", content.getRequestParameters());
             requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
         } else {
             User user = (User) content.getSessionAttributes().get("user");
-            //TODO Raw type GENERIC?????
-            List<RoomOrder> listRoomOrders = (List<RoomOrder>) content.getSessionAttributes().get("listRoomOrders");
-            List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getSessionAttributes().get("listRoomRequests");
-
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            session.setAttribute("listRoomOrders", listRoomOrders);
-            session.setAttribute("listRoomRequests", listRoomRequest);
-
+            request.getSession().setAttribute("user", user);
             requestResult = new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
         }
         return requestResult;

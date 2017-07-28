@@ -25,10 +25,10 @@ public class OrderDaoImpl extends AbstractBaseDao implements OrderDao {
             "WHERE `fk_user_id` = ?";
 
     private static final String FIND_ALL_ORDERS_FOR_ALL_USERS_SQL = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
-            "`room_id`, `number`, `size`, `price`, " +
+            "`room_id`, `fk_user_id` , `number`, `size`, `price`, " +
             "`room_type_id`, `type_name`, `is_paid`, `order_status` FROM `order` " +
             "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
-            "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` ";
+            "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` ORDER BY `order_status`";
 
     @Override
     public List<RoomOrder> findAllOrdersByUser(User user) throws DaoException {

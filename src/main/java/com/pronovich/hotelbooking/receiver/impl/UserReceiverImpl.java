@@ -23,27 +23,27 @@ public class UserReceiverImpl implements UserReceiver {
 
     @Override
     public void signUp(RequestContent content) {
-        String email = content.getParameters().get("email");
-        String password = content.getParameters().get("password");
-        String repeatPassword = content.getParameters().get("repeatPassword");
-        String name = content.getParameters().get("name");
-        String surname = content.getParameters().get("surname");
-        String phoneNumber = content.getParameters().get("phoneNumber");
+        String email = content.getRequestParameters().get("email");
+        String password = content.getRequestParameters().get("password");
+        String repeatPassword = content.getRequestParameters().get("repeatPassword");
+        String name = content.getRequestParameters().get("name");
+        String surname = content.getRequestParameters().get("surname");
+        String phoneNumber = content.getRequestParameters().get("phoneNumber");
 
         // TODO добавить валидацию данных запроса Sign Up
         //TODO add localization messages
 
-        Map<String,String> wrongRequestValues = new HashMap<>();
+        Map<String, String> wrongRequestValues = new HashMap<>();
 
         if (StringUtils.isEmpty(email)) {
             wrongRequestValues.put("email", "Please enter a email");
         }
-        if ( StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(password)) {
             wrongRequestValues.put("password", "Please, enter a Password");
         }
-        if ( StringUtils.isEmpty(repeatPassword)) {
+        if (StringUtils.isEmpty(repeatPassword)) {
             wrongRequestValues.put("repeatPassword", "Please, repeat Password");
-        } else if ( !password.equals(repeatPassword)) {
+        } else if (!password.equals(repeatPassword)) {
             wrongRequestValues.put("repeatPassword", "Passwords don't match");
         }
         if (StringUtils.isEmpty(name)) {
@@ -58,7 +58,7 @@ public class UserReceiverImpl implements UserReceiver {
 
         //TODO Encrypt password!!
 
-        if ( !wrongRequestValues.isEmpty()) {
+        if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
             UserDao userDao = new UserDaoImpl();
@@ -72,22 +72,22 @@ public class UserReceiverImpl implements UserReceiver {
 
     @Override
     public User signIn(RequestContent content) {
-        String email = content.getParameters().get("email");
-        String password = content.getParameters().get("password");
+        String email = content.getRequestParameters().get("email");
+        String password = content.getRequestParameters().get("password");
 
         //TODO add validation and localization for wrong messages
-        Map<String,String> wrongRequestValues = new HashMap<>();
+        Map<String, String> wrongRequestValues = new HashMap<>();
         if (StringUtils.isEmpty(email)) {
             wrongRequestValues.put("email", "Please enter a email");
         }
-        if ( StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(password)) {
             wrongRequestValues.put("password", "Please, enter a Password");
         }
 
         //TODO Encrypt password!!
 
         User user = null;
-        if ( !wrongRequestValues.isEmpty()) {
+        if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
             UserDao userDao = new UserDaoImpl();
@@ -96,13 +96,14 @@ public class UserReceiverImpl implements UserReceiver {
             try {
                 user = userDao.findUserByEmailAndPassword(email, password);
 
-                List<RoomOrder> roomOrders;
-                List<RoomRequest> roomRequests;
+                List<RoomOrder> roomOrders = null;
+                List<RoomRequest> roomRequests = null;
 
-                if (user.getRole() == Role.ADMIN) {
+/*                if (user.getRole() == Role.ADMIN) {
                     roomOrders = orderDao.findAllOrdersForAllUsers();
                     roomRequests = roomRequestDao.findAllRequestsForAllUser();
-                } else {
+                } else {*/
+                if (user.getRole() != Role.ADMIN) {
                     roomOrders = orderDao.findAllOrdersByUser(user);
                     roomRequests = roomRequestDao.findAllRequestsByUser(user);
                 }
@@ -124,13 +125,13 @@ public class UserReceiverImpl implements UserReceiver {
 
     @Override
     public void addRoomRequest(RequestContent content) {
-        String checkInRequest = content.getParameters().get("checkInRequest");
-        String checkOutRequest = content.getParameters().get("checkOutRequest");
-        String roomSizeRequest = content.getParameters().get("roomSizeRequest");
-        String roomTypeRequest = content.getParameters().get("roomTypeRequest");
+        String checkInRequest = content.getRequestParameters().get("checkInRequest");
+        String checkOutRequest = content.getRequestParameters().get("checkOutRequest");
+        String roomSizeRequest = content.getRequestParameters().get("roomSizeRequest");
+        String roomTypeRequest = content.getRequestParameters().get("roomTypeRequest");
         User user = (User) content.getSessionAttributes().get("user");
 
-        Map<String,String> wrongRequestValues = new HashMap<>();
+        Map<String, String> wrongRequestValues = new HashMap<>();
         //TODO add validation and localization for wrong messages
 
         if (!wrongRequestValues.isEmpty()) {

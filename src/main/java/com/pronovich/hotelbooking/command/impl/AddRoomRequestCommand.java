@@ -55,7 +55,7 @@ public class AddRoomRequestCommand implements Command {
         RequestResult requestResult;
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
-            request.setAttribute("correctValues", content.getParameters());
+            request.setAttribute("correctValues", content.getRequestParameters());
             requestResult = new RequestResult(ADD_ROOM_REQUEST_PAGE, NavigationType.FORWARD);
         } else {
             //TODO or send redirect???

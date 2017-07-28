@@ -1,6 +1,7 @@
 package com.pronovich.hotelbooking.command;
 
 import com.pronovich.hotelbooking.command.impl.*;
+import com.pronovich.hotelbooking.command.impl.admin.AssignRoomToRequestCommand;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.impl.AdminReceiverImpl;
@@ -41,6 +42,20 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) {
             ( (AdminReceiverImpl) getCommand().getReceiver() ).findAllRoomsAccordingRequest(content);
+        }
+    },
+
+    FIND_INFO_FOR_ADMIN_ACCOUNT(new FindInfoForAdminAccountCommand( new AdminReceiverImpl()) ) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (AdminReceiverImpl) getCommand().getReceiver() ).findInfoForAdminAccount(content);
+        }
+    },
+
+    ASSIGN_ROOM_TO_REQUEST(new AssignRoomToRequestCommand(new AdminReceiverImpl() ) ){
+        @Override
+        public void doReceiver(RequestContent content) {
+            ((AdminReceiverImpl) getCommand().getReceiver() ).assignRoomToRequest(content);
         }
     }
     ;

@@ -64,7 +64,7 @@ public class SignUpCommand implements Command {
         RequestResult requestResult;
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
-            request.setAttribute("correctValues", content.getParameters());
+            request.setAttribute("correctValues", content.getRequestParameters());
             requestResult = new RequestResult(SIGN_UP_PAGE, NavigationType.FORWARD);
         } else {
             requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
