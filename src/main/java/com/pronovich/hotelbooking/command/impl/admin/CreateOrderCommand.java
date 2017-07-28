@@ -10,7 +10,7 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
-public class AssignRoomToRequestCommand implements Command {
+public class CreateOrderCommand implements Command {
 
     private static final String ADMIN_ACCOUNT = "jsp/admin/admin-account.jsp";
 
@@ -19,8 +19,13 @@ public class AssignRoomToRequestCommand implements Command {
 
     private Receiver receiver;
 
-    public AssignRoomToRequestCommand(Receiver receiver) {
+    public CreateOrderCommand(Receiver receiver) {
         this.receiver = receiver;
+    }
+
+    @Override
+    public Receiver getReceiver() {
+        return receiver;
     }
 
     @Override
@@ -34,13 +39,8 @@ public class AssignRoomToRequestCommand implements Command {
 
         RequestContent content = new RequestContent(requestValues);
 
-        receiver.action(CommandType.ASSIGN_ROOM_TO_REQUEST, content);
+        receiver.action(CommandType.CREATE_ORDER, content);
 
         return new RequestResult(ADMIN_ACCOUNT, NavigationType.FORWARD);
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
     }
 }

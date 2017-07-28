@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command;
 
-import com.pronovich.hotelbooking.command.impl.admin.AssignRoomToRequestCommand;
+import com.pronovich.hotelbooking.command.impl.admin.CreateOrderCommand;
 import com.pronovich.hotelbooking.command.impl.admin.FindInfoForAdminAccountCommand;
 import com.pronovich.hotelbooking.command.impl.admin.FindRoomCommand;
 import com.pronovich.hotelbooking.command.impl.client.AddRoomRequestCommand;
@@ -58,7 +58,7 @@ public enum CommandType {
         }
     },
 
-    ASSIGN_ROOM_TO_REQUEST(new AssignRoomToRequestCommand(new AdminReceiverImpl() ) ){
+    CREATE_ORDER(new CreateOrderCommand(new AdminReceiverImpl() ) ){
         @Override
         public void doReceiver(RequestContent content) {
             ((AdminReceiverImpl) getCommand().getReceiver() ).assignRoomToRequest(content);

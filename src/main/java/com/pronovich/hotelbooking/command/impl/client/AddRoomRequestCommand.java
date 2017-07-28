@@ -21,13 +21,18 @@ public class AddRoomRequestCommand implements Command {
     private static final String ROOM_SIZE_PARAM = "room-size";
     private static final String ROOM_TYPE_PARAM = "room-type";
 
-    private static final String ADD_ROOM_REQUEST_PAGE = "jsp/user/add-room-request.jsp";
-    private static final String PERSONAL_ACCOUNT_PAGE = "jsp/user/personal-account.jsp";
+    private static final String ADD_ROOM_REQUEST_PAGE = "jsp/client/add-room-request.jsp";
+    private static final String PERSONAL_ACCOUNT_PAGE = "jsp/client/personal-account.jsp";
 
     private Receiver receiver;
 
     public AddRoomRequestCommand(Receiver receiver) {
         this.receiver = receiver;
+    }
+
+    @Override
+    public Receiver getReceiver() {
+        return receiver;
     }
 
     @Override
@@ -65,10 +70,5 @@ public class AddRoomRequestCommand implements Command {
             request.getSession().setAttribute("listRoomRequests", listRoomRequest);
         }
         return requestResult;
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
     }
 }

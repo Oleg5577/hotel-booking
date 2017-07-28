@@ -23,6 +23,11 @@ public class FindInfoForAdminAccountCommand implements Command {
     }
 
     @Override
+    public Receiver getReceiver() {
+        return receiver;
+    }
+
+    @Override
     public RequestResult execute(HttpServletRequest request) {
 
         RequestContent content = new RequestContent();
@@ -36,10 +41,5 @@ public class FindInfoForAdminAccountCommand implements Command {
         request.setAttribute("listRoomRequests", listRoomRequest);
 
         return new RequestResult(ADMIN_ACCOUNT, NavigationType.FORWARD);
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
     }
 }

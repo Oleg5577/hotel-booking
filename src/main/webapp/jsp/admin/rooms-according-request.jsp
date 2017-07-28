@@ -32,7 +32,7 @@
                 <td>${room.roomType}</td>
                 <td>
                     <form action="/controller" method="post">
-                        <input hidden name="command" value="assign_room_to_request">
+                        <input hidden name="command" value="create_order">
                         <input hidden name="roomId" value="${room.id}">
                         <input hidden name="requestId" value="${requestId}">
                         <fmt:message key="admin.assign-room.button.submit" var="buttonValue"/>

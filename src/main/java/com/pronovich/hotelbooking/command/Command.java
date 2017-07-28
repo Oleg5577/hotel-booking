@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface Command {
 
-    RequestResult execute(HttpServletRequest request);
-
     Receiver getReceiver();
+
+    RequestResult execute(HttpServletRequest request);
 }
