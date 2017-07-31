@@ -1,7 +1,5 @@
 package com.pronovich.hotelbooking.entity;
 
-import com.pronovich.hotelbooking.entity.characteristic.Role;
-
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -11,8 +9,6 @@ public class User implements Serializable {
     private Integer id;
 
     private String email;
-
-    private String password;
 
     private String name;
 
@@ -39,14 +35,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -90,7 +78,6 @@ public class User implements Serializable {
 
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
         if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null) return false;
@@ -101,7 +88,6 @@ public class User implements Serializable {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);

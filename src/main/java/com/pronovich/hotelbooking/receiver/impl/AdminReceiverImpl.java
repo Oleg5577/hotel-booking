@@ -48,7 +48,6 @@ public class AdminReceiverImpl implements AdminReceiver {
 
     @Override
     public void createOrder(RequestContent content) {
-        //TODO
         String roomId = content.getRequestParameters().get("roomId");
         String requestId = content.getRequestParameters().get("requestId");
 

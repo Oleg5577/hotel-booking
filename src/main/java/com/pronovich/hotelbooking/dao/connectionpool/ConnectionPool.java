@@ -77,7 +77,7 @@ public class ConnectionPool {
         return connection;
     }
 
-    public void closeConnection(ProxyConnection connection) {
+    public void returnConnection(ProxyConnection connection) {
         connectionQueue.offer(connection);
     }
 

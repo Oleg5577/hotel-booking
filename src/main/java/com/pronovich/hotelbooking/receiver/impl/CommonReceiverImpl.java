@@ -10,7 +10,7 @@ import com.pronovich.hotelbooking.dao.impl.UserDaoImpl;
 import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
-import com.pronovich.hotelbooking.entity.characteristic.Role;
+import com.pronovich.hotelbooking.entity.Role;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.CommonReceiver;
 import org.apache.commons.lang3.StringUtils;
@@ -99,10 +99,6 @@ public class CommonReceiverImpl implements CommonReceiver {
                 List<RoomOrder> roomOrders = null;
                 List<RoomRequest> roomRequests = null;
 
-/*                if (user.getRole() == Role.ADMIN) {
-                    roomOrders = orderDao.findAllOrdersForAllUsers();
-                    roomRequests = roomRequestDao.findAllRequestsForAllUser();
-                } else {*/
                 if (user.getRole() != Role.ADMIN) {
                     roomOrders = orderDao.findAllOrdersByUser(user);
                     roomRequests = roomRequestDao.findAllRequestsByUser(user);

@@ -1,5 +1,5 @@
 INSERT INTO `hotel_booking_db`.`role` (`role_name`) VALUES ('admin');
-INSERT INTO `hotel_booking_db`.`role` (`role_name`) VALUES ('user');
+INSERT INTO `hotel_booking_db`.`role` (`role_name`) VALUES ('client');
 
 INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('ivanov@gmail.com', '123456', 'Иван', 'Иванов', '+37512345', 1);
 INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('petrov@gmail.com', '111111', 'Петр', 'Петров', '+375124445', 1);
@@ -39,12 +39,12 @@ INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_si
 INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-08-10', '2017-08-15', 2, 'in_progress', 4, 2);
 INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-08-12', '2017-09-14', 2, 'in_progress', 5, 3);
 
-INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-06-12', '2017-06-15', 120, 3, 1, TRUE, 'checked_out');
-INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-07-13', '2017-07-16', 120, 4, 1, TRUE, 'checked_out');
-INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-06-13', '2017-06-14', 40, 2, 2, TRUE, 'expect_guest_arrival');
+INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-06-12', '2017-06-15', 120, 3, 3, TRUE, 'checked_out');
+INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-07-13', '2017-07-16', 120, 4, 3, TRUE, 'checked_out');
+INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-06-13', '2017-06-14', 40, 2, 4, TRUE, 'expect_guest_arrival');
 INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`) VALUES ('2017-06-13', '2017-06-15', 100, 4, 3, TRUE);
 INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-06-15', '2017-06-18', 180, 5, 4, TRUE, 'checked_out');
-INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-07-16', '2017-07-18', 180, 5, 4, FALSE, 'checked_in');
+INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-07-16', '2017-07-18', 180, 5, 5, FALSE, 'checked_in');
 INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-06-22', '2017-06-23', 120, 3, 5, TRUE, 'checked_out');
 INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-06-23', '2017-06-28', 300, 2, 6, FALSE, 'checked_in');
 INSERT INTO `hotel_booking_db`.`order` (`check_in`, `check_out`, `amount`, `fk_room_id`, `fk_user_id`, `is_paid`, `order_status`) VALUES ('2017-06-25', '2017-06-27', 140, 7, 7, TRUE, 'canceled');

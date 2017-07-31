@@ -39,7 +39,6 @@
                         <input type="submit" name="submit" value="${buttonValue}">
                     </form>
                 </td>
-                <%--<td><a href="/controller?command=assign_room_to_request&=room" Assign to request</td>--%>
             </tr>
         </c:forEach>
     </table>

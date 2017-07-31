@@ -4,10 +4,10 @@ import com.pronovich.hotelbooking.entity.Room;
 import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
-import com.pronovich.hotelbooking.entity.characteristic.OrderStatus;
-import com.pronovich.hotelbooking.entity.characteristic.RequestStatus;
-import com.pronovich.hotelbooking.entity.characteristic.Role;
-import com.pronovich.hotelbooking.entity.characteristic.RoomType;
+import com.pronovich.hotelbooking.entity.OrderStatus;
+import com.pronovich.hotelbooking.entity.RequestStatus;
+import com.pronovich.hotelbooking.entity.Role;
+import com.pronovich.hotelbooking.entity.RoomType;
 import com.pronovich.hotelbooking.exception.DaoException;
 
 import java.math.BigDecimal;

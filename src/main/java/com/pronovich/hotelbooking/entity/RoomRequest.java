@@ -1,11 +1,7 @@
 package com.pronovich.hotelbooking.entity;
 
-import com.pronovich.hotelbooking.entity.characteristic.RequestStatus;
-import com.pronovich.hotelbooking.entity.characteristic.RoomType;
-
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class RoomRequest implements Serializable {
 

@@ -9,7 +9,7 @@ import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
 import com.pronovich.hotelbooking.dao.daoutils.ResultSetConverter;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
-import com.pronovich.hotelbooking.entity.characteristic.RequestStatus;
+import com.pronovich.hotelbooking.entity.RequestStatus;
 import com.pronovich.hotelbooking.exception.DaoException;
 
 import java.sql.*;

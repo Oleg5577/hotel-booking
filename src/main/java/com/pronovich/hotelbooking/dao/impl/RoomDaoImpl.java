@@ -32,7 +32,6 @@ public class RoomDaoImpl extends AbstractBaseDao implements RoomDao {
             "FROM room LEFT JOIN room_type ON room.fk_room_type_id = room_type.room_type_id " +
             "WHERE room_id = ?";
 
-
     @Override
     public Room findRoomById(Integer roomId) throws DaoException {
         ProxyConnection connection = null;

@@ -1,11 +1,8 @@
 package com.pronovich.hotelbooking.entity;
 
-import com.pronovich.hotelbooking.entity.characteristic.OrderStatus;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class RoomOrder implements Serializable {
 

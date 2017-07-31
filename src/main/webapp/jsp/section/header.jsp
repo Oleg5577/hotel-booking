@@ -45,10 +45,10 @@
             <a href="/controller?command=find_info_for_admin_account">Admin account</a>
             <br>
         </c:when>
-        <c:when test="${user.role == 'USER'}">
-            <a href="<fmt:message key="path.page.user.add-room-request" bundle="${ path }"/>">Add room request</a>
+        <c:when test="${user.role == 'CLIENT'}">
+            <a href="<fmt:message key="path.page.client.add-room-request" bundle="${ path }"/>">Add room request</a>
             <br>
-            <a href="<fmt:message key="path.page.user.personal-account" bundle="${ path }"/>">Personal-account</a>
+            <a href="<fmt:message key="path.page.client.personal-account" bundle="${ path }"/>">Personal-account</a>
             <br>
         </c:when>
     </c:choose>

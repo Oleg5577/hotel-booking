@@ -43,7 +43,7 @@ abstract class AbstractBaseDao {
 
     private void releaseConnection(ProxyConnection connection) {
         if (connection != null) {
-            ConnectionPool.getPool().closeConnection(connection);
+            ConnectionPool.getPool().returnConnection(connection);
         }
     }
 }
