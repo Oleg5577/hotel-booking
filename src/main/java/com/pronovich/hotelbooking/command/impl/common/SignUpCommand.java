@@ -61,6 +61,7 @@ public class SignUpCommand implements Command {
 
         Map<String, String> wrongValues = content.getWrongValues();
 
+
         RequestResult requestResult;
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
