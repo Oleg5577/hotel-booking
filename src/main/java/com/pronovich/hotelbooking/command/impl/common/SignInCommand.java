@@ -16,6 +16,7 @@ public class SignInCommand implements Command {
 
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
+    private static final String USER_PARAM = "user";
 
     //TODO page path from properties??;
     private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
@@ -38,8 +39,8 @@ public class SignInCommand implements Command {
         String password = request.getParameter(PASSWORD_PARAM).trim();
 
         HashMap<String, String> requestValues = new HashMap<>();
-        requestValues.put("email", email);
-        requestValues.put("password", password);
+        requestValues.put(EMAIL_PARAM, email);
+        requestValues.put(PASSWORD_PARAM, password);
 
         RequestContent content = new RequestContent(requestValues);
 
@@ -53,9 +54,14 @@ public class SignInCommand implements Command {
             request.setAttribute("correctValues", content.getRequestParameters());
             requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
         } else {
-            User user = (User) content.getSessionAttributes().get("user");
-            request.getSession().setAttribute("user", user);
-            requestResult = new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
+            User user = (User) content.getSessionAttributes().get(USER_PARAM);
+            if (user == null) {
+                request.setAttribute("wrongValues", wrongValues);
+                requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
+            } else {
+                request.getSession().setAttribute(USER_PARAM, user);
+                requestResult = new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
+            }
         }
         return requestResult;
     }

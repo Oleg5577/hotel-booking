@@ -95,16 +95,16 @@ public class CommonReceiverImpl implements CommonReceiver {
             RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
             try {
                 user = userDao.findUserByEmailAndPassword(email, password);
+                if (user == null) {
+                    wrongRequestValues.put("emailOrPassword" , "Password or Email are incorrect");
+                    content.addWrongValues(wrongRequestValues);
+                } else {
+                    List<RoomOrder>  roomOrders = orderDao.findAllOrdersByUser(user);
+                    List<RoomRequest>  roomRequests = roomRequestDao.findAllRequestsByUser(user);
 
-                List<RoomOrder> roomOrders = null;
-                List<RoomRequest> roomRequests = null;
-
-                if (user.getRole() != Role.ADMIN) {
-                    roomOrders = orderDao.findAllOrdersByUser(user);
-                    roomRequests = roomRequestDao.findAllRequestsByUser(user);
+                    content.addSessionAttribute("listRoomOrders", roomOrders);
+                    content.addSessionAttribute("listRoomRequests", roomRequests);
                 }
-                content.addSessionAttribute("listRoomOrders", roomOrders);
-                content.addSessionAttribute("listRoomRequests", roomRequests);
             } catch (DaoException e) {
                 //TODO add log??
             }

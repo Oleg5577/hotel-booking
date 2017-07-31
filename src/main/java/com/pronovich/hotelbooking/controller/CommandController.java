@@ -42,7 +42,8 @@ public class CommandController extends HttpServlet {
         return executionCommand instanceof SignOutCommand;
     }
 
-    private void navigateToPage(RequestResult requestResult, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void navigateToPage(RequestResult requestResult, HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String page = requestResult.getPage();
         NavigationType navigationType = requestResult.getNavigationType();
 

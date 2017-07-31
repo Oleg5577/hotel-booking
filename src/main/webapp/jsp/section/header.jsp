@@ -21,7 +21,7 @@
     </form>
     <jsp:useBean id="user" scope="session" class="com.pronovich.hotelbooking.entity.User"/>
     <c:if test="${user.id != null}">
-        <form method="post" action="controller">
+        <form method="post" action="/controller">
             <input type="hidden" name="command" value="sign_out">
             <fmt:message key="signout.button.submit" var="buttonValue"/>
             <input type="submit" name="submit" value="${buttonValue}">
