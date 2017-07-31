@@ -9,6 +9,7 @@ import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
 import com.pronovich.hotelbooking.dao.daoutils.ResultSetConverter;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
+import com.pronovich.hotelbooking.entity.characteristic.RequestStatus;
 import com.pronovich.hotelbooking.exception.DaoException;
 
 import java.sql.*;
@@ -35,6 +36,9 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             "LEFT JOIN room_type ON room_request.fk_room_type_id = room_type.room_type_id " +
             "WHERE request_id = ?";
 
+    private static final String UPDATE_ROOM_REQUEST_STATUS_SQL = "UPDATE room_request SET request_status = ? " +
+            "WHERE request_id = ?";
+
     @Override
     public void addRoomRequest(RequestContent requestContent) throws DaoException {
         ProxyConnection connection = null;
@@ -47,12 +51,12 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             User user = (User) requestContent.getSessionAttributes().get("user");
 
             RoomDao roomDao = new RoomDaoImpl();
+            int roomId = roomDao.findRoomTypeIdByName(requestParameters.get("roomTypeRequest"));
 
             statement.setDate(1, Date.valueOf( requestParameters.get("checkInRequest")) );
             statement.setDate(2, Date.valueOf( requestParameters.get("checkOutRequest")) );
             statement.setInt(3, Integer.valueOf(requestParameters.get("roomSizeRequest")) );
             statement.setInt(4, user.getId());
-            int roomId = roomDao.findRoomTypeIdByName(requestParameters.get("roomTypeRequest"));
             statement.setInt(5, roomId);
 
             statement.executeUpdate();
@@ -131,6 +135,23 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             throw new DaoException(e);
         } finally {
             closeDbResources(connection, statement, resultSet);
+        }
+    }
+
+    @Override
+    public void changeStatusTo(Integer requestId, RequestStatus newStatus) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(UPDATE_ROOM_REQUEST_STATUS_SQL);
+            statement.setString(1, newStatus.toString().toLowerCase());
+            statement.setInt(2, requestId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement);
         }
     }
 }

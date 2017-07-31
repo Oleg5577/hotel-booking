@@ -51,11 +51,14 @@ public class AdminReceiverImpl implements AdminReceiver {
         //TODO
         String roomId = content.getRequestParameters().get("roomId");
         String requestId = content.getRequestParameters().get("requestId");
-        RoomOrderDao orderDao = new RoomOrderDaoImpl();
-        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
-        try {
 
-//            orderDao.createOrder();
+        RoomDao roomDao = new RoomDaoImpl();
+        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
+        RoomOrderDao orderDao = new RoomOrderDaoImpl();
+        try {
+            Room room = roomDao.findRoomById(Integer.valueOf(roomId));
+            RoomRequest roomRequest = roomRequestDao.findRequestById(Integer.valueOf(requestId));
+            orderDao.createOrder(roomRequest, room);
 
             List<RoomOrder>  roomOrders = orderDao.findAllOrdersForAllUsers();
             List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsForAllUser();

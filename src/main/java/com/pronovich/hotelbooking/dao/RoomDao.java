@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface RoomDao {
 
+    Room findRoomById(Integer roomId) throws DaoException;
+
     Integer findRoomTypeIdByName(String roomType) throws DaoException;
 
     List<Room> findAllRoomsAccordingRequest(RoomRequest roomRequest) throws DaoException;

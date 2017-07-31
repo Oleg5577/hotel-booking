@@ -42,14 +42,29 @@ public class ConnectionPool {
         connectionQueue = new ArrayBlockingQueue<>(poolSize);
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            for (int i = 0; i < poolSize; i++) {
-                Connection connection = ConnectionUtils.createConnection();
-                connectionQueue.offer(new ProxyConnection(connection));
+            createConnectionsForPool(poolSize);
+            if ( !numberConnectionsIsEnough(poolSize) ) {
+                createConnectionsForPool(poolSize - connectionQueue.size());
+                if ( !numberConnectionsIsEnough(poolSize) ) {
+                    //TODO ADD LOG FATAL
+                    throw new RuntimeException("Connection pool initialize Error. Insufficient number of connections");
+                }
             }
         } catch (SQLException e) {
             //TODO ADD LOG FATAL
             throw new RuntimeException("Connection pool initialize Error", e);
         }
+    }
+
+    private void createConnectionsForPool(int poolSize) {
+        for (int i = 0; i < poolSize; i++) {
+            Connection connection = ConnectionUtils.createConnection();
+            connectionQueue.offer(new ProxyConnection(connection));
+        }
+    }
+
+    private boolean numberConnectionsIsEnough(int poolSize) {
+        return connectionQueue.size() > (poolSize / 2);
     }
 
     public ProxyConnection getConnection() {

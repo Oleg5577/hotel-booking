@@ -3,6 +3,7 @@ package com.pronovich.hotelbooking.dao.connectionpool;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 class ConnectionUtils {
@@ -14,7 +15,8 @@ class ConnectionUtils {
     private static String url = resourceBundle.getString("db.url");
     private static String user = resourceBundle.getString("db.user");
     private static String password = resourceBundle.getString("db.password");
-    private static String poolSize = resourceBundle.getString("db.poolSize");
+
+    private static final int DEFAULT_POOL_SIZE = 10;
 
     static Connection createConnection() {
         Connection connection = null;
@@ -27,6 +29,13 @@ class ConnectionUtils {
     }
 
     static int definePoolSize() {
-        return Integer.parseInt(poolSize);
+        int poolSize;
+        try {
+            String poolSizeFromProperties = resourceBundle.getString("db.poolSize");
+            poolSize = Integer.parseInt(poolSizeFromProperties);
+        } catch (MissingResourceException e) {
+            return DEFAULT_POOL_SIZE;
+        }
+        return poolSize;
     }
 }

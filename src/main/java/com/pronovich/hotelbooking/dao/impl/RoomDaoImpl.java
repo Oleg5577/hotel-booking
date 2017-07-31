@@ -28,6 +28,34 @@ public class RoomDaoImpl extends AbstractBaseDao implements RoomDao {
                 "SELECT fk_room_id FROM `order` WHERE ? > `order`.check_in AND ? < `order`.check_out)" +
             "GROUP BY room_id ORDER BY room_id";
 
+    private static final String FIND_ROOM_BY_ID_SQL = "SELECT room_id, number, size, price, type_name " +
+            "FROM room LEFT JOIN room_type ON room.fk_room_type_id = room_type.room_type_id " +
+            "WHERE room_id = ?";
+
+
+    @Override
+    public Room findRoomById(Integer roomId) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Room room = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(FIND_ROOM_BY_ID_SQL);
+            statement.setInt(1, roomId);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                room = ResultSetConverter.createRoomEntity(resultSet);
+            }
+            return room;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement, resultSet);
+        }
+    }
+
     @Override
     public Integer findRoomTypeIdByName(String roomType) throws DaoException {
         ProxyConnection connection = null;
