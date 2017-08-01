@@ -15,12 +15,13 @@ public class SignUpCommand implements Command {
 
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
-    private static final String REPEAT_PASSWORD_PARAM = "repeat-password";
+    private static final String REPEAT_PASSWORD_PARAM = "repeatPassword";
     private static final String NAME_PARAM = "name";
     private static final String SURNAME_PARAM = "surname";
-    private static final String PHONE_NUMBER_PARAM = "phone-number";
+    private static final String PHONE_NUMBER_PARAM = "phoneNumber";
+    private static final String ROLE_PARAM = "role";
 
-    private static final String DEFAULT_USER_ROLE = "user";
+    private static final String DEFAULT_ROLE = "client";
 
     private static final String SIGN_UP_PAGE = "jsp/signup.jsp";
     private static final String SIGN_IN_PAGE = "jsp/signin.jsp";
@@ -45,31 +46,27 @@ public class SignUpCommand implements Command {
         String surname = request.getParameter(SURNAME_PARAM).trim();
         String phoneNumber = request.getParameter(PHONE_NUMBER_PARAM).trim();
 
-        HashMap<String, String> requestValues = new HashMap<>();
+        HashMap<String, String> requestParameters = new HashMap<>();
 
-        requestValues.put("email", email);
-        requestValues.put("password", password);
-        requestValues.put("repeatPassword", repeatPassword);
-        requestValues.put("name", name);
-        requestValues.put("surname", surname);
-        requestValues.put("phoneNumber", phoneNumber);
-        requestValues.put("role", DEFAULT_USER_ROLE);
+        requestParameters.put(EMAIL_PARAM, email);
+        requestParameters.put(PASSWORD_PARAM, password);
+        requestParameters.put(REPEAT_PASSWORD_PARAM, repeatPassword);
+        requestParameters.put(NAME_PARAM, name);
+        requestParameters.put(SURNAME_PARAM, surname);
+        requestParameters.put(PHONE_NUMBER_PARAM, phoneNumber);
+        requestParameters.put(ROLE_PARAM, DEFAULT_ROLE);
 
-        RequestContent content = new RequestContent(requestValues);
+        RequestContent content = new RequestContent(requestParameters);
 
         receiver.action(CommandType.SIGN_UP, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
 
-
-        RequestResult requestResult;
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
-            request.setAttribute("correctValues", content.getRequestParameters());
-            requestResult = new RequestResult(SIGN_UP_PAGE, NavigationType.FORWARD);
-        } else {
-            requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
+            request.setAttribute("requestValues", content.getRequestParameters());
+            return new RequestResult(SIGN_UP_PAGE, NavigationType.FORWARD);
         }
-        return requestResult;
+        return  new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
     }
 }

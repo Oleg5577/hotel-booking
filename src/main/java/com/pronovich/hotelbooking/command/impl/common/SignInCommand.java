@@ -38,31 +38,23 @@ public class SignInCommand implements Command {
         String email = request.getParameter(EMAIL_PARAM).trim();
         String password = request.getParameter(PASSWORD_PARAM).trim();
 
-        HashMap<String, String> requestValues = new HashMap<>();
-        requestValues.put(EMAIL_PARAM, email);
-        requestValues.put(PASSWORD_PARAM, password);
+        HashMap<String, String> requestParameters = new HashMap<>();
+        requestParameters.put(EMAIL_PARAM, email);
+        requestParameters.put(PASSWORD_PARAM, password);
 
-        RequestContent content = new RequestContent(requestValues);
+        RequestContent content = new RequestContent(requestParameters);
 
         receiver.action(CommandType.SIGN_IN, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
 
-        RequestResult requestResult;
-        if ( !wrongValues.isEmpty()) {
+        if ( !wrongValues.isEmpty() ) {
             request.setAttribute("wrongValues", wrongValues);
-            request.setAttribute("correctValues", content.getRequestParameters());
-            requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
-        } else {
-            User user = (User) content.getSessionAttributes().get(USER_PARAM);
-            if (user == null) {
-                request.setAttribute("wrongValues", wrongValues);
-                requestResult = new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
-            } else {
-                request.getSession().setAttribute(USER_PARAM, user);
-                requestResult = new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
-            }
+            request.setAttribute("requestValues", content.getRequestParameters());
+            return new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
         }
-        return requestResult;
+        User user = (User) content.getSessionAttributes().get(USER_PARAM);
+        request.getSession().setAttribute(USER_PARAM, user);
+        return new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
     }
 }

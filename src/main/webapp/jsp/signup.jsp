@@ -17,23 +17,29 @@
     <jsp:include page="/jsp/section/header.jsp"/>
     <form method="post" action="/controller">
         <input type="hidden" name="command" value="sign_up">
-        <label for="email"><fmt:message key="signup.label.email"/>:</label>
-        <input type="text" id="email" name="email">
+        <label for="email"><fmt:message key="signup.label.email"/>:<span class="asterisk"> *</span></label>
+        <input type="text" id="email" name="email" value="${requestValues.email}">
+        <label class="wrong-values">${wrongValues.email}</label>
         <br>
-        <label for="password"><fmt:message key="signup.label.password"/>:</label>
+        <label for="password"><fmt:message key="signup.label.password"/>:<span class="asterisk"> *</span></label>
         <input type="password" id="password" name="password">
+        <label class="wrong-values">${wrongValues.password}</label>
         <br>
-        <label for="repeat-password"><fmt:message key="signup.label.repeat-password"/>:</label>
-        <input type="password" id="repeat-password" name="repeat-password">
+        <label for="repeat-password"><fmt:message key="signup.label.repeat-password"/>:<span class="asterisk"> *</span></label>
+        <input type="password" id="repeat-password" name="repeatPassword">
+        <label class="wrong-values">${wrongValues.repeatPassword}</label>
         <br>
-        <label for="name"><fmt:message key="signup.label.name"/>:</label>
-        <input type="text" id="name" name="name">
+        <label for="name"><fmt:message key="signup.label.name"/>:<span class="asterisk"> *</span></label>
+        <input type="text" id="name" name="name" value="${requestValues.name}">
+        <label class="wrong-values">${wrongValues.name}</label>
         <br>
-        <label for="surname"><fmt:message key="signup.label.surname"/>:</label>
-        <input type="text" id="surname" name="surname">
+        <label for="surname"><fmt:message key="signup.label.surname"/>:<span class="asterisk"> *</span></label>
+        <input type="text" id="surname" name="surname" value="${requestValues.surname}">
+        <label class="wrong-values">${wrongValues.surname}</label>
         <br>
-        <label for="phone-number"><fmt:message key="signup.label.phone-number"/>:</label>
-        <input type="text" id="phone-number" name="phone-number">
+        <label for="phoneNumber"><fmt:message key="signup.label.phone-number"/>:<span class="asterisk"> *</span></label>
+        <input type="text" id="phoneNumber" name="phoneNumber" value="${requestValues.phoneNumber}">
+        <label class="wrong-values">${wrongValues.phoneNumber}</label>
         <br>
         <fmt:message key="signup.button.submit" var="buttonValue"/>
         <input type="submit" name="submit" value="${buttonValue}">

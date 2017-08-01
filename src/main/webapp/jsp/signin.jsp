@@ -18,7 +18,7 @@
     <form method="post" action="/controller">
         <input type="hidden" name="command" value="sign_in">
         <label for="email"><fmt:message key="login.label.email"/>:<span class="asterisk"> *</span></label>
-        <input type="text" id="email" name="email" value="${correctValues.email}">
+        <input type="text" id="email" name="email" value="${requestValues.email}">
         <label class="wrong-values">${wrongValues.email}</label>
         <br>
         <label for="password"><fmt:message key="login.label.password"/>:<span class="asterisk"> *</span></label>

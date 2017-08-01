@@ -61,5 +61,6 @@ public class CommandController extends HttpServlet {
     public void destroy() {
         ConnectionPool.getPool().closeAllConnections();
         super.destroy();
+
     }
 }

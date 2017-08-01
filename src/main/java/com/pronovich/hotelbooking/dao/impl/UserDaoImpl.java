@@ -27,6 +27,9 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
     private static final String FIND_USER_BY_ID_SQL = "SELECT user_id, email, name, surname, phone_number, role_name " +
             "FROM user LEFT JOIN role ON user.fk_role_id = role.role_id WHERE user.user_id = ?";
 
+    private static final String FIND_USER_BY_EMAIL_SQL = "SELECT user_id, email, name, surname, phone_number, role_name " +
+            "FROM user LEFT JOIN role ON user.fk_role_id = role.role_id WHERE user.email = ?";
+
     @Override
     public void addUser(RequestContent requestContent) throws DaoException {
         ProxyConnection connection = null;
@@ -111,6 +114,29 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
             connection = ConnectionPool.getPool().getConnection();
             statement = connection.prepareStatement(FIND_USER_BY_ID_SQL);
             statement.setInt(1, userId);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = ResultSetConverter.createUserEntity(resultSet);
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement, resultSet);
+        }
+    }
+
+    @Override
+    public User findUserByEmail(String email) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        User user = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(FIND_USER_BY_EMAIL_SQL);
+            statement.setString(1, email);
 
             resultSet = statement.executeQuery();
             if (resultSet.next()) {

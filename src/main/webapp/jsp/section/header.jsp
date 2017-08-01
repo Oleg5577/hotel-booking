@@ -52,6 +52,8 @@
             <br>
         </c:when>
     </c:choose>
+    <a href="<fmt:message key="path.page.find-room" bundle="${ path }"/>">Find room</a>
+    <br>
 </header>
 </body>
 </html>
