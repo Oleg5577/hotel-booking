@@ -12,6 +12,9 @@
 <head>
     <title>Welcome</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
+    <link href="../css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
