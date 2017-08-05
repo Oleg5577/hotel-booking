@@ -35,6 +35,11 @@
                         <fmt:message key="navbar.link.home" bundle="${ i18n }"/>
                     </a>
                 </li>
+                <li>
+                    <a href="<fmt:message key="path.page.find-room" bundle="${ path }"/>">
+                        <fmt:message key="find-room.label" bundle="${ i18n }"/>
+                    </a>
+                </li>
                 <c:choose>
                     <c:when test="${user.role == 'ADMIN'}">
                         <li><a href="/controller?command=find_info_for_admin_account">Admin account</a>
@@ -47,7 +52,7 @@
                         </li>
                         <li>
                             <a href="<fmt:message key="path.page.client.personal-account" bundle="${ path }"/>">
-                                Personal-account
+                                <fmt:message key="client.account.label" bundle="${ i18n }"/>
                             </a>
                         </li>
                     </c:when>
@@ -56,7 +61,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <c:if test="${user.id == null}">
                     <li>
-                        <div class="btn-group btn-group-md">
+                        <div class="btn-group btn-group-sm">
                             <button class="btn btn-success navbar-btn" data-toggle="modal" data-target="#modal-1">
                                 <fmt:message key="login.label.signin" bundle="${ i18n }"/>
                             </button>
@@ -85,9 +90,6 @@
         <option value="ru_RU" ${language == "ru_RU" ? "selected" : ""}>Русский</option>
     </select>
 </form>
-
-<a href="<fmt:message key="path.page.find-room" bundle="${ path }"/>">Find room</a>
-
 <div class="modal fade" id="modal-1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -135,20 +137,74 @@
     </div>
 </div>
 <div class="modal fade" id="modal-2">
-    <!--        <div class="modal-dialog">-->
-    <!--        <div class="modal-dialog modal-lg">-->
-    <!--        <div class="modal-dialog modal-sm">-->
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" type="button" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><fmt:message key="login.label.signup" var="i18n"/></h4>
+                <h4 class="modal-title"><fmt:message key="login.label.signup" bundle="${ i18n }"/></h4>
             </div>
             <div class="modal-body">
-                <p>Это модальное окно 2</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>
+                <form role="form" method="post" action="/controller">
+                    <input type="hidden" name="command" value="sign_up">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="email">
+                                <fmt:message key="signup.label.email" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
+                            </label>
+                            <input class="form-control" id="email" name="email" value="${requestValues.email}"
+                                   placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>"
+                                   type="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">
+                                <fmt:message key="signup.label.password" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
+                            </label>
+                            <input class="form-control"
+                                   placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
+                                   id="password" name="password" type="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="repeat-password">
+                                <fmt:message key="signup.label.repeat-password" bundle="${ i18n }"/>:<span class="asterisk"> *</span></label>
+                            <input class="form-control"
+                                   placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
+                                   type="password" id="repeat-password" name="repeatPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">
+                                <fmt:message key="signup.label.name" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
+                            </label>
+                            <input class="form-control"
+                                   placeholder="<fmt:message key="signup.label.name" bundle="${ i18n }"/>"
+                                   type="text"
+                                   id="name" name="name" value="${requestValues.name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">
+                                <fmt:message key="signup.label.surname" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
+                            </label>
+                            <input class="form-control" id="surname" name="surname" value="${requestValues.surname}"
+                                   placeholder="<fmt:message key="signup.label.surname" bundle="${ i18n }"/>">
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneNumber">
+                                <fmt:message key="signup.label.phone-number" bundle="${ i18n }"/>:<span
+                                    class="asterisk"> *</span>
+                            </label>
+                            <input class="form-control" name="phoneNumber"
+                                   placeholder="<fmt:message key="signup.label.phone-number" bundle="${ i18n }"/>"
+                                   id="phoneNumber"
+                                   value="${requestValues.phoneNumber}" type="text">
+                        </div>
+                        <div class="form-group">
+                            <fmt:message key="signup.button.submit" bundle="${ i18n }" var="buttonValue"/>
+                            <input type="submit" name="submit" value="${buttonValue}" class="btn btn-sm btn-success">
+                            <fmt:message key="common.button.cancel" var="buttonCancelValue" bundle="${ i18n }"/>
+                            <input type="submit" name="submit" value="${buttonCancelValue}" class="btn btn-sm btn-danger"
+                                   data-dismiss="modal">
+                        </div>
+                    </fieldset>
+                </form>
             </div>
         </div>
     </div>

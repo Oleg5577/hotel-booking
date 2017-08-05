@@ -15,6 +15,8 @@ import java.util.List;
 public class FindInfoForAdminAccountCommand implements Command {
 
     private static final String ADMIN_ACCOUNT = "jsp/admin/admin-account.jsp";
+    private static final String LIST_ROOM_ORDERS = "listRoomOrders";
+    private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
 
     private Receiver receiver;
 
@@ -34,11 +36,8 @@ public class FindInfoForAdminAccountCommand implements Command {
 
         receiver.action(CommandType.FIND_INFO_FOR_ADMIN_ACCOUNT, content);
 
-        List<RoomOrder> listRoomOrders = (List<RoomOrder>) content.getRequestAttributes().get("listRoomOrders");
-        List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getRequestAttributes().get("listRoomRequests");
-
-        request.setAttribute("listRoomOrders", listRoomOrders);
-        request.setAttribute("listRoomRequests", listRoomRequest);
+        request.setAttribute(LIST_ROOM_ORDERS, content.getRequestAttributes().get(LIST_ROOM_ORDERS));
+        request.setAttribute(LIST_ROOM_REQUESTS, content.getRequestAttributes().get(LIST_ROOM_REQUESTS));
 
         return new RequestResult(ADMIN_ACCOUNT, NavigationType.FORWARD);
     }

@@ -5,7 +5,7 @@
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}" scope="session"/>
-<fmt:setBundle basename="property.bundler"/>
+<fmt:setBundle basename="property.bundler" var="i18n"/>
 <fmt:setBundle basename="property.page" var="path"/>
 <!DOCTYPE html>
 <html lang="${language}">
@@ -41,23 +41,23 @@
             <td>1 guest</td>
             <td>
                 <input type="hidden" name="command" value="add_room_request">
-                <label><fmt:message key="find-room.label.check-in"/>:
+                <label><fmt:message key="find-room.label.check-in" bundle="${ i18n }"/>:
                     <input type="date" name="check-in-request" required>
                 </label>
             </td>
             <td>
-                <label><fmt:message key="find-room.label.check-out"/>:
+                <label><fmt:message key="find-room.label.check-out" bundle="${ i18n }"/>:
                     <input type="date" id="check-out-request" name="check-out-request" required>
                 </label>
             </td>
             <td>
-                <label><fmt:message key="find-room.label.check-out"/>:
+                <label><fmt:message key="find-room.label.check-out" bundle="${ i18n }"/>:
                     <input type="date" id="check-out-request" name="check-out-request" required>
                 </label>
             </td>
             <td>**SEARCH IN DB</td>
             <td>
-                <fmt:message key="find-room.button.submit" var="buttonValue"/>
+                <fmt:message key="find-room.button.submit" bundle="${ i18n }" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}">
             </td>
         </tr>
@@ -67,18 +67,18 @@
             <td>2 guest</td>
             <td>
                 <input type="hidden" name="command" value="add_room_request">
-                <label><fmt:message key="find-room.label.check-in"/>:
+                <label><fmt:message key="find-room.label.check-in" bundle="${ i18n }"/>:
                     <input type="date" name="check-in-request" required>
                 </label>
             </td>
             <td>
-                <label><fmt:message key="find-room.label.check-out"/>:
+                <label><fmt:message key="find-room.label.check-out" bundle="${ i18n }"/>:
                     <input type="date" id="check-out-request" name="check-out-request" required>
                 </label>
             </td>
             <td>**SEARCH IN DB</td>
             <td>
-                <fmt:message key="find-room.button.submit" var="buttonValue"/>
+                <fmt:message key="find-room.button.submit" bundle="${ i18n }" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}">
             </td>
         </tr>
@@ -88,18 +88,18 @@
             <td>1 guest</td>
             <td>
                 <input type="hidden" name="command" value="add_room_request">
-                <label><fmt:message key="find-room.label.check-in"/>:
+                <label><fmt:message key="find-room.label.check-in" bundle="${ i18n }"/>:
                     <input type="date" name="check-in-request" required>
                 </label>
             </td>
             <td>
-                <label><fmt:message key="find-room.label.check-out"/>:
+                <label><fmt:message key="find-room.label.check-out" bundle="${ i18n }"/>:
                     <input type="date" id="check-out-request" name="check-out-request" required>
                 </label>
             </td>
             <td>**SEARCH IN DB</td>
             <td>
-                <fmt:message key="find-room.button.submit" var="buttonValue"/>
+                <fmt:message key="find-room.button.submit" bundle="${ i18n }" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}">
             </td>
         </tr>
@@ -109,18 +109,18 @@
             <td>2 guests</td>
             <td>
                 <input type="hidden" name="command" value="add_room_request">
-                <label><fmt:message key="find-room.label.check-in"/>:
+                <label><fmt:message key="find-room.label.check-in" bundle="${ i18n }"/>:
                     <input type="date" name="check-in-request" required>
                 </label>
             </td>
             <td>
-                <label><fmt:message key="find-room.label.check-out"/>:
+                <label><fmt:message key="find-room.label.check-out" bundle="${ i18n }"/>:
                     <input type="date" id="check-out-request" name="check-out-request" required>
                 </label>
             </td>
             <td>**SEARCH IN DB</td>
             <td>
-                <fmt:message key="find-room.button.submit" var="buttonValue"/>
+                <fmt:message key="find-room.button.submit" bundle="${ i18n }" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}">
             </td>
         </tr>
@@ -130,18 +130,18 @@
             <td>1 guest</td>
             <td>
                 <input type="hidden" name="command" value="add_room_request">
-                <label><fmt:message key="find-room.label.check-in"/>:
+                <label><fmt:message key="find-room.label.check-in" bundle="${ i18n }"/>:
                     <input type="date" name="check-in-request" required>
                 </label>
             </td>
             <td>
-                <label><fmt:message key="find-room.label.check-out"/>:
+                <label><fmt:message key="find-room.label.check-out" bundle="${ i18n }"/>:
                     <input type="date" id="check-out-request" name="check-out-request" required>
                 </label>
             </td>
             <td>**SEARCH IN DB</td>
             <td>
-                <fmt:message key="find-room.button.submit" var="buttonValue"/>
+                <fmt:message key="find-room.button.submit" bundle="${ i18n }" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}">
             </td>
         </tr>
@@ -151,18 +151,18 @@
             <td>2 guests</td>
             <td>
                 <input type="hidden" name="command" value="add_room_request">
-                <label><fmt:message key="find-room.label.check-in"/>:
+                <label><fmt:message key="find-room.label.check-in" bundle="${ i18n }"/>:
                     <input type="date" name="check-in-request" required>
                 </label>
             </td>
             <td>
-                <label><fmt:message key="find-room.label.check-out"/>:
+                <label><fmt:message key="find-room.label.check-out" bundle="${ i18n }"/>:
                     <input type="date" id="check-out-request" name="check-out-request" required>
                 </label>
             </td>
             <td>**SEARCH IN DB</td>
             <td>
-                <fmt:message key="find-room.button.submit" var="buttonValue"/>
+                <fmt:message key="find-room.button.submit" bundle="${ i18n }" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}">
             </td>
         </tr>
@@ -172,12 +172,12 @@
             <td>2 guests</td>
             <td>**SEARCH IN DB</td>
             <td>
-                <label><fmt:message key="find-room.label.check-out"/>:
+                <label><fmt:message key="find-room.label.check-out" bundle="${ i18n }"/>:
                     <input type="date" id="check-out-request" name="check-out-request" required>
                 </label>
             </td>
             <td>
-                <fmt:message key="find-room.button.submit" var="buttonValue"/>
+                <fmt:message key="find-room.button.submit" bundle="${ i18n }" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}">
             </td>
         </tr>

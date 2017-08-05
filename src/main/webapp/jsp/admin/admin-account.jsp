@@ -5,7 +5,7 @@
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}" scope="session"/>
-<fmt:setBundle basename="property.bundler"/>
+<fmt:setBundle basename="property.bundler" var="i18n"/>
 <fmt:setBundle basename="property.page" var="path"/>
 <!DOCTYPE html>
 <html lang="${language}">
@@ -25,7 +25,6 @@
         <th>Client</th>
         <th></th>
     </tr>
-    <%--<jsp:useBean id="listRoomRequests" scope="session" class="com.pronovich.hotelbooking.entity.RoomRequest"/>--%>
     <c:forEach items="${listRoomRequests}" var="roomRequest">
         <tr>
             <td>${roomRequest.checkInDate}</td>
@@ -52,7 +51,6 @@
         <th>Client</th>
         <%--TODO add link to full info about the user--%>
     </tr>
-    <%--<jsp:useBean id="listRoomOrders" scope="session" class="com.pronovich.hotelbooking.entity.RoomOrder"/>--%>
     <c:forEach items="${listRoomOrders}" var="roomOrder">
         <tr>
             <td>${roomOrder.checkInDate}</td>

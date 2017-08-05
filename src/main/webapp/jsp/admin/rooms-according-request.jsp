@@ -5,7 +5,7 @@
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}" scope="session"/>
-<fmt:setBundle basename="property.bundler"/>
+<fmt:setBundle basename="property.bundler" var="i18n"/>
 <fmt:setBundle basename="property.page" var="path"/>
 <!DOCTYPE html>
 <html lang="${language}">
@@ -35,7 +35,7 @@
                         <input hidden name="command" value="create_order">
                         <input hidden name="roomId" value="${room.id}">
                         <input hidden name="requestId" value="${requestId}">
-                        <fmt:message key="admin.create-order.button.submit" var="buttonValue"/>
+                        <fmt:message key="admin.create-order.button.submit" bundle="${ i18n }" var="buttonValue"/>
                         <input type="submit" name="submit" value="${buttonValue}">
                     </form>
                 </td>

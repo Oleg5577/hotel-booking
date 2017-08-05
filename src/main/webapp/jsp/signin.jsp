@@ -20,7 +20,6 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <%--<button class="close" type="button" data-dismiss="modal">&times;</button>--%>
                     <h4 class="panel-title"><fmt:message key="login.label.signin" bundle="${ i18n }"/></h4>
                 </div>
                 <div class="panel-body">
