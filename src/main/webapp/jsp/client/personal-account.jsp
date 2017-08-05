@@ -17,7 +17,7 @@
     <jsp:include page="/jsp/section/header.jsp"/>
     <div class="container">
         <h2><fmt:message key="client.account.label" bundle="${ i18n }"/></h2>
-        <p>Contextual classes can be used to color table rows or table cells. The classes that can be used are: .active, .success, .info, .warning, and .danger.</p>
+        <h4><fmt:message key="client.account.requests" bundle="${ i18n }"/></h4>
         <table class="table">
             <thead>
                 <tr>
@@ -30,75 +30,65 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Default</td>
-                    <td>Defaultson</td>
-                    <td>def@somemail.com</td>
+            <c:forEach items="${listRoomRequests}" var="roomRequest">
+                <tr <c:choose>
+                        <c:when test="${roomRequest.requestStatus == 'CONFIRMED'}">class="success" hidden</c:when>
+                        <c:when test="${roomRequest.requestStatus == 'IN_PROGRESS'}">class="info"</c:when>
+                        <c:when test="${roomRequest.requestStatus == 'DENIED'}">class="danger"</c:when>
+                        <c:otherwise>class="default"</c:otherwise>
+                    </c:choose>>
+                    <td>${roomRequest.checkInDate}</td>
+                    <td>${roomRequest.checkOutDate}</td>
+                    <td>${roomRequest.roomType}</td>
+                    <td>${roomRequest.roomSize}</td>
+                    <td>${roomRequest.requestStatus}</td>
+                    <td>
+                        <c:if test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
+                            /*ОТМЕНИТЬ*/
+                        </c:if>
+                    </td>
                 </tr>
-            <tr class="success">
-                <td>Success</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
-            </tr>
-            <tr class="danger">
-                <td>Danger</td>
-                <td>Moe</td>
-                <td>mary@example.com</td>
-            </tr>
-            <tr class="info">
-                <td>Info</td>
-                <td>Dooley</td>
-                <td>july@example.com</td>
-            </tr>
-            <tr class="warning">
-                <td>Warning</td>
-                <td>Refs</td>
-                <td>bo@example.com</td>
-            </tr>
-            <tr class="active">
-                <td>Active</td>
-                <td>Activeson</td>
-                <td>act@example.com</td>
-            </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
 
-    <table class="room-request-list">
-        <tr>
-            <th>Check-in date</th>
-            <th>Check-out date</th>
-            <th>Room type</th>
-            <th>Room size</th>
-            <th>Request status</th>
-        </tr>
-        <c:forEach items="${listRoomRequests}" var="roomRequest">
-            <tr>
-                <td>${roomRequest.checkInDate}</td>
-                <td>${roomRequest.checkOutDate}</td>
-                <td>${roomRequest.roomType}</td>
-                <td>${roomRequest.roomSize}</td>
-                <td>${roomRequest.requestStatus}</td>
-            </tr>
-        </c:forEach>
-    </table>
-    <table class="room-order-list">
-        <tr>
-            <th>Check-in date</th>
-            <th>Check-out date</th>
-            <th>Amount</th>
-            <th>Room</th>
-            <th>Order status</th>
-        </tr>
-        <c:forEach items="${listRoomOrders}" var="roomOrder">
-            <tr>
-                <td>${roomOrder.checkInDate}</td>
-                <td>${roomOrder.checkOutDate}</td>
-                <td>${roomOrder.amount}</td>
-                <td>${roomOrder.room}</td>
-                <td>${roomOrder.orderStatus}</td>
-            </tr>
-        </c:forEach>
-    </table>
+    <div class="container">
+        <h4><fmt:message key="client.account.orders" bundle="${ i18n }"/></h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Check-in date</th>
+                    <th>Check-out date</th>
+                    <th>Amount</th>
+                    <th>Room №</th>
+                    <th>Order status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${listRoomOrders}" var="roomOrder">
+                <tr <c:choose>
+                        <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">class="info"</c:when>
+                        <c:when test="${roomOrder.orderStatus == 'CHECKED_IN'}">class="active"</c:when>
+                        <c:when test="${roomOrder.orderStatus == 'CHECKED_OUT'}">class="success"</c:when>
+                        <c:when test="${roomOrder.orderStatus == 'CANCELED'}">class="danger"</c:when>
+                        <c:otherwise>class="default"</c:otherwise>
+                    </c:choose>>
+                    <td>${roomOrder.checkInDate}</td>
+                    <td>${roomOrder.checkOutDate}</td>
+                    <td>${roomOrder.amount}</td>
+                    <td>${roomOrder.room}</td>
+                    <td>${roomOrder.orderStatus}</td>
+                    <td>
+                        <c:if test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
+                            /*ОТМЕНИТЬ*/
+                        </c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

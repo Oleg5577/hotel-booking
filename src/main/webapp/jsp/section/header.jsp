@@ -26,7 +26,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<fmt:message key="path.page.home" bundle="${ path }"/>">Logo</a>
+            <a class="navbar-brand" href="<fmt:message key="path.page.home" bundle="${ path }"/>">
+                <img alt="Brand"  src="../../img/hotel-logo.gif" height="35px">
+            </a>
+            <%--<a class="navbar-brand" href="<fmt:message key="path.page.home" bundle="${ path }"/>">Logo</a>--%>
         </div>
         <div class="collapse navbar-collapse" id="responsive-menu">
             <ul class="nav navbar-nav navbar-left">
@@ -42,7 +45,11 @@
                 </li>
                 <c:choose>
                     <c:when test="${user.role == 'ADMIN'}">
-                        <li><a href="/controller?command=find_info_for_admin_account">Admin account</a>
+                        <li>
+                            <a href="/controller?command=find_info_for_admin_account">
+                                <fmt:message key="admin.account.label" bundle="${ i18n }"/>
+                            </a>
+                        </li>
                     </c:when>
                     <c:when test="${user.role == 'CLIENT'}">
                         <li>
