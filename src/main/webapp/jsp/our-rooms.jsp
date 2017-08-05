@@ -10,24 +10,38 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title>Find room</title>
+    <title><fmt:message key="our-rooms.label" bundle="${ i18n }"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <jsp:include page="/jsp/section/header.jsp"/>
-<div class="media">
-    <div class="media-left">
-        <a href="#">
-            <img class="media-object" src="..." alt="...">
-        </a>
-    </div>
-    <div class="media-body">
-        <h4 class="media-heading">Media heading</h4>
-        ...
-    </div>
+<div class="container" >
+    <h2 class="text-center"><fmt:message key="our-rooms.label" bundle="${ i18n }"/></h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>/*PHOTO*/</th>
+                <th>Room type</th>
+                <th>Room size</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${roomList}" var="room">
+            <tr>
+                <td>/*LINK TO PHOTO*/</td>
+                <td>${room.roomType}</td>
+                <td>${room.size}</td>
+                <td>${room.price} EUR</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 
-<form method="post" action="/controller">
+<a class="btn btn-md btn-info" href="client/add-room-request.jsp">*ADD ROOM REQUEST*</a>
+
+<%--<form method="post" action="/controller">--%>
     <%--    <input type="hidden" name="command" value="add_room_request">
         <label for="check-in-request"><fmt:message key="find-room.label.check-in"/>:</label>
         <input type="date" id="check-in-request" name="check-in-request" required>--%>
@@ -35,8 +49,7 @@
     <label for="check-out-request"><fmt:message key="find-room.label.check-out"/>:</label>
     <input type="date" id="check-out-request" name="check-out-request" required>
     <br>--%>
-    <%--    TODO ADD RADIO BUTTON ??--%>
-    <table>
+<%--    <table>
         <tr>
             <th>//*PHOTO*//</th>
             <th>Room type</th>
@@ -192,7 +205,7 @@
                 <input type="submit" name="submit" value="${buttonValue}">
             </td>
         </tr>
-    </table>
+    </table>--%>
 
     <%--    <label for="room-size"><fmt:message key="find-room.label.room-size"/>:</label>
         <select id="room-size" name="room-size" required>
@@ -212,6 +225,6 @@
         <br>
         <fmt:message key="find-room.button.submit" var="buttonValue"/>
         <input type="submit" name="submit" value="${buttonValue}">--%>
-</form>
+<%--</form>--%>
 </body>
 </html>

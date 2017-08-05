@@ -39,8 +39,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<fmt:message key="path.page.find-room" bundle="${ path }"/>">
-                        <fmt:message key="find-room.label" bundle="${ i18n }"/>
+                    <a href="<fmt:message key="path.page.our-rooms" bundle="${ path }"/>">
+                        <fmt:message key="our-rooms.label" bundle="${ i18n }"/>
                     </a>
                 </li>
                 <c:choose>
@@ -70,7 +70,7 @@
                     <li>
                         <div class="btn-group btn-group-sm">
                             <button class="btn btn-success navbar-btn" data-toggle="modal" data-target="#modal-1">
-                                <fmt:message key="login.label.signin" bundle="${ i18n }"/>
+                                <fmt:message key="signin.label" bundle="${ i18n }"/>
                             </button>
                             <button class="btn btn-success navbar-btn" data-toggle="modal" data-target="#modal-2">
                                 <fmt:message key="login.label.signup" bundle="${ i18n }"/>
@@ -102,7 +102,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" type="button" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><fmt:message key="login.label.signin" bundle="${ i18n }"/></h4>
+                <h4 class="modal-title"><fmt:message key="signin.label" bundle="${ i18n }"/></h4>
             </div>
             <div class="modal-body">
                 <form role="form" method="post" action="/controller">
@@ -114,7 +114,7 @@
                         <div class="form-group">
                             <input class="form-control" placeholder="Password" name="password" type="password" value="">
                         </div>
-                        <fmt:message key="login.button.submit" var="buttonValue" bundle="${ i18n }"/>
+                        <fmt:message key="signin.button.submit" var="buttonValue" bundle="${ i18n }"/>
                         <input type="submit" name="submit" value="${buttonValue}" class="btn btn-sm btn-success">
                         <fmt:message key="common.button.cancel" var="buttonCancelValue" bundle="${ i18n }"/>
                         <input type="submit" name="submit" value="${buttonCancelValue}" class="btn btn-sm btn-danger"

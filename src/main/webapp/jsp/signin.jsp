@@ -20,7 +20,7 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title"><fmt:message key="login.label.signin" bundle="${ i18n }"/></h4>
+                    <h4 class="panel-title"><fmt:message key="signin.label" bundle="${ i18n }"/></h4>
                 </div>
                 <div class="panel-body">
                     <form role="form" method="post" action="/controller">
@@ -36,7 +36,7 @@
                                 <label class="wrong-values">${wrongValues.password}</label>
                                 <label class="wrong-values">${wrongValues.emailOrPassword}</label>
                             </div>
-                            <fmt:message key="login.button.submit" bundle="${ i18n }" var="buttonValue"/>
+                            <fmt:message key="signin.button.submit" bundle="${ i18n }" var="buttonValue"/>
                             <input type="submit" name="submit" value="${buttonValue}"
                                    class="btn btn-md btn-success">
                             <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonCancelValue"/>
