@@ -1,5 +1,8 @@
 package com.pronovich.hotelbooking.dao.connectionpool;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -10,6 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
+
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
     private static ConnectionPool pool;
 
@@ -46,12 +51,12 @@ public class ConnectionPool {
             if ( !numberConnectionsIsEnough(poolSize) ) {
                 createConnectionsForPool(poolSize - connectionQueue.size());
                 if ( !numberConnectionsIsEnough(poolSize) ) {
-                    //TODO ADD LOG FATAL
-                    throw new RuntimeException("Connection pool initialize Error. Insufficient number of connections");
+                    LOGGER.fatal("Connection pool initialize Error. Insufficient number of connections");
+                    throw new RuntimeException("Connection pool initialize Error.");
                 }
             }
         } catch (SQLException e) {
-            //TODO ADD LOG FATAL
+            LOGGER.fatal("Connection pool initialize Error");
             throw new RuntimeException("Connection pool initialize Error", e);
         }
     }
@@ -72,7 +77,7 @@ public class ConnectionPool {
         try {
             connection = connectionQueue.take();
         } catch (InterruptedException e) {
-            //TODO Log
+            LOGGER.error("Impossible get connection");
         }
         return connection;
     }
@@ -81,6 +86,7 @@ public class ConnectionPool {
         connectionQueue.offer(connection);
     }
 
+    //TODO rename to derigister driver
     public void closeAllConnections() {
         try {
             Enumeration<Driver> drivers = DriverManager.getDrivers();
@@ -89,7 +95,8 @@ public class ConnectionPool {
                 DriverManager.deregisterDriver(driver);
             }
         } catch (SQLException e) {
-            // TODO add log
+            LOGGER.error("Deregister driver error");
         }
     }
+    //TODO add closing resources method
 }

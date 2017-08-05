@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class SignOutCommand implements Command {
 
-    private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
+    //TODO path from properties???
+    private static final String SIGN_IN_PAGE = "/jsp/home.jsp";
 
     private Receiver receiver;
 

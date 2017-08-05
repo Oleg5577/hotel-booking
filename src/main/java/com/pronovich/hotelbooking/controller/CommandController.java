@@ -6,6 +6,8 @@ import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestResult;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.command.CommandFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,8 +20,11 @@ import java.io.IOException;
 @WebServlet("/controller")
 public class CommandController extends HttpServlet {
 
+    private static final Logger LOGGER = LogManager.getLogger(CommandController.class);
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.info("logger in do post");
         handleRequest(request, response);
     }
 
@@ -29,6 +34,8 @@ public class CommandController extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.info("logger in handleRequest");
+
         Command command = new CommandFactory().initCommand(request);
         RequestResult requestResult = command.execute(request);
         if (isSignOutCommand(command)) {
@@ -53,7 +60,7 @@ public class CommandController extends HttpServlet {
         } else if (navigationType == NavigationType.REDIRECT) {
             response.sendRedirect(page);
         } else {
-            //TODO log???
+            LOGGER.error("Wrong navigation page type");
         }
     }
 

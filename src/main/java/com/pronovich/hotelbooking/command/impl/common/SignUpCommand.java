@@ -67,6 +67,6 @@ public class SignUpCommand implements Command {
             request.setAttribute("requestValues", content.getRequestParameters());
             return new RequestResult(SIGN_UP_PAGE, NavigationType.FORWARD);
         }
-        return  new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
+        return  new RequestResult(SIGN_IN_PAGE, NavigationType.REDIRECT);
     }
 }

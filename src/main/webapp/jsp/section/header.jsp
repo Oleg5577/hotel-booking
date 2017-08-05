@@ -5,7 +5,7 @@
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}" scope="session"/>
-<fmt:setBundle basename="property.bundler"/>
+<fmt:setBundle basename="property.bundler" var="i18n"/>
 <fmt:setBundle basename="property.page" var="path"/>
 <jsp:useBean id="user" scope="session" class="com.pronovich.hotelbooking.entity.User"/>
 <html>
@@ -13,29 +13,11 @@
     <title>Title</title>
     <link href="../../css/bootstrap.css" rel="stylesheet">
     <link href="../../css/font-awesome.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
     <script src="../../js/jquery-1.12.4.min.js"></script>
     <script src="../../js/bootstrap.js"></script>
 </head>
 <body>
-<div class="modal fade" id="modal-1">
-    <!--        <div class="modal-dialog">-->
-    <!--        <div class="modal-dialog modal-lg">-->
-    <!--        <div class="modal-dialog modal-sm">-->
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Название окна (Sign in)</h4>
-            </div>
-            <div class="modal-body">
-                <p>Это модальное окно</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
@@ -44,68 +26,56 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand" href="<fmt:message key="path.page.home" bundle="${ path }"/>">Logo</a>
         </div>
         <div class="collapse navbar-collapse" id="responsive-menu">
-            <ul class="nav navbar-nav navbar-right">
-                <c:if test="${user.id == null}">
-                    <li class="nav navbar-right"><a href="<fmt:message key="path.page.signup" bundle="${ path }"/>">Go
-                        to sign up</a></li>
-                    <li class="nav navbar-right"><a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go
-                        to sign in</a></li>
-                </c:if>
-            </ul>
             <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a href="<fmt:message key="path.page.home" bundle="${ path }"/>">
+                        <fmt:message key="navbar.link.home" bundle="${ i18n }"/>
+                    </a>
+                </li>
                 <c:choose>
                     <c:when test="${user.role == 'ADMIN'}">
-                        <%--            <form action="/controller" method="get">
-                                        <input type="hidden" name="command" value="get_info_for_admin_account">
-                                        <fmt:message key="admin.account.button.submit" var="buttonValue"/>
-                                        <input type="submit" name="submit" value="${buttonValue}">
-                                    </form>--%>
-                        <%--<a href="<fmt:message key="path.page.admin.admin-account" bundle="${ path }"/>">Admin account</a>--%>
                         <li><a href="/controller?command=find_info_for_admin_account">Admin account</a>
                     </c:when>
                     <c:when test="${user.role == 'CLIENT'}">
-                        <li><a href="<fmt:message key="path.page.client.add-room-request" bundle="${ path }"/>">Add room
-                            request</a></li>
-                        <li><a href="<fmt:message key="path.page.client.personal-account" bundle="${ path }"/>">Personal-account</a>
+                        <li>
+                            <a href="<fmt:message key="path.page.client.add-room-request" bundle="${ path }"/>">
+                                <fmt:message key="add-room-request.label.search-room" bundle="${ i18n }"/>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<fmt:message key="path.page.client.personal-account" bundle="${ path }"/>">
+                                Personal-account
+                            </a>
                         </li>
                     </c:when>
                 </c:choose>
-                <%--<li><a href="#">Пункт 1</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Пункт 2<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Пункт 1</a></li>
-                        <li><a href="#">Пункт 2</a></li>
-                        <li><a href="#">Пункт 3</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Пункт 4</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Пункт 3</a></li>
-                <li><a href="#">Пункт 4</a></li>--%>
             </ul>
-            <%--            <form action="" class="navbar-form navbar-right" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Email" value="">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Пароль">
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-sign-in"></i>Войти
+            <ul class="nav navbar-nav navbar-right">
+                <c:if test="${user.id == null}">
+                    <li>
+                        <div class="btn-group btn-group-md">
+                            <button class="btn btn-success navbar-btn" data-toggle="modal" data-target="#modal-1">
+                                <fmt:message key="login.label.signin" bundle="${ i18n }"/>
                             </button>
-                        </form>--%>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <button class="btn btn-success" data-toggle="modal" data-target="#modal-1">Открыть модальное окно(Sign in)
-            </button>
+                            <button class="btn btn-success navbar-btn" data-toggle="modal" data-target="#modal-2">
+                                <fmt:message key="login.label.signup" bundle="${ i18n }"/>
+                            </button>
+                        </div>
+                    </li>
+                </c:if>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <c:if test="${user.id != null}">
+                    <form method="post" action="/controller" class="navbar-form">
+                        <input type="hidden" name="command" value="sign_out">
+                        <fmt:message key="signout.button.submit" bundle="${ i18n }" var="buttonValue"/>
+                        <input type="submit" name="submit" value="${buttonValue}" class="btn btn-primary">
+                    </form>
+                </c:if>
+            </ul>
         </div>
     </div>
 </div>
@@ -115,40 +85,73 @@
         <option value="ru_RU" ${language == "ru_RU" ? "selected" : ""}>Русский</option>
     </select>
 </form>
-<%--<jsp:useBean id="user" scope="session" class="com.pronovich.hotelbooking.entity.User"/>--%>
-<c:if test="${user.id != null}">
-    <form method="post" action="/controller">
-        <input type="hidden" name="command" value="sign_out">
-        <fmt:message key="signout.button.submit" var="buttonValue"/>
-        <input type="submit" name="submit" value="${buttonValue}">
-    </form>
-</c:if>
-<%--<c:if test="${user.id == null}">
-    <br>
-    <a href="<fmt:message key="path.page.signup" bundle="${ path }"/>">Go to sign up</a>
-    <br>
-    <a href="<fmt:message key="path.page.signin" bundle="${ path }"/>">Go to sign in</a>
-    <br>
-</c:if>--%>
-<%--<c:choose>
-    <c:when test="${user.role == 'ADMIN'}">
-        &lt;%&ndash;            <form action="/controller" method="get">
-                        <input type="hidden" name="command" value="get_info_for_admin_account">
-                        <fmt:message key="admin.account.button.submit" var="buttonValue"/>
-                        <input type="submit" name="submit" value="${buttonValue}">
-                    </form>&ndash;%&gt;
-        &lt;%&ndash;<a href="<fmt:message key="path.page.admin.admin-account" bundle="${ path }"/>">Admin account</a>&ndash;%&gt;
-        <a href="/controller?command=find_info_for_admin_account">Admin account</a>
-        <br>
-    </c:when>
-    <c:when test="${user.role == 'CLIENT'}">
-        <a href="<fmt:message key="path.page.client.add-room-request" bundle="${ path }"/>">Add room request</a>
-        <br>
-        <a href="<fmt:message key="path.page.client.personal-account" bundle="${ path }"/>">Personal-account</a>
-        <br>
-    </c:when>
-</c:choose>--%>
+
 <a href="<fmt:message key="path.page.find-room" bundle="${ path }"/>">Find room</a>
-<br>
+
+<div class="modal fade" id="modal-1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><fmt:message key="login.label.signin" bundle="${ i18n }"/></h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" method="post" action="/controller">
+                    <input type="hidden" name="command" value="sign_in">
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                        </div>
+                        <fmt:message key="login.button.submit" var="buttonValue" bundle="${ i18n }"/>
+                        <input type="submit" name="submit" value="${buttonValue}" class="btn btn-sm btn-success">
+                        <fmt:message key="common.button.cancel" var="buttonCancelValue" bundle="${ i18n }"/>
+                        <input type="submit" name="submit" value="${buttonCancelValue}" class="btn btn-sm btn-danger"
+                               data-dismiss="modal">
+                    </fieldset>
+                </form>
+                <%-- <form method="post" action="/controller">
+                    <input type="hidden" name="command" value="sign_in">
+                    <label for="email"><fmt:message key="login.label.email"/>:<span class="asterisk"> *</span></label>
+                    <input type="text" id="email" name="email" value="${requestValues.email}">
+                    <label class="wrong-values">${wrongValues.email}</label>
+                    <br>
+                    <label for="password"><fmt:message key="login.label.password"/>:<span class="asterisk"> *</span></label>
+                    <input type="password" id="password" name="password">
+                    <label class="wrong-values">${wrongValues.password}</label>
+                    <br>
+                    <fmt:message key="login.button.submit" var="buttonValue"/>
+                    <input type="submit" name="submit" value="${buttonValue}">
+                    <br>
+                    <label class="wrong-values">${wrongValues.emailOrPassword}</label>
+                </form>--%>
+            </div>
+            <%--<div class="modal-footer">--%>
+            <%--<button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>--%>
+            <%--</div>--%>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-2">
+    <!--        <div class="modal-dialog">-->
+    <!--        <div class="modal-dialog modal-lg">-->
+    <!--        <div class="modal-dialog modal-sm">-->
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><fmt:message key="login.label.signup" var="i18n"/></h4>
+            </div>
+            <div class="modal-body">
+                <p>Это модальное окно 2</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
