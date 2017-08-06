@@ -4,6 +4,7 @@ import com.pronovich.hotelbooking.command.impl.admin.CreateOrderCommand;
 import com.pronovich.hotelbooking.command.impl.admin.FindInfoForAdminAccountCommand;
 import com.pronovich.hotelbooking.command.impl.admin.FindRoomCommand;
 import com.pronovich.hotelbooking.command.impl.client.AddRoomRequestCommand;
+import com.pronovich.hotelbooking.command.impl.common.FindRoomsDescriptionCommand;
 import com.pronovich.hotelbooking.command.impl.common.SignInCommand;
 import com.pronovich.hotelbooking.command.impl.common.SignOutCommand;
 import com.pronovich.hotelbooking.command.impl.common.SignUpCommand;
@@ -63,7 +64,15 @@ public enum CommandType {
         public void doReceiver(RequestContent content) {
             ((AdminReceiverImpl) getCommand().getReceiver() ).createOrder(content);
         }
+    },
+
+    FIND_ROOMS_DESCRIPTION(new FindRoomsDescriptionCommand(new CommonReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            (  (CommonReceiverImpl) getCommand().getReceiver()).findRoomsDescription(content);
+        }
     }
+
     ;
 
     private Command command;

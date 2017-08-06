@@ -20,6 +20,9 @@ public class CreateOrderCommand implements Command {
     private static final String ROOM_ID_PARAM = "roomId";
     private static final String REQUEST_ID_PARAM = "requestId";
 
+    private static final String LIST_ROOM_ORDERS = "listRoomOrders";
+    private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
+
     private Receiver receiver;
 
     public CreateOrderCommand(Receiver receiver) {
@@ -37,18 +40,18 @@ public class CreateOrderCommand implements Command {
         String requestId = request.getParameter(REQUEST_ID_PARAM);
 
         HashMap<String, String> requestValues = new HashMap<>();
-        requestValues.put("roomId", roomId);
-        requestValues.put("requestId", requestId);
+        requestValues.put(ROOM_ID_PARAM, roomId);
+        requestValues.put(REQUEST_ID_PARAM, requestId);
 
         RequestContent content = new RequestContent(requestValues);
 
         receiver.action(CommandType.CREATE_ORDER, content);
 
-        List<RoomOrder> listRoomOrders = (List<RoomOrder>) content.getRequestAttributes().get("listRoomOrders");
-        List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getRequestAttributes().get("listRoomRequests");
+//        List<RoomOrder> listRoomOrders = (List<RoomOrder>) content.getRequestAttributes().get(LIST_ROOM_ORDERS);
+//        List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getRequestAttributes().get(LIST_ROOM_REQUESTS);
 
-        request.setAttribute("listRoomOrders", listRoomOrders);
-        request.setAttribute("listRoomRequests", listRoomRequest);
+        request.setAttribute(LIST_ROOM_ORDERS, content.getRequestAttributes().get(LIST_ROOM_ORDERS));
+        request.setAttribute(LIST_ROOM_REQUESTS, content.getRequestAttributes().get(LIST_ROOM_REQUESTS));
         return new RequestResult(ADMIN_ACCOUNT, NavigationType.FORWARD);
     }
 }

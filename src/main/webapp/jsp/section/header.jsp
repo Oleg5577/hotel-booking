@@ -39,7 +39,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<fmt:message key="path.page.our-rooms" bundle="${ path }"/>">
+                    <a href="/controller?command=find_rooms_description">
+                    <%--<a href="<fmt:message key="path.page.our-rooms" bundle="${ path }"/>">--%>
                         <fmt:message key="our-rooms.label" bundle="${ i18n }"/>
                     </a>
                 </li>

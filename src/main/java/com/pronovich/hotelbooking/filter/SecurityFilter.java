@@ -34,7 +34,7 @@ public class SecurityFilter implements Filter {
 
         //TODO add pattern /controller except signin and signout
         if (URI.startsWith("/jsp/client") && user == null || user.getRole() != Role.CLIENT) {
-            httpServletResponse.sendRedirect("/jsp/home.jsp");
+            httpServletResponse.sendRedirect("/jsp/signin.jsp");
             return;
         } else if (URI.startsWith("/jsp/admin") && user.getRole() != Role.ADMIN /*|| URI.startsWith("/controller?command")*/) {
             httpServletResponse.sendRedirect("/jsp/home.jsp");

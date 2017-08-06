@@ -20,103 +20,77 @@
         <form class="form-horizontal" method="post" action="/controller">
             <input type="hidden" name="command" value="add_room_request">
             <div class="form-group">
-                <label class="control-label col-sm-4" for="check-in-request">
+                <label class="control-label col-sm-4" for="checkInRequest">
                     <fmt:message key="add-room-request.label.check-in" bundle="${ i18n }"/>:
                     <span class="asterisk"> *</span>
                 </label>
                 <div class="col-sm-4">
-                    <input type="date" class="form-control" id="check-in-request" name="check-in-request">
+                    <input type="date" class="form-control" id="checkInRequest" name="checkInRequest"
+                           value="${requestValues.checkInRequest}">
+                    <label class="wrong-values">${wrongValues.checkInRequest}</label>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="check-out-request">
+                <label class="control-label col-sm-4" for="checkOutRequest">
                     <fmt:message key="add-room-request.label.check-out" bundle="${ i18n }"/>:
                     <span class="asterisk"> *</span>
                 </label>
                 <div class="col-sm-4">
-                    <input type="date" class="form-control" id="check-out-request" name="check-out-request">
+                    <input type="date" class="form-control" id="checkOutRequest" name="checkOutRequest"
+                           value="${requestValues.checkOutRequest}">
+                    <label class="wrong-values">${wrongValues.checkOutRequest}</label>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="room-size">
+                <label class="control-label col-sm-4" for="roomSizeRequest">
                     <fmt:message key="add-room-request.label.room-size" bundle="${ i18n }"/>:
                     <span class="asterisk"> *</span>
                 </label>
                 <div class="col-sm-4">
-                    <select class="select form-control" id="select" name="room-size">
+                    <select class="select form-control" id="roomSizeRequest" name="roomSizeRequest">
                         <option value=""></option>
-                        <option value="1" ${roomRequestValues.roomSize == '1' ? 'selected' : ''}>
+                        <option value="1" ${requestValues.roomSizeRequest == '1' ? 'selected' : ''}>
                             <fmt:message key="add-room-request.label.room-size.1-person" bundle="${ i18n }"/>
                         </option>
-                        <option value="2" ${roomRequestValues.roomSize == '2' ? 'selected' : ''}>
+                        <option value="2" ${requestValues.roomSizeRequest == '2' ? 'selected' : ''}>
                             <fmt:message key="add-room-request.label.room-size.2-person" bundle="${ i18n }"/>
                         </option>
                     </select>
+                    <label class="wrong-values">${wrongValues.roomSizeRequest}</label>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-4" for="room-type">
+                <label class="control-label col-sm-4" for="roomTypeRequest">
                     <fmt:message key="add-room-request.label.room-type" bundle="${ i18n }"/>:
                     <span class="asterisk"> *</span>
                 </label>
                 <div class="col-sm-4">
-                    <select class="select form-control" id="room-type" name="room-type" >
+                    <select class="select form-control" id="roomTypeRequest" name="roomTypeRequest" >
                         <option value=""></option>
-                        <option value="standard" ${roomRequestValues.roomType == 'standard' ? 'selected' : ''}>
+                        <option value="standard" ${requestValues.roomTypeRequest == 'standard' ? 'selected' : ''}>
                             <fmt:message key="add-room-request.label.room-type.standard" bundle="${ i18n }"/>
                         </option>
-                        <option value="semilux" ${roomRequestValues.roomType == 'semilux' ? 'selected' : ''}>
+                        <option value="semilux" ${requestValues.roomTypeRequest == 'semilux' ? 'selected' : ''}>
                             <fmt:message key="add-room-request.label.room-type.semilux" bundle="${ i18n }"/>
                         </option>
-                        <option value="lux" ${roomRequestValues.roomType == 'lux' ? 'selected' : ''}>
+                        <option value="lux" ${requestValues.roomTypeRequest == 'lux' ? 'selected' : ''}>
                             <fmt:message key="add-room-request.label.room-type.lux" bundle="${ i18n }"/>
                         </option>
-                        <option value="president" ${roomRequestValues.roomType == 'president' ? 'selected' : ''}>
+                        <option value="president" ${requestValues.roomTypeRequest == 'president' ? 'selected' : ''}>
                             <fmt:message key="add-room-request.label.room-type.president" bundle="${ i18n }"/>
                         </option>
                     </select>
+                    <label class="wrong-values">${wrongValues.roomTypeRequest}</label>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-4">
                     <fmt:message key="add-room-request.button.submit" var="buttonValue" bundle="${ i18n }"/>
                     <input type="submit" class="btn btn-success" name="submit" value="${buttonValue}">
-
-                    <%--<button type="submit" class="btn btn-success">Submit</button>--%>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
-
-<%--<form method="post" action="/controller">--%>
-    <%--<input type="hidden" name="command" value="add_room_request">--%>
-    <%--<label for="check-in-request"><fmt:message key="add-room-request.label.check-in"/>:</label>--%>
-    <%--<input type="date" id="check-in-request" name="check-in-request" required>--%>
-    <%--<br>--%>
-    <%--<label for="check-out-request"><fmt:message key="add-room-request.label.check-out"/>:</label>--%>
-    <%--<input type="date" id="check-out-request" name="check-out-request" required>--%>
-    <%--<br>--%>
-    <%--<label for="room-size"><fmt:message key="add-room-request.label.room-size" bundle="${ i18n }"/>:</label>--%>
-    <%--<select id="room-size" name="room-size" required>--%>
-        <%--<option value=""></option>--%>
-        <%--<option value="1" ${roomRequestValues.roomSize == '1' ? 'selected' : ''}>1 person</option>--%>
-        <%--<option value="2" ${roomRequestValues.roomSize == '2' ? 'selected' : ''}>2 persons</option>--%>
-    <%--</select>--%>
-    <%--<br>--%>
-    <%--<label for="room-type"><fmt:message key="add-room-request.label.room-type" bundle="${ i18n }"/>:</label>--%>
-    <%--<select id="room-type" name="room-type" required>--%>
-        <%--<option value=""></option>--%>
-        <%--<option value="standard" ${roomRequestValues.roomType == 'standard' ? 'selected' : ''}>standart</option>--%>
-        <%--<option value="semilux" ${roomRequestValues.roomType == 'semilux' ? 'selected' : ''}>semilux</option>--%>
-        <%--<option value="lux" ${roomRequestValues.roomType == 'lux' ? 'selected' : ''}>lux</option>--%>
-        <%--<option value="president" ${roomRequestValues.roomType == 'president' ? 'selected' : ''}>president</option>--%>
-    <%--</select>--%>
-    <%--<br>--%>
-    <%--<fmt:message key="add-room-request.button.submit" var="buttonValue" bundle="${ i18n }"/>--%>
-    <%--<input type="submit" name="submit" value="${buttonValue}">--%>
-<%--</form>--%>
 </body>
 </html>

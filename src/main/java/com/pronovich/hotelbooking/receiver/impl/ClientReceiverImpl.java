@@ -8,6 +8,7 @@ import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.ClientReceiver;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,31 @@ public class ClientReceiverImpl implements ClientReceiver {
         User user = (User) content.getSessionAttributes().get("user");
 
         Map<String, String> wrongRequestValues = new HashMap<>();
-        //TODO add validation and localization for wrong messages
+
+        if (checkInRequest.isEmpty()) {
+            wrongRequestValues.put("checkInRequest", "Enter check-in date");
+        }
+        if (checkOutRequest.isEmpty()) {
+            wrongRequestValues.put("checkOutRequest", "Enter check-out date");
+        }
+        if ( !checkInRequest.isEmpty() && !checkOutRequest.isEmpty() ) {
+            LocalDate checkInRequestDate = LocalDate.parse(checkInRequest);
+            LocalDate checkOutRequestDate = LocalDate.parse(checkOutRequest);
+            if ( !checkInRequestDate.isBefore(checkOutRequestDate)) {
+                wrongRequestValues.put("checkOutRequest", "Check-out date has to be after check-in date");
+            }
+        }
+        if (roomSizeRequest.isEmpty()) {
+            wrongRequestValues.put("roomSizeRequest", "Choose quantity of guests");
+        }
+        if (roomTypeRequest.isEmpty()) {
+            wrongRequestValues.put("roomTypeRequest", "Choose type of room");
+        }
+        if (user == null) {
+            wrongRequestValues.put("user", "Sign in or Sign up");
+        }
+
+        //TODO add localization for wrong messages
 
         if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);

@@ -32,6 +32,11 @@ public class RoomDaoImpl extends AbstractBaseDao implements RoomDao {
             "FROM room LEFT JOIN room_type ON room.fk_room_type_id = room_type.room_type_id " +
             "WHERE room_id = ?";
 
+    private static final java.lang.String FIND_ALL_ROOMS_WITH_UNIQUE_TYPE_AND_SIZE_SQL = "SELECT  " +
+            "room_id, number, type_name, size, price " +
+            "FROM room LEFT JOIN room_type ON room.fk_room_type_id = room_type.room_type_id " +
+            "GROUP BY type_name, size ORDER BY price";
+
     @Override
     public Room findRoomById(Integer roomId) throws DaoException {
         ProxyConnection connection = null;
@@ -98,6 +103,28 @@ public class RoomDaoImpl extends AbstractBaseDao implements RoomDao {
                 allRoomsByRequest.add(room);
             }
             return allRoomsByRequest;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement, resultSet);
+        }
+    }
+
+    @Override
+    public List<Room> findRoomsWithUniqueType() throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Room> allUniqueTypeRooms = new ArrayList<>();
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(FIND_ALL_ROOMS_WITH_UNIQUE_TYPE_AND_SIZE_SQL);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Room room = ResultSetConverter.createRoomEntity(resultSet);
+                allUniqueTypeRooms.add(room);
+            }
+            return allUniqueTypeRooms;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {

@@ -13,4 +13,6 @@ public interface RoomDao {
     Integer findRoomTypeIdByName(String roomType) throws DaoException;
 
     List<Room> findAllRoomsAccordingRequest(RoomRequest roomRequest) throws DaoException;
+
+    List<Room> findRoomsWithUniqueType()throws DaoException;
 }

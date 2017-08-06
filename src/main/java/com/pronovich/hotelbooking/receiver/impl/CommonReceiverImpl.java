@@ -1,12 +1,15 @@
 package com.pronovich.hotelbooking.receiver.impl;
 
 import com.pronovich.hotelbooking.content.RequestContent;
+import com.pronovich.hotelbooking.dao.RoomDao;
 import com.pronovich.hotelbooking.dao.RoomOrderDao;
 import com.pronovich.hotelbooking.dao.RoomRequestDao;
 import com.pronovich.hotelbooking.dao.UserDao;
+import com.pronovich.hotelbooking.dao.impl.RoomDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomOrderDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.UserDaoImpl;
+import com.pronovich.hotelbooking.entity.Room;
 import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
@@ -101,6 +104,7 @@ public class CommonReceiverImpl implements CommonReceiver {
         return emailExists;
     }
 
+    //TODO add User in sessionn and return void???
     @Override
     public User signIn(RequestContent content) {
         String email = content.getRequestParameters().get("email");
@@ -148,5 +152,16 @@ public class CommonReceiverImpl implements CommonReceiver {
         //TODO ???? remove method??
         System.out.println("SignOut dao");
         return content;
+    }
+
+    @Override
+    public void findRoomsDescription(RequestContent content) {
+        RoomDao roomDao = new RoomDaoImpl();
+        try {
+            List<Room> roomList = roomDao.findRoomsWithUniqueType();
+            content.addRequestAttributes("roomList" , roomList);
+        } catch (DaoException e) {
+            //TODO add log??
+        }
     }
 }
