@@ -3,12 +3,16 @@ package com.pronovich.hotelbooking.dao.impl;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
 import com.pronovich.hotelbooking.exception.DaoException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 abstract class AbstractBaseDao {
+
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
     void closeDbResources(ProxyConnection connection, Statement statement) throws DaoException {
         closeStatement(statement);
@@ -26,7 +30,7 @@ abstract class AbstractBaseDao {
             try {
                 resultSet.close();
             } catch (SQLException e) {
-                System.out.println("Error: ResultSet has not been closed!");
+                LOGGER.error("Error: ResultSet has not been closed!");
             }
         }
     }

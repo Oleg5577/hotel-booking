@@ -80,7 +80,6 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
     @Override
     public User findUserByEmailAndPassword(String email, String password) throws DaoException {
-        //TODO ProxyConnection or Connection
         ProxyConnection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;

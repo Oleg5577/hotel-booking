@@ -8,7 +8,7 @@ public class RoomRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    //TODO Date or String
+
     private LocalDate checkInDate;
 
     private LocalDate checkOutDate;

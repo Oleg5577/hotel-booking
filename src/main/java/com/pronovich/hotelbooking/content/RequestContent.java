@@ -12,7 +12,6 @@ public class RequestContent {
 
 //    private HashMap<String, String[]> requestParameters;
 
-
     public RequestContent() {
     }
 

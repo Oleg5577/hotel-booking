@@ -15,7 +15,17 @@
 </head>
 <body>
 <jsp:include page="/jsp/section/header.jsp"/>
-Page not found :( 404
+<div class="container">
+    <div class="jumbotron">
+        <h1><i class="fa fa-frown-o red"></i>404 Page Not Found</h1>
+        <p class="lead">We couldn't find what you're looking for on <em><span id="display-domain"></span></em>.</p>
+        <p>
+            <a href="<fmt:message key="path.page.home" bundle="${ path }"/>" class="btn btn-default btn-lg">
+                <span class="green">To Home page</span>
+            </a>
+        </p>
+    </div>
+</div>
 </body>
 </html>
 

@@ -18,11 +18,11 @@ public class AddRoomRequestCommand implements Command {
     private static final String CHECK_OUT_REQUEST_PARAM = "checkOutRequest";
     private static final String ROOM_SIZE_PARAM = "roomSizeRequest";
     private static final String ROOM_TYPE_PARAM = "roomTypeRequest";
+    private static final String USER_PARAM = "user";
+    private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
 
     private static final String ADD_ROOM_REQUEST_PAGE = "jsp/client/add-room-request.jsp";
     private static final String PERSONAL_ACCOUNT_PAGE = "jsp/client/personal-account.jsp";
-
-    private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
 
     private Receiver receiver;
 
@@ -41,17 +41,17 @@ public class AddRoomRequestCommand implements Command {
         String checkOutRequest = request.getParameter(CHECK_OUT_REQUEST_PARAM);
         String roomSizeRequest = request.getParameter(ROOM_SIZE_PARAM);
         String roomTypeRequest = request.getParameter(ROOM_TYPE_PARAM);
-        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute(USER_PARAM);
 
         HashMap<String, String> requestValues = new HashMap<>();
 
-        requestValues.put("checkInRequest", checkInRequest);
-        requestValues.put("checkOutRequest", checkOutRequest);
-        requestValues.put("roomSizeRequest", roomSizeRequest);
-        requestValues.put("roomTypeRequest", roomTypeRequest);
+        requestValues.put(CHECK_IN_REQUEST_PARAM, checkInRequest);
+        requestValues.put(CHECK_OUT_REQUEST_PARAM, checkOutRequest);
+        requestValues.put(ROOM_SIZE_PARAM, roomSizeRequest);
+        requestValues.put(ROOM_TYPE_PARAM, roomTypeRequest);
 
         RequestContent content = new RequestContent(requestValues);
-        content.addSessionAttribute("user", user);
+        content.addSessionAttribute(USER_PARAM, user);
 
         receiver.action(CommandType.ADD_ROOM_REQUEST, content);
 
@@ -63,8 +63,6 @@ public class AddRoomRequestCommand implements Command {
             request.setAttribute("requestValues", content.getRequestParameters());
             requestResult = new RequestResult(ADD_ROOM_REQUEST_PAGE, NavigationType.FORWARD);
         } else {
-
-//            List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getSessionAttributes().get("listRoomRequests");
             request.getSession().setAttribute(LIST_ROOM_REQUESTS, content.getSessionAttributes().get(LIST_ROOM_REQUESTS));
             requestResult = new RequestResult(PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
         }

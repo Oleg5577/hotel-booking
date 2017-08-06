@@ -17,12 +17,16 @@ import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.CommonReceiver;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CommonReceiverImpl implements CommonReceiver {
+
+    private static final Logger LOGGER = LogManager.getLogger(CommonReceiverImpl.class);
 
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
@@ -88,7 +92,7 @@ public class CommonReceiverImpl implements CommonReceiver {
                 UserDao userDao = new UserDaoImpl();
                 userDao.addUser(content);
             } catch (DaoException e) {
-                //TODO add log??
+                LOGGER.error("Sign up error", e);
             }
         }
     }
@@ -99,12 +103,12 @@ public class CommonReceiverImpl implements CommonReceiver {
         try {
             emailExists = userDao.findUserByEmail(email) != null;
         } catch (DaoException e) {
-            //TODO add log??
+            LOGGER.error("Check if email exists error", e);
         }
         return emailExists;
     }
 
-    //TODO add User in sessionn and return void???
+    //TODO add User in sessionn attributes and return void???
     @Override
     public User signIn(RequestContent content) {
         String email = content.getRequestParameters().get("email");
@@ -141,17 +145,10 @@ public class CommonReceiverImpl implements CommonReceiver {
                     content.addSessionAttribute("listRoomRequests", roomRequests);
                 }
             } catch (DaoException e) {
-                //TODO add log??
+                LOGGER.error("Sign in error", e);
             }
         }
         return user;
-    }
-
-    @Override
-    public RequestContent signOut(RequestContent content) {
-        //TODO ???? remove method??
-        System.out.println("SignOut dao");
-        return content;
     }
 
     @Override
@@ -161,7 +158,7 @@ public class CommonReceiverImpl implements CommonReceiver {
             List<Room> roomList = roomDao.findRoomsWithUniqueType();
             content.addRequestAttributes("roomList" , roomList);
         } catch (DaoException e) {
-            //TODO add log??
+            LOGGER.error("Find rooms descriptions error", e);
         }
     }
 }

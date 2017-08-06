@@ -1,5 +1,8 @@
 package com.pronovich.hotelbooking.dao.connectionpool;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,8 +11,9 @@ import java.util.ResourceBundle;
 
 class ConnectionUtils {
 
-    private static final String BUNDLE = "property/db";
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionUtils.class);
 
+    private static final String BUNDLE = "property/db";
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE);
 
     private static String url = resourceBundle.getString("db.url");
@@ -23,7 +27,7 @@ class ConnectionUtils {
         try {
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            //TODO add log???
+            LOGGER.error("Creation connection error");
         }
         return connection;
     }

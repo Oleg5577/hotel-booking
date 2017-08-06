@@ -32,7 +32,7 @@ public class SecurityFilter implements Filter {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
 
-        //TODO add pattern /controller except signin and signout
+        //TODO add pattern /controller except signin and signout (find_info_for_admin_account)
         if (URI.startsWith("/jsp/client") && user == null || user.getRole() != Role.CLIENT) {
             httpServletResponse.sendRedirect("/jsp/signin.jsp");
             return;

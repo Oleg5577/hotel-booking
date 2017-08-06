@@ -4,6 +4,7 @@ import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.dao.RoomOrderDao;
 import com.pronovich.hotelbooking.dao.RoomDao;
 import com.pronovich.hotelbooking.dao.RoomRequestDao;
+import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.impl.RoomOrderDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
@@ -12,10 +13,14 @@ import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.AdminReceiver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class AdminReceiverImpl implements AdminReceiver {
+
+    private static final Logger LOGGER = LogManager.getLogger(AdminReceiverImpl.class);
 
     public void findAllRoomsAccordingRequest(RequestContent content) {
         String requestId = content.getRequestParameters().get("requestId");
@@ -26,7 +31,7 @@ public class AdminReceiverImpl implements AdminReceiver {
             List<Room> allRoomsAccordingRequest = roomDao.findAllRoomsAccordingRequest(roomRequest);
             content.addRequestAttributes("allRoomsAccordingRequest", allRoomsAccordingRequest);
         } catch (DaoException e) {
-            //TODO add log??
+            LOGGER.error("Find room according request error", e);
         }
     }
 
@@ -42,7 +47,7 @@ public class AdminReceiverImpl implements AdminReceiver {
             content.addRequestAttributes("listRoomOrders", roomOrders);
             content.addRequestAttributes("listRoomRequests", roomRequests);
         } catch (DaoException e) {
-            //TODO add log??
+            LOGGER.error("Find info for admin account error", e);
         }
     }
 
@@ -65,7 +70,7 @@ public class AdminReceiverImpl implements AdminReceiver {
             content.addRequestAttributes("listRoomOrders", roomOrders);
             content.addRequestAttributes("listRoomRequests", roomRequests);
         } catch (DaoException e) {
-            //TODO add log??
+            LOGGER.error("Create order error", e);
         }
     }
 }

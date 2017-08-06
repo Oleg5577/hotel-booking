@@ -24,7 +24,6 @@ public class CommandController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.info("logger in do post");
         handleRequest(request, response);
     }
 
@@ -34,8 +33,6 @@ public class CommandController extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.info("logger in handleRequest");
-
         Command command = new CommandFactory().initCommand(request);
         RequestResult requestResult = command.execute(request);
         if (isSignOutCommand(command)) {
@@ -45,8 +42,8 @@ public class CommandController extends HttpServlet {
     }
 
     //TODO check result
-    private boolean isSignOutCommand(Command executionCommand) {
-        return executionCommand instanceof SignOutCommand;
+    private boolean isSignOutCommand(Command command) {
+        return command instanceof SignOutCommand;
     }
 
     private void navigateToPage(RequestResult requestResult, HttpServletRequest request, HttpServletResponse response)
@@ -64,10 +61,10 @@ public class CommandController extends HttpServlet {
         }
     }
 
+    //TODO add closing all connections
     @Override
     public void destroy() {
         ConnectionPool.getPool().closeAllConnections();
         super.destroy();
-
     }
 }

@@ -9,7 +9,5 @@ public interface CommonReceiver extends Receiver {
 
     User signIn(RequestContent content);
 
-    RequestContent signOut(RequestContent content);
-
     void findRoomsDescription(RequestContent content);
 }

@@ -52,8 +52,8 @@
                 </td>
                 <td>
                     <c:if test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
-                        <form action="#<%-- TODO add link--%>">
-                            <input type="hidden" name="command" value="cancel_client_request">
+                        <form action="/controller" method="post">
+                            <input type="hidden" name="command" value="deny_request_by_admin">
                             <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
                             <input type="submit" name="submit" value="${buttonValue}" class="btn btn-md btn-danger">
                         </form>
@@ -64,7 +64,6 @@
         </tbody>
     </table>
 </div>
-
 <div class="container">
     <h4><fmt:message key="client.account.orders" bundle="${ i18n }"/></h4>
     <table class="table">
@@ -93,12 +92,11 @@
                 <td>${roomOrder.room}</td>
                 <td>${roomOrder.orderStatus}</td>
 <%--TODO add link to full info about the user--%>
-<%--TODO add l18n--%>
                 <td>${roomOrder.user}</td>
                 <td>
                     <c:if test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
-                        <form action="#<%-- TODO add link--%>">
-                            <input type="hidden" name="command" value="cancel_client_request">
+                        <form action="/controller" method="post">
+                            <input type="hidden" name="command" value="cancel_order_by_admin">
                             <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
                             <input type="submit" name="submit" value="${buttonValue}" class="btn btn-md btn-danger">
                         </form>

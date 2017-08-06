@@ -7,9 +7,8 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class SignOutCommand implements Command {
+public class DefaultCommand implements Command {
 
-    //TODO path from properties???
     private static final String HOME_PAGE = "/jsp/home.jsp";
 
     @Override

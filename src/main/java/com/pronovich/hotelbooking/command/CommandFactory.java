@@ -1,20 +1,26 @@
 package com.pronovich.hotelbooking.command;
 
+import com.pronovich.hotelbooking.command.impl.common.DefaultCommand;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class CommandFactory {
+
+    private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 
     private final static String COMMAND_PARAMETER = "command";
 
     public Command initCommand(HttpServletRequest request) {
         String commandName = request.getParameter(COMMAND_PARAMETER);
-        Command command = null;
+        Command command;
         try {
             CommandType commandType = CommandType.valueOf(commandName.toUpperCase());
             command = commandType.getCommand();
         } catch (IllegalArgumentException e) {
-            //TODO log??
-            // TODO command = Default command or redirect to error page???
+            LOGGER.error("The command [" + commandName + "] is not exists");
+            command = new DefaultCommand();
         }
         return command;
     }

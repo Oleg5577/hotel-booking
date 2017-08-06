@@ -31,10 +31,11 @@ public enum CommandType {
         }
     },
 
-    SIGN_OUT( new SignOutCommand(new CommonReceiverImpl()) ) {
+    SIGN_OUT( new SignOutCommand() ) {
         @Override
         public void doReceiver(RequestContent content) {
-//            ((ClientReceiverImpl) getCommand().getReceiver()).signOut(content);
+            //TODO throw new UnsupportedOperationException ????
+            throw new UnsupportedOperationException();
         }
     },
 

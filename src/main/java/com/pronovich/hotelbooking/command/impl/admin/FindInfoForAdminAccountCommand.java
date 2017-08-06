@@ -5,12 +5,9 @@ import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
-import com.pronovich.hotelbooking.entity.RoomOrder;
-import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class FindInfoForAdminAccountCommand implements Command {
 

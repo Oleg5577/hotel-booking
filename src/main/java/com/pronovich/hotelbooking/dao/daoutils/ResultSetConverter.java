@@ -43,7 +43,6 @@ public class ResultSetConverter {
         RoomOrder roomOrder = new RoomOrder();
         try {
             Integer orderId = resultSet.getInt("order_id");
-            //TODO check if work java.util.Date or LocalDate
             LocalDate checkInDate = resultSet.getDate("check_in").toLocalDate();
             LocalDate checkOutDate = resultSet.getDate("check_out").toLocalDate();
             BigDecimal amount = resultSet.getBigDecimal("amount");

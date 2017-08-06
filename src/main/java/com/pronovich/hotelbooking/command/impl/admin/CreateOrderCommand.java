@@ -5,13 +5,10 @@ import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
-import com.pronovich.hotelbooking.entity.RoomOrder;
-import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.List;
 
 public class CreateOrderCommand implements Command {
 
@@ -46,9 +43,6 @@ public class CreateOrderCommand implements Command {
         RequestContent content = new RequestContent(requestValues);
 
         receiver.action(CommandType.CREATE_ORDER, content);
-
-//        List<RoomOrder> listRoomOrders = (List<RoomOrder>) content.getRequestAttributes().get(LIST_ROOM_ORDERS);
-//        List<RoomRequest> listRoomRequest = (List<RoomRequest>) content.getRequestAttributes().get(LIST_ROOM_REQUESTS);
 
         request.setAttribute(LIST_ROOM_ORDERS, content.getRequestAttributes().get(LIST_ROOM_ORDERS));
         request.setAttribute(LIST_ROOM_REQUESTS, content.getRequestAttributes().get(LIST_ROOM_REQUESTS));

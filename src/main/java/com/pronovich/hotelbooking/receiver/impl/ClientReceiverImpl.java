@@ -7,6 +7,8 @@ import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.ClientReceiver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ClientReceiverImpl implements ClientReceiver {
+
+    private static final Logger LOGGER = LogManager.getLogger(ClientReceiverImpl.class);
 
     @Override
     public void addRoomRequest(RequestContent content) {
@@ -34,7 +38,9 @@ public class ClientReceiverImpl implements ClientReceiver {
         if ( !checkInRequest.isEmpty() && !checkOutRequest.isEmpty() ) {
             LocalDate checkInRequestDate = LocalDate.parse(checkInRequest);
             LocalDate checkOutRequestDate = LocalDate.parse(checkOutRequest);
-            if ( !checkInRequestDate.isBefore(checkOutRequestDate)) {
+            if (checkInRequestDate.isBefore(LocalDate.now())) {
+                wrongRequestValues.put("checkOutRequest", "Check-in can not be at later then today");
+            } else if ( !checkInRequestDate.isBefore(checkOutRequestDate)) {
                 wrongRequestValues.put("checkOutRequest", "Check-out date has to be after check-in date");
             }
         }
@@ -60,7 +66,7 @@ public class ClientReceiverImpl implements ClientReceiver {
                 List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
                 content.addSessionAttribute("listRoomRequests", roomRequests);
             } catch (DaoException e) {
-                //TODO add log??
+                LOGGER.error("Add room request error" , e);
             }
         }
     }

@@ -44,7 +44,12 @@
                     <td class="text-center">${roomRequest.requestStatus}</td>
                     <td class="text-center">
                         <c:if test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
-                            /*ОТМЕНИТЬ*/
+                            <form action="/controller" method="post">
+                                <input type="hidden" name="command" value="cancel_request_by_client">
+                                <input hidden name="roomRequestId" value="${roomRequest.id}">
+                                <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
+                                <input type="submit" name="submit" value="${buttonValue}" class="btn btn-md btn-danger">
+                            </form>
                         </c:if>
                     </td>
                 </tr>
@@ -52,7 +57,6 @@
             </tbody>
         </table>
     </div>
-
     <div class="container">
         <h4 class="text-center"><fmt:message key="client.account.orders" bundle="${ i18n }"/></h4>
         <table class="table">
@@ -82,8 +86,9 @@
                     <td class="text-center">${roomOrder.orderStatus}</td>
                     <td class="text-center">
                         <c:if test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
-                            <form action="#<%-- TODO add link--%>">
-                                <input type="hidden" name="command" value="deny_client_request">
+                            <form action="/controller" method="post">
+                                <input type="hidden" name="command" value="cancel_order_by_client">
+                                <input hidden name="orderId" value="${roomOrder.id}">
                                 <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
                                 <input type="submit" name="submit" value="${buttonValue}" class="btn btn-md btn-danger">
                             </form>
