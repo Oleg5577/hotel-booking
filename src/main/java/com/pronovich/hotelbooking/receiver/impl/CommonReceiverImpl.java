@@ -20,6 +20,10 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +57,7 @@ public class CommonReceiverImpl implements CommonReceiver {
         EmailValidator emailValidator = EmailValidator.getInstance();
         if (StringUtils.isEmpty(email)) {
             wrongRequestValues.put(EMAIL_PARAM, "Please enter a email");
-        } else if ( !emailValidator.isValid(email) ) {
+        } else if (!emailValidator.isValid(email)) {
             wrongRequestValues.put(EMAIL_PARAM, "Email is not valid");
         } else if (emailExists(email)) {
             wrongRequestValues.put(EMAIL_PARAM, "Email already exists");
@@ -61,13 +65,13 @@ public class CommonReceiverImpl implements CommonReceiver {
 
         if (StringUtils.isEmpty(password)) {
             wrongRequestValues.put(PASSWORD_PARAM, "Please, enter a Password");
-        } else if ( password.length() < MIN_PASSWORD_SIZE ) {
+        } else if (password.length() < MIN_PASSWORD_SIZE) {
             wrongRequestValues.put(PASSWORD_PARAM, "Enter " + MIN_PASSWORD_SIZE + " or more characters");
         }
 
         if (StringUtils.isEmpty(repeatPassword)) {
             wrongRequestValues.put(REPEAT_PASSWORD_PARAM, "Please, repeat the Password");
-        } else if ( !password.equals(repeatPassword) ) {
+        } else if (!password.equals(repeatPassword)) {
             wrongRequestValues.put(REPEAT_PASSWORD_PARAM, "Passwords don't match");
         }
 
@@ -84,8 +88,18 @@ public class CommonReceiverImpl implements CommonReceiver {
         }
 
         //TODO Encrypt password!!
+        byte[] salt = new byte[0];
+        try {
+            salt = getSalt();
+        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+            LOGGER.error("No such algorithm");
+        }
 
-        if ( !wrongRequestValues.isEmpty() ) {
+        String securePassword = getSecurePassword(password, salt);
+        String regeneratedPassowrdToVerify = getSecurePassword(password, salt);
+
+
+        if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
             try {
@@ -95,6 +109,30 @@ public class CommonReceiverImpl implements CommonReceiver {
                 LOGGER.error("Sign up error", e);
             }
         }
+    }
+
+    private static String getSecurePassword(String passwordToHash, byte[] salt) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(salt);
+            byte[] bytes = md.digest(passwordToHash.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte aByte : bytes) {
+                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            LOGGER.error("No such algorithm");
+        }
+        return generatedPassword;
+    }
+
+    private static byte[] getSalt() throws NoSuchAlgorithmException, NoSuchProviderException {
+        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+        byte[] salt = new byte[16];
+        sr.nextBytes(salt);
+        return salt;
     }
 
     private boolean emailExists(String email) {
@@ -135,11 +173,11 @@ public class CommonReceiverImpl implements CommonReceiver {
             try {
                 user = userDao.findUserByEmailAndPassword(email, password);
                 if (user == null) {
-                    wrongRequestValues.put("emailOrPassword" , "Password or Email are incorrect");
+                    wrongRequestValues.put("emailOrPassword", "Password or Email are incorrect");
                     content.addWrongValues(wrongRequestValues);
                 } else {
-                    List<RoomOrder>  roomOrders = orderDao.findAllOrdersByUser(user);
-                    List<RoomRequest>  roomRequests = roomRequestDao.findAllRequestsByUser(user);
+                    List<RoomOrder> roomOrders = orderDao.findAllOrdersByUser(user);
+                    List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
 
                     content.addSessionAttribute("listRoomOrders", roomOrders);
                     content.addSessionAttribute("listRoomRequests", roomRequests);
@@ -156,9 +194,11 @@ public class CommonReceiverImpl implements CommonReceiver {
         RoomDao roomDao = new RoomDaoImpl();
         try {
             List<Room> roomList = roomDao.findRoomsWithUniqueType();
-            content.addRequestAttributes("roomList" , roomList);
+            content.addRequestAttributes("roomList", roomList);
         } catch (DaoException e) {
             LOGGER.error("Find rooms descriptions error", e);
         }
     }
+
+
 }
