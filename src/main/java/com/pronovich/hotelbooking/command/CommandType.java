@@ -4,10 +4,7 @@ import com.pronovich.hotelbooking.command.impl.admin.CreateOrderCommand;
 import com.pronovich.hotelbooking.command.impl.admin.FindInfoForAdminAccountCommand;
 import com.pronovich.hotelbooking.command.impl.admin.FindRoomCommand;
 import com.pronovich.hotelbooking.command.impl.client.AddRoomRequestCommand;
-import com.pronovich.hotelbooking.command.impl.common.FindRoomsDescriptionCommand;
-import com.pronovich.hotelbooking.command.impl.common.SignInCommand;
-import com.pronovich.hotelbooking.command.impl.common.SignOutCommand;
-import com.pronovich.hotelbooking.command.impl.common.SignUpCommand;
+import com.pronovich.hotelbooking.command.impl.common.*;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.impl.AdminReceiverImpl;
@@ -71,6 +68,14 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) {
             (  (CommonReceiverImpl) getCommand().getReceiver()).findRoomsDescription(content);
+        }
+    },
+
+    CHANGE_LOCALE(new ChangeLocaleCommand()) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            //TODO throw new UnsupportedOperationException ????
+            throw new UnsupportedOperationException();
         }
     }
 

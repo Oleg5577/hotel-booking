@@ -8,7 +8,7 @@
 <fmt:setBundle basename="property.bundler" var="i18n"/>
 <fmt:setBundle basename="property.page" var="path"/>
 <jsp:useBean id="user" scope="session" class="com.pronovich.hotelbooking.entity.User"/>
-<html>
+<html lang="${language}">
 <head>
     <title>Title</title>
     <link href="../../css/bootstrap.css" rel="stylesheet">
@@ -16,6 +16,7 @@
     <link href="../../css/style.css" rel="stylesheet">
     <script src="../../js/jquery-1.12.4.min.js"></script>
     <script src="../../js/bootstrap.js"></script>
+    <script src="../../js/script.js"></script>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-static-top">
@@ -89,14 +90,20 @@
                     </form>
                 </c:if>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form class="navbar-form" action="/controller" method="get" id="language" name="language" onchange="submit()">
+                    <input type="hidden" name="command" value="change_locale">
+                    <div>
+                        <select class="form-control" name="language">
+                            <option value="ru_RU" ${language == 'ru' ? 'selected' : ''}>RU</option>
+                            <option value="en" ${language == 'en' ? 'selected' : ''}>EN</option>
+                        </select>
+                    </div>
+                </form>
+            </ul>
         </div>
     </div>
 </div>
-<form>
-    <select id="language" name="language" onchange="submit()">
-        <option value="en_US" ${language == "en_US" ? "selected" : ""}>English</option>
-        <option value="ru_RU" ${language == "ru_RU" ? "selected" : ""}>Русский</option>
-    </select>
 </form>
 <div class="modal fade" id="modal-1">
     <div class="modal-dialog modal-md">
