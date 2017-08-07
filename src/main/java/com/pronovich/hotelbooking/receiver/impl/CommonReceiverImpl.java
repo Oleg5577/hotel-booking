@@ -146,6 +146,7 @@ public class CommonReceiverImpl implements CommonReceiver {
         return emailExists;
     }
 
+
     //TODO add User in sessionn attributes and return void???
     @Override
     public User signIn(RequestContent content) {
