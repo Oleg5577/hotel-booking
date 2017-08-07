@@ -16,7 +16,6 @@
     <link href="../../css/style.css" rel="stylesheet">
     <script src="../../js/jquery-1.12.4.min.js"></script>
     <script src="../../js/bootstrap.js"></script>
-    <script src="../../js/script.js"></script>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-static-top">
