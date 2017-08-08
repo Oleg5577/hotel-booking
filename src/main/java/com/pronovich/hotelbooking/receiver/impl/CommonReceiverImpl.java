@@ -24,9 +24,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CommonReceiverImpl implements CommonReceiver {
 
@@ -87,25 +85,21 @@ public class CommonReceiverImpl implements CommonReceiver {
             wrongRequestValues.put(PHONE_NUMBER_PARAM, "Please enter a Phone number");
         }
 
-        //TODO Encrypt password!!
-        byte[] salt = new byte[0];
-        try {
-            salt = getSalt();
-        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-            LOGGER.error("No such algorithm");
-        }
-
-        String securePassword = getSecurePassword(password, salt);
-        String regeneratedPassowrdToVerify = getSecurePassword(password, salt);
-
-
         if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
             try {
+                byte[] salt = getSalt();
+                String securePassword = getSecurePassword(password, salt);
+
+                String encodedSalt = Base64.getEncoder().encodeToString(salt);
+
+                content.addRequestAttributes("securePassword", securePassword);
+                content.addRequestAttributes("encodedSalt", encodedSalt);
+
                 UserDao userDao = new UserDaoImpl();
                 userDao.addUser(content);
-            } catch (DaoException e) {
+            } catch (DaoException | NoSuchAlgorithmException | NoSuchProviderException e) {
                 LOGGER.error("Sign up error", e);
             }
         }
@@ -147,7 +141,6 @@ public class CommonReceiverImpl implements CommonReceiver {
     }
 
 
-    //TODO add User in sessionn attributes and return void???
     @Override
     public User signIn(RequestContent content) {
         String email = content.getRequestParameters().get("email");
@@ -162,32 +155,48 @@ public class CommonReceiverImpl implements CommonReceiver {
             wrongRequestValues.put("password", "Please, enter a Password");
         }
 
-        //TODO Encrypt password!!
-
         User user = null;
         if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
             UserDao userDao = new UserDaoImpl();
-            RoomOrderDao orderDao = new RoomOrderDaoImpl();
-            RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
             try {
-                user = userDao.findUserByEmailAndPassword(email, password);
+                String encodedSalt = userDao.findPasswordSaltByEmail(email);
+                if (encodedSalt == null) {
+                    wrongRequestValues.put("emailOrPassword", "Password or Email are incorrect");
+                    content.addWrongValues(wrongRequestValues);
+                    return null;
+                }
+
+                byte[] salt = Base64.getDecoder().decode(encodedSalt);
+                String securePassword = getSecurePassword(password, salt);
+
+                user = userDao.findUserByEmailAndPassword(email, securePassword);
                 if (user == null) {
                     wrongRequestValues.put("emailOrPassword", "Password or Email are incorrect");
                     content.addWrongValues(wrongRequestValues);
-                } else {
-                    List<RoomOrder> roomOrders = orderDao.findAllOrdersByUser(user);
-                    List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
-
-                    content.addSessionAttribute("listRoomOrders", roomOrders);
-                    content.addSessionAttribute("listRoomRequests", roomRequests);
+                    return null;
                 }
+                fillContentByOrdersAndRequests(content, user);
             } catch (DaoException e) {
                 LOGGER.error("Sign in error", e);
             }
         }
         return user;
+    }
+
+    private void fillContentByOrdersAndRequests(RequestContent content, User user) {
+        RoomOrderDao orderDao = new RoomOrderDaoImpl();
+        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
+        try {
+            List<RoomOrder> roomOrders  = orderDao.findAllOrdersByUser(user);
+            List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
+
+            content.addSessionAttribute("listRoomOrders", roomOrders);
+            content.addSessionAttribute("listRoomRequests", roomRequests);
+        } catch (DaoException e) {
+            LOGGER.error("Fill content by Orders and Requests error", e);
+        }
     }
 
     @Override

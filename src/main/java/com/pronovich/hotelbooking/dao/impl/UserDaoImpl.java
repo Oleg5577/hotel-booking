@@ -16,7 +16,7 @@ import java.util.Map;
 public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
     private static final String ADD_USER_SQL = "INSERT INTO hotel_booking_db.user " +
-            "(email, password, name, surname, phone_number, fk_role_id) VALUES (?, ?, ?, ?, ?, ?)";
+            "(email, password, password_salt, name, surname, phone_number, fk_role_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     private static final String FIND_ROLE_ID_BY_NAME_SQL = "SELECT role_id FROM hotel_booking_db.role WHERE role_name=?";
 
@@ -30,22 +30,26 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
     private static final String FIND_USER_BY_EMAIL_SQL = "SELECT user_id, email, name, surname, phone_number, role_name " +
             "FROM user LEFT JOIN role ON user.fk_role_id = role.role_id WHERE user.email = ?";
 
+    private static final String FIND_SALT_BY_EMAIL_SQL = "SELECT password_salt FROM user WHERE email = ?";
+
     @Override
-    public void addUser(RequestContent requestContent) throws DaoException {
+    public void addUser(RequestContent content) throws DaoException {
         ProxyConnection connection = null;
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getPool().getConnection();
             statement = connection.prepareStatement(ADD_USER_SQL);
 
-            Map<String, String> requestParameters = requestContent.getRequestParameters();
+            Map<String, String> requestParameters = content.getRequestParameters();
+            Map<String, Object> requestAttributes = content.getRequestAttributes();
 
             statement.setString(1, requestParameters.get("email"));
-            statement.setString(2, requestParameters.get("password"));
-            statement.setString(3, requestParameters.get("name"));
-            statement.setString(4, requestParameters.get("surname"));
-            statement.setString(5, requestParameters.get("phoneNumber"));
-            statement.setInt(6, findRoleIdByName(requestParameters.get("role")));
+            statement.setString(2, (String) requestAttributes.get("securePassword"));
+            statement.setString(3, (String) requestAttributes.get("encodedSalt"));
+            statement.setString(4, requestParameters.get("name"));
+            statement.setString(5, requestParameters.get("surname"));
+            statement.setString(6, requestParameters.get("phoneNumber"));
+            statement.setInt(7, findRoleIdByName(requestParameters.get("role")));
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -71,6 +75,28 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
                 roleId = resultSet.getInt("role_id");
             }
             return roleId;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement, resultSet);
+        }
+    }
+
+    @Override
+    public String findPasswordSaltByEmail(String email) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String salt = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(FIND_SALT_BY_EMAIL_SQL);
+            statement.setString(1, email);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                salt = resultSet.getString("password_salt");
+            }
+            return salt;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {

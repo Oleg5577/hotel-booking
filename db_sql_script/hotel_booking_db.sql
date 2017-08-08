@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `hotel_booking_db`.`user` (
   `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'user id',
   `email` VARCHAR(45) NOT NULL COMMENT 'user email for authorization',
   `password` VARCHAR(40) NOT NULL COMMENT 'user password for authorization\n',
+  `password_salt` VARCHAR(45) NOT NULL COMMENT 'salt for password',
   `name` VARCHAR(45) NOT NULL COMMENT 'user name ',
   `surname` VARCHAR(45) NOT NULL COMMENT 'user surname',
   `phone_number` VARCHAR(20) NULL COMMENT 'user phone\n',
