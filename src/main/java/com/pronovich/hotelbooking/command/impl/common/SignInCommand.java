@@ -58,10 +58,11 @@ public class SignInCommand implements Command {
             return new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
         }
         HttpSession session = request.getSession();
-        User user = (User) content.getSessionAttributes().get(USER_PARAM);
-        session.setAttribute(USER_PARAM, user);
+//        User user = (User) content.getSessionAttributes().get(USER_PARAM);
+        session.setAttribute(USER_PARAM, content.getSessionAttributes().get(USER_PARAM));
         session.setAttribute(LIST_ROOM_ORDERS, content.getSessionAttributes().get(LIST_ROOM_ORDERS));
         session.setAttribute(LIST_ROOM_REQUESTS, content.getSessionAttributes().get(LIST_ROOM_REQUESTS));
+
         return new RequestResult(WELCOME_PAGE, NavigationType.FORWARD);
     }
 }

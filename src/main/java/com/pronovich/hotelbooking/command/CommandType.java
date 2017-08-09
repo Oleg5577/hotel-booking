@@ -16,8 +16,8 @@ public enum CommandType {
     SIGN_IN( new SignInCommand(new CommonReceiverImpl()) ) {
         @Override
         public void doReceiver(RequestContent content) {
-            User user = ((CommonReceiverImpl) getCommand().getReceiver()).signIn(content);
-            content.addSessionAttribute("user", user);
+            ((CommonReceiverImpl) getCommand().getReceiver()).signIn(content);
+//            content.addSessionAttribute("user", user);
         }
     },
 

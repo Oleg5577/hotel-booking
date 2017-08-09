@@ -18,7 +18,7 @@ public class ConnectionPool {
 
     private static ConnectionPool pool;
 
-    private  ArrayBlockingQueue<ProxyConnection> connectionQueue;
+    private ArrayBlockingQueue<ProxyConnection> connectionQueue;
 
     private static ReentrantLock lock = new ReentrantLock();
     private static AtomicBoolean instanceExists = new AtomicBoolean(false);
@@ -42,15 +42,15 @@ public class ConnectionPool {
         return pool;
     }
 
-    private  void initConnectionPool() {
+    private void initConnectionPool() {
         int poolSize = ConnectionUtils.definePoolSize();
         connectionQueue = new ArrayBlockingQueue<>(poolSize);
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             createConnectionsForPool(poolSize);
-            if ( !numberConnectionsIsEnough(poolSize) ) {
+            if (!numberConnectionsIsEnough(poolSize)) {
                 createConnectionsForPool(poolSize - connectionQueue.size());
-                if ( !numberConnectionsIsEnough(poolSize) ) {
+                if (!numberConnectionsIsEnough(poolSize)) {
                     LOGGER.fatal("Connection pool initialize Error. Insufficient number of connections");
                     throw new RuntimeException("Connection pool initialize Error.");
                 }
@@ -86,8 +86,19 @@ public class ConnectionPool {
         connectionQueue.offer(connection);
     }
 
-    //TODO rename to derigister driver
     public void closeAllConnections() {
+        for (int i = 0; i < connectionQueue.size(); i++) {
+            try {
+                ProxyConnection connection = connectionQueue.take();
+                connection.close();
+            } catch (SQLException | InterruptedException e) {
+                LOGGER.error("Close connection error");
+            }
+        }
+        derigisterAllDrivers();
+    }
+
+    private void derigisterAllDrivers() {
         try {
             Enumeration<Driver> drivers = DriverManager.getDrivers();
             while (drivers.hasMoreElements()) {
@@ -98,5 +109,4 @@ public class ConnectionPool {
             LOGGER.error("Deregister driver error");
         }
     }
-    //TODO add closing resources method
 }

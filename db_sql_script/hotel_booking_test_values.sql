@@ -1,16 +1,16 @@
 INSERT INTO `hotel_booking_db`.`role` (`role_name`) VALUES ('admin');
 INSERT INTO `hotel_booking_db`.`role` (`role_name`) VALUES ('client');
 
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('ivanov@gmail.com', '123456', 'Иван', 'Иванов', '+37512345', 1);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('petrov@gmail.com', '111111', 'Петр', 'Петров', '+375124445', 1);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('sidorov@gmail.com', '222222', 'Сидр', 'Сидорович', '+37662345', 2);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('jhon@gmail.com', '333333', 'Jhon', 'Brown', '+117512345', 2);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('jhony@gmail.com', '323232', 'Johnny', 'Green', '+37512345', 2);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('vasya@gmail.com', '123123', 'Vasya', 'Vasilyev', '+75537512345', 2);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('johnson@gmail.com', '1234321', 'Anna', 'Johnson', '+235512345', 2);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('williams@gmail.com', '12341234', 'Sophia', 'Williams', '+1177512345', 2);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('miller@gmail.com', '12344321', 'Ryan', 'Miller', '+37512345', 2);
-INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('zayceva@gmail.com', '7676764', 'Мария', 'Зайцева', '+37512345', 2);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`, `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('ivanov@gmail.com', '62573119d415f092afb633db8560f056', 'hUQY6PF3aStXEk8iVUjb5g==','Иван', 'Иванов', '+37512345', 1);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('petrov@gmail.com', 'ddc44339f6f62f4e8d48a19dfeee3faf', 'UQD2E/BwSuNUeufkblz0vA==', 'Петр', 'Петров', '+375124445', 1);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('sidorov@gmail.com', '62573119d415f092afb633db8560f056', 'hUQY6PF3aStXEk8iVUjb5g', 'Сидр', 'Сидорович', '+37662345', 2);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('jhon@gmail.com', '333333', 'hUQY6PF3aStXEk8iVUjb5g', 'Jhon', 'Brown', '+117512345', 2);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('jhony@gmail.com', '323232', 'hUQY6PF3aStXEk8iVUjb5g', 'Johnny', 'Green', '+37512345', 2);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('vasya@gmail.com', '123123', 'hUQY6PF3aStXEk8iVUjb5g', 'Vasya', 'Vasilyev', '+75537512345', 2);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('johnson@gmail.com', '1234321', 'hUQY6PF3aStXEk8iVUjb5g', 'Anna', 'Johnson', '+235512345', 2);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('williams@gmail.com', '12341234', 'hUQY6PF3aStXEk8iVUjb5g', 'Sophia', 'Williams', '+1177512345', 2);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('miller@gmail.com', '12344321', 'hUQY6PF3aStXEk8iVUjb5g', 'Ryan', 'Miller', '+37512345', 2);
+INSERT INTO `hotel_booking_db`.`user` (`email`, `password`, `password_salt`,  `name`, `surname`, `phone_number`, `fk_role_id`) VALUES ('zayceva@gmail.com', '7676764', 'hUQY6PF3aStXEk8iVUjb5g', 'Мария', 'Зайцева', '+37512345', 2);
 
 INSERT INTO `hotel_booking_db`.`room_type` (`type_name`) VALUES ('standard');
 INSERT INTO `hotel_booking_db`.`room_type` (`type_name`) VALUES ('semilux');

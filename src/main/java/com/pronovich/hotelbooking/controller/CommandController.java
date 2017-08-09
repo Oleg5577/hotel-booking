@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Locale;
 
 @WebServlet("/controller")
 public class CommandController extends HttpServlet {
@@ -62,7 +61,6 @@ public class CommandController extends HttpServlet {
         }
     }
 
-    //TODO add closing all connections
     @Override
     public void destroy() {
         ConnectionPool.getPool().closeAllConnections();

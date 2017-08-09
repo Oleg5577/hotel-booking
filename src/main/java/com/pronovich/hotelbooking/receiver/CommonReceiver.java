@@ -7,7 +7,7 @@ public interface CommonReceiver extends Receiver {
 
     void signUp(RequestContent content);
 
-    User signIn(RequestContent content);
+    void signIn(RequestContent content);
 
     void findRoomsDescription(RequestContent content);
 }
