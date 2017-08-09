@@ -5,7 +5,6 @@ import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
-import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +17,6 @@ public class SignInCommand implements Command {
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
     private static final String USER_PARAM = "user";
-
-    private static final String LIST_ROOM_ORDERS = "listRoomOrders";
-    private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
 
     //TODO page path from properties??;
     private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
@@ -57,12 +53,7 @@ public class SignInCommand implements Command {
             request.setAttribute("requestValues", content.getRequestParameters());
             return new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
         }
-        HttpSession session = request.getSession();
-//        User user = (User) content.getSessionAttributes().get(USER_PARAM);
-        session.setAttribute(USER_PARAM, content.getSessionAttributes().get(USER_PARAM));
-        session.setAttribute(LIST_ROOM_ORDERS, content.getSessionAttributes().get(LIST_ROOM_ORDERS));
-        session.setAttribute(LIST_ROOM_REQUESTS, content.getSessionAttributes().get(LIST_ROOM_REQUESTS));
-
-        return new RequestResult(WELCOME_PAGE, NavigationType.FORWARD);
+        request.getSession().setAttribute(USER_PARAM, content.getSessionAttributes().get(USER_PARAM));
+        return new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
     }
 }

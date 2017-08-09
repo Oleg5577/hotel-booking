@@ -16,6 +16,8 @@
     <link href="../../css/style.css" rel="stylesheet">
     <script src="../../js/jquery-1.12.4.min.js"></script>
     <script src="../../js/bootstrap.js"></script>
+    <script src="../../js/main.js"></script>
+    <%--<script src="../../js/jquery.popconfirm.js" type="text/javascript"></script>--%>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-static-top">
@@ -59,7 +61,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="<fmt:message key="path.page.client.personal-account" bundle="${ path }"/>">
+                            <%--<a href="<fmt:message key="path.page.client.personal-account" bundle="${ path }"/>">--%>
+                            <a href="/controller?command=find_info_for_client_account"/>
                                 <fmt:message key="client.account.label" bundle="${ i18n }"/>
                             </a>
                         </li>

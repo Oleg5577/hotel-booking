@@ -39,6 +39,9 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
     private static final String UPDATE_ROOM_REQUEST_STATUS_SQL = "UPDATE room_request SET request_status = ? " +
             "WHERE request_id = ?";
 
+    private static final String REMOVE_REQUEST_BY_ID_SQL = "DELETE FROM room_request " +
+            "WHERE request_id = ?";
+
     @Override
     public void addRoomRequest(RequestContent requestContent) throws DaoException {
         ProxyConnection connection = null;
@@ -147,6 +150,22 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             statement = connection.prepareStatement(UPDATE_ROOM_REQUEST_STATUS_SQL);
             statement.setString(1, newStatus.toString().toLowerCase());
             statement.setInt(2, requestId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement);
+        }
+    }
+
+    @Override
+    public void removeRequestById(Integer requestId) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(REMOVE_REQUEST_BY_ID_SQL);
+            statement.setInt(1, requestId);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);

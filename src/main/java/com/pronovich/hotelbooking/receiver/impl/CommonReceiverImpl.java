@@ -108,30 +108,6 @@ public class CommonReceiverImpl implements CommonReceiver {
         }
     }
 
-//    private static String getSecurePassword(String passwordToHash, byte[] salt) {
-//        String generatedPassword = null;
-//        try {
-//            MessageDigest md = MessageDigest.getInstance("MD5");
-//            md.update(salt);
-//            byte[] bytes = md.digest(passwordToHash.getBytes());
-//            StringBuilder sb = new StringBuilder();
-//            for (byte aByte : bytes) {
-//                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-//            }
-//            generatedPassword = sb.toString();
-//        } catch (NoSuchAlgorithmException e) {
-//            LOGGER.error("No such algorithm");
-//        }
-//        return generatedPassword;
-//    }
-
-//    private static byte[] getSalt() throws NoSuchAlgorithmException, NoSuchProviderException {
-//        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
-//        byte[] salt = new byte[16];
-//        sr.nextBytes(salt);
-//        return salt;
-//    }
-
     private boolean emailExists(String email) {
         UserDao userDao = new UserDaoImpl();
         boolean emailExists = false;
@@ -180,28 +156,27 @@ public class CommonReceiverImpl implements CommonReceiver {
                     content.addWrongValues(wrongRequestValues);
                     return;
                 }
-                fillContentByOrdersAndRequests(content, user);
+//                fillContentByOrdersAndRequests(content, user);
             } catch (DaoException e) {
                 LOGGER.error("Sign in error", e);
             }
         }
         content.addSessionAttribute("user", user);
-//        return user;
     }
 
-    private void fillContentByOrdersAndRequests(RequestContent content, User user) {
-        RoomOrderDao orderDao = new RoomOrderDaoImpl();
-        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
-        try {
-            List<RoomOrder> roomOrders  = orderDao.findAllOrdersByUser(user);
-            List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
-
-            content.addSessionAttribute("listRoomOrders", roomOrders);
-            content.addSessionAttribute("listRoomRequests", roomRequests);
-        } catch (DaoException e) {
-            LOGGER.error("Fill content by Orders and Requests error", e);
-        }
-    }
+//     void fillContentByOrdersAndRequests(RequestContent content, User user) {
+//        RoomOrderDao orderDao = new RoomOrderDaoImpl();
+//        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
+//        try {
+//            List<RoomOrder> roomOrders  = orderDao.findAllOrdersByUser(user);
+//            List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
+//
+//            content.addSessionAttribute("listRoomOrders", roomOrders);
+//            content.addSessionAttribute("listRoomRequests", roomRequests);
+//        } catch (DaoException e) {
+//            LOGGER.error("Fill content by Orders and Requests error", e);
+//        }
+//    }
 
     @Override
     public void findRoomsDescription(RequestContent content) {

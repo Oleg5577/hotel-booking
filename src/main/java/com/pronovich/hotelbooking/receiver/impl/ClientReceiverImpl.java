@@ -1,8 +1,11 @@
 package com.pronovich.hotelbooking.receiver.impl;
 
 import com.pronovich.hotelbooking.content.RequestContent;
+import com.pronovich.hotelbooking.dao.RoomOrderDao;
 import com.pronovich.hotelbooking.dao.RoomRequestDao;
+import com.pronovich.hotelbooking.dao.impl.RoomOrderDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
+import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
@@ -18,6 +21,26 @@ import java.util.Map;
 public class ClientReceiverImpl implements ClientReceiver {
 
     private static final Logger LOGGER = LogManager.getLogger(ClientReceiverImpl.class);
+
+    private static final String USER = "user";
+    private static final String ROOM_REQUEST_ID = "roomRequestId";
+
+    @Override
+    public void findInfoForClientAccount(RequestContent content) {
+        RoomOrderDao orderDao = new RoomOrderDaoImpl();
+        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
+        try {
+            User user = (User) content.getSessionAttributes().get(USER);
+
+            List<RoomOrder> roomOrders  = orderDao.findAllOrdersByUser(user);
+            List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
+
+            content.addSessionAttribute("listRoomOrders", roomOrders);
+            content.addSessionAttribute("listRoomRequests", roomRequests);
+        } catch (DaoException e) {
+            LOGGER.error("Fill content by Orders and Requests error", e);
+        }
+    }
 
     @Override
     public void addRoomRequest(RequestContent content) {
@@ -54,8 +77,6 @@ public class ClientReceiverImpl implements ClientReceiver {
             wrongRequestValues.put("user", "Sign in or Sign up");
         }
 
-        //TODO add localization for wrong messages
-
         if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
@@ -68,6 +89,25 @@ public class ClientReceiverImpl implements ClientReceiver {
             } catch (DaoException e) {
                 LOGGER.error("Add room request error" , e);
             }
+        }
+    }
+
+    public void cancelRequest(RequestContent content) {
+        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
+        CommonReceiverImpl commonReceiver = new CommonReceiverImpl();//TODO create CommonReceiverImpl in ClientReceiverImpl??
+        try {
+            String requestId = content.getRequestParameters().get(ROOM_REQUEST_ID);
+            roomRequestDao.removeRequestById(Integer.valueOf(requestId));
+
+//            User user = (User) content.getSessionAttributes().get(USER);
+//            List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
+
+            //TODO or make separate command fill content and sendRedirect to one???
+//            commonReceiver.fillContentByOrdersAndRequests(content, user);
+
+//            content.addSessionAttribute("listRoomRequests", roomRequests);
+        } catch (DaoException e) {
+            LOGGER.error("Cancel request error" , e);
         }
     }
 }
