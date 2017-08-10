@@ -4,6 +4,7 @@ import com.pronovich.hotelbooking.command.impl.admin.CreateOrderCommand;
 import com.pronovich.hotelbooking.command.impl.admin.FindInfoForAdminAccountCommand;
 import com.pronovich.hotelbooking.command.impl.admin.FindRoomCommand;
 import com.pronovich.hotelbooking.command.impl.client.AddRoomRequestCommand;
+import com.pronovich.hotelbooking.command.impl.client.CancelOrderByClientCommand;
 import com.pronovich.hotelbooking.command.impl.client.CancelRequestByClientCommand;
 import com.pronovich.hotelbooking.command.impl.client.FindInfoForClientAccountCommand;
 import com.pronovich.hotelbooking.command.impl.common.*;
@@ -90,6 +91,13 @@ public enum CommandType {
         @Override
         public void doReceiver(RequestContent content) {
             ( (ClientReceiverImpl) getCommand().getReceiver() ).cancelRequest(content);
+        }
+    },
+
+    CANCEL_ORDER_BY_CLIENT(new CancelOrderByClientCommand(new ClientReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (ClientReceiverImpl) getCommand().getReceiver() ).cancelOrder(content);
         }
     }
 

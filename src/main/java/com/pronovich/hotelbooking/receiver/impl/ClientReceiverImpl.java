@@ -24,6 +24,8 @@ public class ClientReceiverImpl implements ClientReceiver {
 
     private static final String USER = "user";
     private static final String ROOM_REQUEST_ID = "roomRequestId";
+    private static final String ROOM_ORDER_ID = "orderId";
+
 
     @Override
     public void findInfoForClientAccount(RequestContent content) {
@@ -94,20 +96,22 @@ public class ClientReceiverImpl implements ClientReceiver {
 
     public void cancelRequest(RequestContent content) {
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
-        CommonReceiverImpl commonReceiver = new CommonReceiverImpl();//TODO create CommonReceiverImpl in ClientReceiverImpl??
         try {
             String requestId = content.getRequestParameters().get(ROOM_REQUEST_ID);
             roomRequestDao.removeRequestById(Integer.valueOf(requestId));
-
-//            User user = (User) content.getSessionAttributes().get(USER);
-//            List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
-
-            //TODO or make separate command fill content and sendRedirect to one???
-//            commonReceiver.fillContentByOrdersAndRequests(content, user);
-
-//            content.addSessionAttribute("listRoomRequests", roomRequests);
         } catch (DaoException e) {
             LOGGER.error("Cancel request error" , e);
+        }
+    }
+
+    @Override
+    public void cancelOrder(RequestContent content) {
+        RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
+        try {
+            String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
+            roomOrderDao.removeOrderById(Integer.valueOf(orderId));
+        } catch (DaoException e) {
+            LOGGER.error("Cancel order error" , e);
         }
     }
 }

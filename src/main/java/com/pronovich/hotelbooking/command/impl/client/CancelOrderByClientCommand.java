@@ -11,16 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
-public class CancelRequestByClientCommand implements Command {
+public class CancelOrderByClientCommand implements Command {
 
     private static final String PERSONAL_ACCOUNT_PAGE = "/controller?command=find_info_for_client_account";
     private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
-    private static final String ROOM_REQUEST_ID = "roomRequestId";
+    private static final String ROOM_ORDER_ID = "orderId";
     private static final String USER = "user";
-
     private Receiver receiver;
 
-    public CancelRequestByClientCommand(Receiver receiver) {
+    public CancelOrderByClientCommand(Receiver receiver) {
         this.receiver = receiver;
     }
 
@@ -31,16 +30,16 @@ public class CancelRequestByClientCommand implements Command {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
-        String roomRequestId = request.getParameter(ROOM_REQUEST_ID);
+        String roomOrderId = request.getParameter(ROOM_ORDER_ID);
         HttpSession session = request.getSession();
 
         HashMap<String, String> requestValues = new HashMap<>();
-        requestValues.put(ROOM_REQUEST_ID, roomRequestId);
+        requestValues.put(ROOM_ORDER_ID, roomOrderId);
 
         RequestContent content = new RequestContent(requestValues);
         content.addSessionAttribute(USER, session.getAttribute(USER));
 
-        receiver.action(CommandType.CANCEL_REQUEST_BY_CLIENT, content);
+        receiver.action(CommandType.CANCEL_ORDER_BY_CLIENT, content);
 
         session.setAttribute(LIST_ROOM_REQUESTS, content.getSessionAttributes().get(LIST_ROOM_REQUESTS));
 

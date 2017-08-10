@@ -28,3 +28,10 @@
     padding: 14px 24px;
 }
 
+.table.rooms-table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.btn-space {
+    margin: 5px;
+}

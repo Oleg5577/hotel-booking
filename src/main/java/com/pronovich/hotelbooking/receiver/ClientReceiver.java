@@ -9,4 +9,6 @@ public interface ClientReceiver extends Receiver {
     void cancelRequest(RequestContent content);
 
     void findInfoForClientAccount(RequestContent content);
+
+    void cancelOrder(RequestContent content);
 }

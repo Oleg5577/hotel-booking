@@ -41,6 +41,8 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
     private static final java.lang.String CREATE_ORDER_SQL = "INSERT INTO `order` " +
             "(check_in, check_out, amount, fk_room_id, fk_user_id) VALUES (?, ?, ?, ?, ?)";
 
+    private static final String REMOVE_ORDER_BY_ID_SQL = "DELETE FROM `order` WHERE order_id = ?";
+
     @Override
     public List<RoomOrder> findAllOrdersByUser(User user) throws DaoException {
         ProxyConnection connection = null;
@@ -117,5 +119,21 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
      private BigDecimal calculateAmount(BigDecimal price, LocalDate checkInDate, LocalDate checkOutDate) {
         long daysNumber = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
         return price.multiply(BigDecimal.valueOf(daysNumber));
+    }
+
+    @Override
+    public void removeOrderById(Integer orderId) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(REMOVE_ORDER_BY_ID_SQL);
+            statement.setInt(1, orderId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement);
+        }
     }
 }

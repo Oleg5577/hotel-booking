@@ -15,4 +15,6 @@ public interface RoomOrderDao {
     List<RoomOrder> findAllOrdersForAllUsers() throws DaoException;
 
     void createOrder(RoomRequest roomRequest, Room room) throws DaoException;
+
+    void removeOrderById(Integer orderId) throws DaoException;
 }
