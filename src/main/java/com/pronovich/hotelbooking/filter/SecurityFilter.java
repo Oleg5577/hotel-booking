@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.pronovich.hotelbooking.entity.Role;
 import com.pronovich.hotelbooking.entity.User;
 
-@WebFilter(urlPatterns = {"/jsp/client/*", "/jsp/admin/*"})
+@WebFilter(urlPatterns = {"/jsp/client/*", "/jsp/admin/*", "/jsp/edit-user-info*"})
 public class SecurityFilter implements Filter {
 
     public void init(FilterConfig fConfig) throws ServletException {

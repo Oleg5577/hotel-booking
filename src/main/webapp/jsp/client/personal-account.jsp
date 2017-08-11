@@ -15,8 +15,47 @@
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
+    <div class="container col-md-4">
+        <%--TODO make tag for user-info--%>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="text-center">Email</td>
+                    <td class="text-center">${user.email}</td>
+                </tr>
+                <tr>
+                    <td class="text-center">Name</td>
+                    <td class="text-center">${user.name}</td>
+                </tr>
+                <tr>
+                    <td class="text-center">Surname</td>
+                    <td class="text-center">${user.surname}</td>
+                </tr>
+                <tr>
+                    <td class="text-center">Phone number</td>
+                    <td class="text-center">${user.phoneNumber}</td>
+                </tr>
+                <c:if test="${user.role == 'ADMIN'}">
+                    <tr>
+                        <td class="text-center">Role</td>
+                        <td class="text-center">${user.role}</td>
+                    </tr>
+                </c:if>
+                <tr>
+                    <td></td>
+                    <td class="text-center">
+                        <a href="<fmt:message key="path.page.user.edit-user-info" bundle="${ path }"/> " class="btn btn-info ">
+                            <fmt:message key="common.button.edit" bundle="${ i18n }"/>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="container">
         <h2 class="text-center"><fmt:message key="client.account.label" bundle="${ i18n }"/></h2>
+    </div>
+    <div class="container">
         <h4 class="text-center"><fmt:message key="client.account.requests" bundle="${ i18n }"/></h4>
         <table class="table">
             <thead>
