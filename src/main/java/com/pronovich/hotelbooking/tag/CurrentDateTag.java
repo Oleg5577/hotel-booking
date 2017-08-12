@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 @SuppressWarnings("serial")
-public class CurrentDate extends TagSupport {
+public class CurrentDateTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {

@@ -19,7 +19,7 @@
 <div class="container" >
     <div class="row col-md-8 col-md-offset-2">
         <h2 class="text-center"><fmt:message key="our-rooms.label" bundle="${ i18n }"/></h2>
-        <table class="table rooms-table" style="height: 100px;">
+        <table class="table vertical-align-table">
             <thead>
                 <tr>
                     <th class="text-left"></th>

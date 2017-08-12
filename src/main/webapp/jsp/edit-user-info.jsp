@@ -20,7 +20,7 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title"><fmt:message key="login.label.signup" bundle="${ i18n }"/></h4>
+                    <h4 class="panel-title"><fmt:message key="edit-user-info.edit-user" bundle="${ i18n }"/></h4>
                 </div>
                 <div class="panel-body">
                     <form role="form" method="post" action="/controller">
@@ -30,18 +30,10 @@
                                 <label for="email" >
                                     <fmt:message key="signup.label.email" bundle="${ i18n }"/>:
                                 </label>
-                                <input class="form-control" id="email" name="email" value="${requestValues.email}"
+                                <input class="form-control" id="email" name="email" value="${user.email}"
                                        placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>"
                                        type="email" readonly>
-                            </div>
-                            <div class="control-group">
-                                <label for="password">
-                                    <fmt:message key="signup.label.password" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
-                                </label>
-                                <input class="form-control"
-                                       placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
-                                       id="password" name="password" type="password">
-                                <label class="wrong-values">${wrongValues.password}</label>
+                                <label class="wrong-values">${wrongValues.email}</label>
                             </div>
                             <div class="control-group">
                                 <label for="name">
@@ -50,14 +42,14 @@
                                 <input class="form-control"
                                        placeholder="<fmt:message key="signup.label.name" bundle="${ i18n }"/>"
                                        type="text"
-                                       id="name" name="name" value="${requestValues.name}">
+                                       id="name" name="name" value="${user.name}">
                                 <label class="wrong-values">${wrongValues.name}</label>
                             </div>
                             <div class="control-group">
                                 <label for="surname">
                                     <fmt:message key="signup.label.surname" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
                                 </label>
-                                <input class="form-control" id="surname" name="surname" value="${requestValues.surname}"
+                                <input class="form-control" id="surname" name="surname" value="${user.surname}"
                                        placeholder="<fmt:message key="signup.label.surname" bundle="${ i18n }"/>">
                                 <label class="wrong-values">${wrongValues.surname}</label>
                             </div>
@@ -69,8 +61,17 @@
                                 <input class="form-control" name="phoneNumber"
                                        placeholder="<fmt:message key="signup.label.phone-number" bundle="${ i18n }"/>"
                                        id="phoneNumber"
-                                       value="${requestValues.phoneNumber}" type="text">
+                                       value="${user.phoneNumber}" type="text">
                                 <label class="wrong-values">${wrongValues.phoneNumber}</label>
+                            </div>
+                            <div class="control-group">
+                                <label for="password">
+                                    <fmt:message key="signup.label.password" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
+                                </label>
+                                <input class="form-control"
+                                       placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
+                                       id="password" name="password" type="password">
+                                <label class="wrong-values">${wrongValues.password}</label>
                             </div>
                             <div class="control-group">
                                 <fmt:message key="edit-user-info.button.submit" bundle="${ i18n }" var="buttonValue"/>

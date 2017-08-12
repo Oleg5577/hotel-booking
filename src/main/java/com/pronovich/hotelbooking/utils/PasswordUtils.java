@@ -12,10 +12,15 @@ public class PasswordUtils {
 
     private static final Logger LOGGER = LogManager.getLogger(PasswordUtils.class);
 
-    public static byte[] getSalt() throws NoSuchAlgorithmException, NoSuchProviderException {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+    public static byte[] getSalt() {
+        SecureRandom sr;
         byte[] salt = new byte[16];
-        sr.nextBytes(salt);
+        try {
+            sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+            sr.nextBytes(salt);
+        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+            LOGGER.error("Get salt error");
+        }
         return salt;
     }
 
@@ -31,7 +36,7 @@ public class PasswordUtils {
             }
             generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            LOGGER.error("No such algorithm");
+            LOGGER.error("Get secure password error");
         }
         return generatedPassword;
     }

@@ -15,8 +15,7 @@
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
-    <div class="container col-md-4">
-        <%--TODO make tag for user-info--%>
+    <div class="container col-md-4 col-md-offset-1">
         <table class="table">
             <tbody>
                 <tr>
@@ -44,7 +43,7 @@
                 <tr>
                     <td></td>
                     <td class="text-center">
-                        <a href="<fmt:message key="path.page.user.edit-user-info" bundle="${ path }"/> " class="btn btn-info ">
+                        <a href="<fmt:message key="path.page.user.edit-user-info" bundle="${ path }"/> " class="btn btn-xs btn-info ">
                             <fmt:message key="common.button.edit" bundle="${ i18n }"/>
                         </a>
                     </td>
@@ -55,9 +54,9 @@
     <div class="container">
         <h2 class="text-center"><fmt:message key="client.account.label" bundle="${ i18n }"/></h2>
     </div>
-    <div class="container">
+    <div class="container col-md-10 col-md-offset-1">
         <h4 class="text-center"><fmt:message key="client.account.requests" bundle="${ i18n }"/></h4>
-        <table class="table">
+        <table class="table vertical-align-table">
             <thead>
                 <tr>
                     <th class="text-center">Check-in date</th>
@@ -87,7 +86,7 @@
                                 <input type="hidden" name="command" value="cancel_request_by_client">
                                 <input hidden name="roomRequestId" value="${roomRequest.id}">
                                 <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
-                                <input type="submit" name="submit" value="${buttonValue}" class="btn btn-md btn-danger">
+                                <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-danger">
                             </form>
                         </c:if>
                     </td>
@@ -96,9 +95,9 @@
             </tbody>
         </table>
     </div>
-    <div class="container">
+    <div class="container col-md-10 col-md-offset-1">
         <h4 class="text-center"><fmt:message key="client.account.orders" bundle="${ i18n }"/></h4>
-        <table class="table">
+        <table class="table vertical-align-table">
             <thead>
                 <tr>
                     <th class="text-center">Check-in date</th>
@@ -129,7 +128,7 @@
                                 <input type="hidden" name="command" value="cancel_order_by_client">
                                 <input hidden name="orderId" value="${roomOrder.id}">
                                 <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
-                                <input type="submit" name="submit" value="${buttonValue}" class="btn btn-md btn-danger">
+                                <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-danger">
                             </form>
                         </c:if>
                     </td>

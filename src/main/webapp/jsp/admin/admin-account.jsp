@@ -15,9 +15,9 @@
 </head>
 <body>
 <jsp:include page="/jsp/section/header.jsp"/>
-<div class="container col-md-4">
+<div class="container col-md-4 col-md-offset-1">
     <%--TODO make tag for user-info--%>
-    <table class="table">
+    <table class="table vertical-align-table">
         <tbody>
         <tr>
             <td class="text-center">Email</td>
@@ -44,7 +44,7 @@
         <tr>
             <td></td>
             <td class="text-center">
-                <a href="<fmt:message key="path.page.user.edit-user-info" bundle="${ path }"/> " class="btn btn-info ">
+                <a href="<fmt:message key="path.page.user.edit-user-info" bundle="${ path }"/> " class="btn btn-xs btn-info ">
                     <fmt:message key="common.button.edit" bundle="${ i18n }"/>
                 </a>
             </td>
@@ -55,9 +55,9 @@
 <div class="container">
     <h2 class="text-center"><fmt:message key="admin.account.label" bundle="${ i18n }"/></h2>
 </div>
-<div class="container">
+<div class="container col-md-10 col-md-offset-1">
     <h4><fmt:message key="client.account.requests" bundle="${ i18n }"/></h4>
-    <table class="table">
+    <table class="table vertical-align-table">
         <thead>
             <tr>
                 <th>Check-in date</th>
@@ -86,7 +86,7 @@
                 <td>${roomRequest.user}</td>
                 <td>
                     <c:if test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
-                        <a class="btn btn-md btn-info" href="/controller?command=find_room&requestId=${roomRequest.id}">Find room</a>
+                        <a class="btn btn-xs btn-info" href="/controller?command=find_room&requestId=${roomRequest.id}">Find room</a>
                     </c:if>
                 </td>
                 <td>
@@ -94,7 +94,7 @@
                         <form action="/controller" method="post">
                             <input type="hidden" name="command" value="deny_request_by_admin">
                             <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
-                            <input type="submit" name="submit" value="${buttonValue}" class="btn btn-md btn-danger">
+                            <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-danger">
                         </form>
                     </c:if>
                 </td>
@@ -103,9 +103,9 @@
         </tbody>
     </table>
 </div>
-<div class="container">
+<div class="container col-md-10 col-md-offset-1">
     <h4><fmt:message key="client.account.orders" bundle="${ i18n }"/></h4>
-    <table class="table">
+    <table class="table vertical-align-table">
         <thead>
             <tr>
                 <th>Check-in date</th>
@@ -137,7 +137,7 @@
                         <form action="/controller" method="post">
                             <input type="hidden" name="command" value="cancel_order_by_admin">
                             <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
-                            <input type="submit" name="submit" value="${buttonValue}" class="btn btn-md btn-danger">
+                            <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-danger">
                         </form>
                     </c:if>
                 </td>

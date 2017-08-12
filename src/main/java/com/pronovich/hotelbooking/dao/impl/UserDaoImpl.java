@@ -174,4 +174,16 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
             closeDbResources(connection, statement, resultSet);
         }
     }
+
+    @Override
+    public String findPasswordByEmail(String email) throws DaoException {
+        //TODO implement method
+        return null;
+    }
+
+    @Override
+    public void updateUser(RequestContent content) throws DaoException {
+        //TODO implement method
+
+    }
 }

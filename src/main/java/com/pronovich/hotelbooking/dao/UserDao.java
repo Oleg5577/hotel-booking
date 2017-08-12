@@ -17,4 +17,8 @@ public interface UserDao {
     User findUserByEmail(String email) throws DaoException;
 
     String findPasswordSaltByEmail(String email) throws DaoException;
+
+    String findPasswordByEmail(String email) throws DaoException;
+
+    void updateUser(RequestContent content) throws DaoException;
 }

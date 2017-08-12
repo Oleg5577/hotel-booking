@@ -29,6 +29,13 @@ public enum CommandType {
         }
     },
 
+    EDIT_USER_INFO(new EditUserInfoCommand(new CommonReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (CommonReceiverImpl) getCommand().getReceiver()).editUserInfo(content);
+        }
+    },
+
     SIGN_OUT( new SignOutCommand() ) {
         @Override
         public void doReceiver(RequestContent content) {

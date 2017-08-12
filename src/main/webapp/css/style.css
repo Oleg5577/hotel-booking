@@ -28,9 +28,9 @@
     padding: 14px 24px;
 }
 
-.table.rooms-table > tbody > tr > td {
-    vertical-align: middle;
-}
+.table.vertical-align-table > tbody > tr > td {
+     vertical-align: middle;
+ }
 
 .btn-space {
     margin: 5px;
@@ -38,4 +38,13 @@
 
 .date-tag {
     margin-right: 10px;
+}
+
+.navbar-brand {
+    padding: 0;
+}
+.navbar-brand>img {
+    height: 100%;
+    padding: 2px;
+    width: auto;
 }

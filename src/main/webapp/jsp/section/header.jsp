@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="<fmt:message key="path.page.home" bundle="${ path }"/>">
-                <img alt="Brand"  src="../../img/hotel-logo.gif" height="35px">
+               <img alt="Brand"  src="../../img/hotel-logo.gif" height="35px">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="responsive-menu">

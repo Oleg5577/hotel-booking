@@ -8,7 +8,7 @@
     <uri>customtags</uri>
     <tag>
         <name>current-date</name>
-        <tag-class>com.pronovich.hotelbooking.tag.CurrentDate</tag-class>
+        <tag-class>com.pronovich.hotelbooking.tag.CurrentDateTag</tag-class>
         <body-content>empty</body-content>
     </tag>
     <tag>

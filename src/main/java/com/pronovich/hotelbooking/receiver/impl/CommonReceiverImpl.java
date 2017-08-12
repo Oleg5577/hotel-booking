@@ -35,6 +35,7 @@ public class CommonReceiverImpl implements CommonReceiver {
     private static final String NAME_PARAM = "name";
     private static final String SURNAME_PARAM = "surname";
     private static final String PHONE_NUMBER_PARAM = "phoneNumber";
+    private static final String USER_PARAM = "user";
 
     private static final int MIN_PASSWORD_SIZE = 6;
 
@@ -92,7 +93,6 @@ public class CommonReceiverImpl implements CommonReceiver {
         } else {
             try {
                 byte[] salt = PasswordUtils.getSalt();
-//                String password = content.getRequestParameters().get(PASSWORD_PARAM);
                 String securePassword = PasswordUtils.getSecurePassword(password, salt);
 
                 String encodedSalt = Base64.getEncoder().encodeToString(salt);
@@ -102,7 +102,7 @@ public class CommonReceiverImpl implements CommonReceiver {
 
                 UserDao userDao = new UserDaoImpl();
                 userDao.addUser(content);
-            } catch (DaoException | NoSuchAlgorithmException | NoSuchProviderException e) {
+            } catch (DaoException e) {
                 LOGGER.error("Sign up error", e);
             }
         }
@@ -156,7 +156,6 @@ public class CommonReceiverImpl implements CommonReceiver {
                     content.addWrongValues(wrongRequestValues);
                     return;
                 }
-//                fillContentByOrdersAndRequests(content, user);
             } catch (DaoException e) {
                 LOGGER.error("Sign in error", e);
             }
@@ -164,19 +163,63 @@ public class CommonReceiverImpl implements CommonReceiver {
         content.addSessionAttribute("user", user);
     }
 
-//     void fillContentByOrdersAndRequests(RequestContent content, User user) {
-//        RoomOrderDao orderDao = new RoomOrderDaoImpl();
-//        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
-//        try {
-//            List<RoomOrder> roomOrders  = orderDao.findAllOrdersByUser(user);
-//            List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
-//
-//            content.addSessionAttribute("listRoomOrders", roomOrders);
-//            content.addSessionAttribute("listRoomRequests", roomRequests);
-//        } catch (DaoException e) {
-//            LOGGER.error("Fill content by Orders and Requests error", e);
-//        }
-//    }
+
+
+    @Override
+    public void editUserInfo(RequestContent content) {
+        String email = content.getRequestParameters().get(EMAIL_PARAM);
+        String password = content.getRequestParameters().get(PASSWORD_PARAM);
+        String name = content.getRequestParameters().get(NAME_PARAM);
+        String surname = content.getRequestParameters().get(SURNAME_PARAM);
+        String phoneNumber = content.getRequestParameters().get(PHONE_NUMBER_PARAM);
+        User user = (User) content.getSessionAttributes().get(USER_PARAM);
+//        //TODO add localization messages
+
+        Map<String, String> wrongRequestValues = new HashMap<>();
+
+        if (StringUtils.isEmpty(password)) {
+            wrongRequestValues.put(PASSWORD_PARAM, "Please, enter a Password");
+        }
+
+        if (StringUtils.isEmpty(name)) {
+            wrongRequestValues.put(NAME_PARAM, "Please enter a Name");
+        }
+
+        if (StringUtils.isEmpty(surname)) {
+            wrongRequestValues.put(SURNAME_PARAM, "Please enter a Surname");
+        }
+
+        if (StringUtils.isEmpty(phoneNumber)) {
+            wrongRequestValues.put(PHONE_NUMBER_PARAM, "Please enter a Phone number");
+        }
+
+        if (user == null) {
+            wrongRequestValues.put(USER_PARAM, "Please sign in");
+        }
+
+        if (!wrongRequestValues.isEmpty()) {
+            content.addWrongValues(wrongRequestValues);
+        } else {
+            try {
+                UserDao userDao = new UserDaoImpl();
+
+                String encodedSalt = userDao.findPasswordSaltByEmail(email);
+                byte[] salt = Base64.getDecoder().decode(encodedSalt);
+                String securePassword = PasswordUtils.getSecurePassword(password, salt);
+
+                String realPassword = userDao.findPasswordByEmail(email);
+
+                if (realPassword.equals(securePassword)) {
+                    userDao.updateUser(content);
+                } else {
+                    wrongRequestValues.put(PASSWORD_PARAM,"Password is incorrect");
+                }
+            } catch (DaoException e) {
+                LOGGER.error("Sign up error", e);
+            }
+        }
+
+    }
 
     @Override
     public void findRoomsDescription(RequestContent content) {
