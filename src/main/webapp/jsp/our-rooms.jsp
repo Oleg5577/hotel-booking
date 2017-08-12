@@ -83,12 +83,12 @@
                 <fmt:message key="add-room-request.label.search-room" bundle="${ i18n }"/>
             </a>
         </c:when>
-        <c:otherwise>
+        <c:when test="${user.role == null}">
             <a class="btn btn-sm btn-info btn-space" href="<fmt:message key="path.page.signin" bundle="${ path }"/>">
                 <fmt:message key="signin.label" bundle="${ i18n }"/>
             </a>
             <span>if you want to book a room</span>
-        </c:otherwise>
+        </c:when>
     </c:choose>
     </div>
 </div>

@@ -22,12 +22,12 @@ public class ChangeLocaleCommand implements Command {
     @Override
     public RequestResult execute(HttpServletRequest request) {
         String language = request.getParameter(LANGUAGE_PARAM);
-        Locale localeBefore = request.getLocale();
-        if (language.equals("ru")) {
-            Locale newlocale = new Locale("ru", "RU");
-        }
-        Locale localeAfter = request.getLocale();
 
+        if (language.equals("ru_RU")) {
+            Locale.setDefault(new Locale("ru", "RU"));
+        } else {
+            Locale.setDefault(Locale.US);
+        }
         request.getSession().setAttribute("language", language);
         return new RequestResult(HOME_PAGE, NavigationType.FORWARD);
     }

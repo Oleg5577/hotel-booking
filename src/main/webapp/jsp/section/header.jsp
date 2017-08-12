@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
@@ -31,7 +32,6 @@
             <a class="navbar-brand" href="<fmt:message key="path.page.home" bundle="${ path }"/>">
                 <img alt="Brand"  src="../../img/hotel-logo.gif" height="35px">
             </a>
-            <%--<a class="navbar-brand" href="<fmt:message key="path.page.home" bundle="${ path }"/>">Logo</a>--%>
         </div>
         <div class="collapse navbar-collapse" id="responsive-menu">
             <ul class="nav navbar-nav navbar-left">
@@ -42,7 +42,6 @@
                 </li>
                 <li>
                     <a href="/controller?command=find_rooms_description">
-                    <%--<a href="<fmt:message key="path.page.our-rooms" bundle="${ path }"/>">--%>
                         <fmt:message key="our-rooms.label" bundle="${ i18n }"/>
                     </a>
                 </li>
@@ -61,7 +60,6 @@
                             </a>
                         </li>
                         <li>
-                            <%--<a href="<fmt:message key="path.page.client.personal-account" bundle="${ path }"/>">--%>
                             <a href="/controller?command=find_info_for_client_account"/>
                                 <fmt:message key="client.account.label" bundle="${ i18n }"/>
                             </a>
@@ -84,6 +82,7 @@
                 </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
                 <c:if test="${user.id != null}">
                     <form method="post" action="/controller" class="navbar-form">
                         <input type="hidden" name="command" value="sign_out">
@@ -91,22 +90,43 @@
                         <input type="submit" name="submit" value="${buttonValue}" class="btn btn-primary">
                     </form>
                 </c:if>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <form class="navbar-form" action="/controller" method="get" id="language" name="language" onchange="submit()">
-                    <input type="hidden" name="command" value="change_locale">
-                    <div>
-                        <select class="form-control" name="language">
-                            <option value="ru_RU" ${language == 'ru' ? 'selected' : ''}>RU</option>
-                            <option value="en" ${language == 'en' ? 'selected' : ''}>EN</option>
-                        </select>
-                    </div>
-                </form>
+                <li>
+                    <form class="navbar-form" action="/controller" method="get" id="language" name="language" onchange="submit()">
+                        <input type="hidden" name="command" value="change_locale">
+                        <div>
+                            <select class="form-control" name="language">
+                                <option value="ru_RU" ${language == 'ru' ? 'selected' : ''}>RU</option>
+                                <option value="en" ${language == 'en' ? 'selected' : ''}>EN</option>
+                            </select>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                <c:choose>
+                    <c:when test="${user.role == 'ADMIN'}">
+                        <a href="/controller?command=find_info_for_admin_account">
+                            <ctg:user-name user="${ user }"/>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/controller?command=find_info_for_client_account">
+                            <ctg:user-name user="${ user }"/>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
+                </li>
             </ul>
         </div>
     </div>
 </div>
-</form>
+<div class="text-right date-tag">
+    <ctg:current-date/>
+</div>
 <div class="modal fade" id="modal-1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -131,25 +151,7 @@
                                data-dismiss="modal">
                     </fieldset>
                 </form>
-                <%-- <form method="post" action="/controller">
-                    <input type="hidden" name="command" value="sign_in">
-                    <label for="email"><fmt:message key="login.label.email"/>:<span class="asterisk"> *</span></label>
-                    <input type="text" id="email" name="email" value="${requestValues.email}">
-                    <label class="wrong-values">${wrongValues.email}</label>
-                    <br>
-                    <label for="password"><fmt:message key="login.label.password"/>:<span class="asterisk"> *</span></label>
-                    <input type="password" id="password" name="password">
-                    <label class="wrong-values">${wrongValues.password}</label>
-                    <br>
-                    <fmt:message key="login.button.submit" var="buttonValue"/>
-                    <input type="submit" name="submit" value="${buttonValue}">
-                    <br>
-                    <label class="wrong-values">${wrongValues.emailOrPassword}</label>
-                </form>--%>
             </div>
-            <%--<div class="modal-footer">--%>
-            <%--<button class="btn btn-danger" type="button" data-dismiss="modal">Отмена</button>--%>
-            <%--</div>--%>
         </div>
     </div>
 </div>

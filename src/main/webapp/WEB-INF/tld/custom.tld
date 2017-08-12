@@ -7,19 +7,18 @@
     <short-name>ctg</short-name>
     <uri>customtags</uri>
     <tag>
-        <name>info-time</name>
-        <tag-class>com.pronovich.hotelbooking.tag.InfoTimeTag</tag-class>
+        <name>current-date</name>
+        <tag-class>com.pronovich.hotelbooking.tag.CurrentDate</tag-class>
         <body-content>empty</body-content>
     </tag>
     <tag>
-        <name>hello</name>
-        <tag-class>com.pronovich.hotelbooking.tag.HelloTag</tag-class>
+        <name>user-name</name>
+        <tag-class>com.pronovich.hotelbooking.tag.UserNameTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
-            <name>role</name>
+            <name>user</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
-
 </taglib>
