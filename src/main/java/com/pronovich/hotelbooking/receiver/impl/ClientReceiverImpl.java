@@ -26,7 +26,6 @@ public class ClientReceiverImpl implements ClientReceiver {
     private static final String ROOM_REQUEST_ID = "roomRequestId";
     private static final String ROOM_ORDER_ID = "orderId";
 
-
     @Override
     public void findInfoForClientAccount(RequestContent content) {
         RoomOrderDao orderDao = new RoomOrderDaoImpl();
@@ -94,7 +93,7 @@ public class ClientReceiverImpl implements ClientReceiver {
         }
     }
 
-    public void cancelRequest(RequestContent content) {
+    public void cancelRequestByClient(RequestContent content) {
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
         try {
             String requestId = content.getRequestParameters().get(ROOM_REQUEST_ID);
@@ -104,8 +103,7 @@ public class ClientReceiverImpl implements ClientReceiver {
         }
     }
 
-    @Override
-    public void cancelOrder(RequestContent content) {
+    public void cancelOrderByClient(RequestContent content) {
         RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
         try {
             String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);

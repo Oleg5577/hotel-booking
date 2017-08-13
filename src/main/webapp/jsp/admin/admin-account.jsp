@@ -111,8 +111,9 @@
                 <td class="text-center">
                     <c:if test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
                         <form action="/controller" method="post">
-                            <input type="hidden" name="command" value="deny_request_by_admin">
-                            <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
+                            <input type="hidden" name="command" value="cancel_request_by_admin">
+                            <input type="hidden" name="roomRequestId" value="${roomRequest.id}">
+                            <fmt:message key="common.button.deny" bundle="${ i18n }" var="buttonValue"/>
                             <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-danger">
                         </form>
                     </c:if>
@@ -161,13 +162,13 @@
                 <td  class="text-right">${roomOrder.amount} EUR</td>
                 <td class="text-center">${roomOrder.room}</td>
                 <td class="text-center">${roomOrder.orderStatus}</td>
-<%--TODO add link to full info about the user--%>
-                <td class="text-right">${roomOrder.user}</td>
+                <td class="text-center">${roomOrder.user}</td>
                 <td class="text-center">
                     <c:if test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
                         <form action="/controller" method="post">
                             <input type="hidden" name="command" value="cancel_order_by_admin">
-                            <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
+                            <input type="hidden" name="roomOrderId" value="${roomOrder.id}">
+                                <fmt:message key="common.button.cancel" bundle="${ i18n }" var="buttonValue"/>
                             <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-danger">
                         </form>
                     </c:if>

@@ -1,4 +1,4 @@
-package com.pronovich.hotelbooking.command.impl.client;
+package com.pronovich.hotelbooking.command.impl.admin;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
@@ -8,17 +8,16 @@ import com.pronovich.hotelbooking.content.RequestResult;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
-public class CancelOrderByClientCommand implements Command {
+public class CancelOrderByAdminCommand implements Command {
 
-    private static final String PERSONAL_ACCOUNT_PAGE = "/controller?command=find_info_for_client_account";
-    private static final String ROOM_ORDER_ID = "orderId";
-    private static final String USER = "user";
+    private static final String ADMIN_ACCOUNT_PAGE = "/controller?command=find_info_for_admin_account";
+    private static final String ROOM_ORDER_ID = "roomOrderId";
+
     private Receiver receiver;
 
-    public CancelOrderByClientCommand(Receiver receiver) {
+    public CancelOrderByAdminCommand(Receiver receiver) {
         this.receiver = receiver;
     }
 
@@ -30,16 +29,14 @@ public class CancelOrderByClientCommand implements Command {
     @Override
     public RequestResult execute(HttpServletRequest request) {
         String roomOrderId = request.getParameter(ROOM_ORDER_ID);
-        HttpSession session = request.getSession();
 
         HashMap<String, String> requestValues = new HashMap<>();
         requestValues.put(ROOM_ORDER_ID, roomOrderId);
 
         RequestContent content = new RequestContent(requestValues);
-        content.addSessionAttribute(USER, session.getAttribute(USER));
 
-        receiver.action(CommandType.CANCEL_ORDER_BY_CLIENT, content);
+        receiver.action(CommandType.CANCEL_ORDER_BY_ADMIN, content);
 
-        return new RequestResult(PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+        return new RequestResult(ADMIN_ACCOUNT_PAGE, NavigationType.REDIRECT);
     }
 }

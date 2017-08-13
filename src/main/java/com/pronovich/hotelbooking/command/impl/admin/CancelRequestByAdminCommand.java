@@ -1,4 +1,4 @@
-package com.pronovich.hotelbooking.command.impl.client;
+package com.pronovich.hotelbooking.command.impl.admin;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
@@ -6,19 +6,19 @@ import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
 import com.pronovich.hotelbooking.receiver.Receiver;
+import com.pronovich.hotelbooking.receiver.impl.AdminReceiverImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
-public class CancelRequestByClientCommand implements Command {
+public class CancelRequestByAdminCommand implements Command {
 
-    private static final String PERSONAL_ACCOUNT_PAGE = "/controller?command=find_info_for_client_account";
+    private static final String ADMIN_ACCOUNT_PAGE = "/controller?command=find_info_for_admin_account";
     private static final String ROOM_REQUEST_ID = "roomRequestId";
 
     private Receiver receiver;
 
-    public CancelRequestByClientCommand(Receiver receiver) {
+    public CancelRequestByAdminCommand(Receiver receiver) {
         this.receiver = receiver;
     }
 
@@ -36,8 +36,8 @@ public class CancelRequestByClientCommand implements Command {
 
         RequestContent content = new RequestContent(requestValues);
 
-        receiver.action(CommandType.CANCEL_REQUEST_BY_CLIENT, content);
+        receiver.action(CommandType.CANCEL_REQUEST_BY_ADMIN, content);
 
-        return new RequestResult(PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+        return new RequestResult(ADMIN_ACCOUNT_PAGE, NavigationType.REDIRECT);
     }
 }

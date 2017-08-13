@@ -29,11 +29,11 @@ INSERT INTO `hotel_booking_db`.`room` (`number`, `size`, `price`, `fk_room_type_
 INSERT INTO `hotel_booking_db`.`room` (`number`, `size`, `price`, `fk_room_type_id`) VALUES (210, 2, 200, 4);
 
 INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-22', '2017-07-24', 2, 'in_progress', 3, 1);
-INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-25', '2017-07-28', 1, 'confirmed', 4, 2);
-INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-24', '2017-07-27', 1, 'confirmed', 5, 4);
+INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-25', '2017-07-28', 1, 'in_progress', 4, 2);
+INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-24', '2017-07-27', 2, 'in_progress', 5, 4);
 INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-21', '2017-08-01', 2, 'denied', 6, 3);
-INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-26', '2017-07-29', 2, 'confirmed', 7, 2);
-INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-24', '2017-07-28', 2, 'confirmed', 8, 1);
+INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-26', '2017-07-29', 2, 'in_progress', 7, 2);
+INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-07-24', '2017-07-28', 2, 'in_progress', 8, 1);
 INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-08-02', '2017-08-06', 1, 'confirmed', 9, 1);
 INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-08-06', '2017-08-11', 2, 'in_progress', 3, 1);
 INSERT INTO `hotel_booking_db`.`room_request` (`check_in`, `check_out`, `room_size`, `request_status`, `fk_user_id`, `fk_room_type_id`) VALUES ('2017-08-10', '2017-08-15', 2, 'in_progress', 4, 2);

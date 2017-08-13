@@ -15,32 +15,33 @@
 </head>
 <body>
     <jsp:include page="/jsp/section/header.jsp"/>
-    <table class="room-list">
+<div class="container col-md-8 col-md-offset-2">
+    <table class="table vertical-align-table">
         <tr>
-            <th>Room number</th>
-            <th>Room size, persons</th>
-            <th>Price</th>
-            <th>Room type</th>
+            <th class="text-center">Room number</th>
+            <th class="text-center">Room size</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Room type</th>
             <th></th>
         </tr>
-        <%--<jsp:useBean id="allRoomsAccordingRequest" scope="request" class="com.pronovich.hotelbooking.entity.Room"/>--%>
         <c:forEach items="${allRoomsAccordingRequest}" var="room">
-            <tr>
-                <td>${room.roomNumber}</td>
-                <td>${room.size}</td>
-                <td>${room.price}</td>
-                <td>${room.roomType}</td>
-                <td>
+            <tr class="info">
+                <td class="text-center">${room.roomNumber}</td>
+                <td class="text-center">${room.size}</td>
+                <td class="text-center">${room.price} EUR</td>
+                <td class="text-center">${room.roomType}</td>
+                <td class="text-center">
                     <form action="/controller" method="post">
                         <input hidden name="command" value="create_order">
                         <input hidden name="roomId" value="${room.id}">
                         <input hidden name="requestId" value="${requestId}">
                         <fmt:message key="admin.create-order.button.submit" bundle="${ i18n }" var="buttonValue"/>
-                        <input type="submit" name="submit" value="${buttonValue}">
+                        <input class="btn btn-xs btn-info" type="submit" name="submit" value="${buttonValue}">
                     </form>
                 </td>
             </tr>
         </c:forEach>
     </table>
+</div>
 </body>
 </html>

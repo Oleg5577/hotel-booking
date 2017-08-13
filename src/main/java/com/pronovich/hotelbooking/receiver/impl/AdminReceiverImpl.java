@@ -21,6 +21,8 @@ import java.util.List;
 public class AdminReceiverImpl implements AdminReceiver {
 
     private static final Logger LOGGER = LogManager.getLogger(AdminReceiverImpl.class);
+    private static final String ROOM_ORDER_ID = "roomOrderId";
+    private static final String ROOM_REQUEST_ID = "roomRequestId";
 
     public void findAllRoomsAccordingRequest(RequestContent content) {
         String requestId = content.getRequestParameters().get("requestId");
@@ -71,6 +73,28 @@ public class AdminReceiverImpl implements AdminReceiver {
             content.addRequestAttributes("listRoomRequests", roomRequests);
         } catch (DaoException e) {
             LOGGER.error("Create order error", e);
+        }
+    }
+
+    @Override
+    public void cancelRequestByAdmin(RequestContent content) {
+        RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
+        try {
+            String requestId = content.getRequestParameters().get(ROOM_REQUEST_ID);
+            roomRequestDao.removeRequestById(Integer.valueOf(requestId));
+        } catch (DaoException e) {
+            LOGGER.error("Cancel request error" , e);
+        }
+    }
+
+    @Override
+    public void cancelOrderByAdmin(RequestContent content) {
+        RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
+        try {
+            String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
+            roomOrderDao.removeOrderById(Integer.valueOf(orderId));
+        } catch (DaoException e) {
+            LOGGER.error("Cancel order error" , e);
         }
     }
 }

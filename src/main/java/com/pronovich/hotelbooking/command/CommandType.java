@@ -1,8 +1,6 @@
 package com.pronovich.hotelbooking.command;
 
-import com.pronovich.hotelbooking.command.impl.admin.CreateOrderCommand;
-import com.pronovich.hotelbooking.command.impl.admin.FindInfoForAdminAccountCommand;
-import com.pronovich.hotelbooking.command.impl.admin.FindRoomCommand;
+import com.pronovich.hotelbooking.command.impl.admin.*;
 import com.pronovich.hotelbooking.command.impl.client.AddRoomRequestCommand;
 import com.pronovich.hotelbooking.command.impl.client.CancelOrderByClientCommand;
 import com.pronovich.hotelbooking.command.impl.client.CancelRequestByClientCommand;
@@ -97,17 +95,30 @@ public enum CommandType {
     CANCEL_REQUEST_BY_CLIENT(new CancelRequestByClientCommand(new ClientReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) {
-            ( (ClientReceiverImpl) getCommand().getReceiver() ).cancelRequest(content);
+            ( (ClientReceiverImpl) getCommand().getReceiver() ).cancelRequestByClient(content);
         }
     },
 
     CANCEL_ORDER_BY_CLIENT(new CancelOrderByClientCommand(new ClientReceiverImpl())) {
         @Override
         public void doReceiver(RequestContent content) {
-            ( (ClientReceiverImpl) getCommand().getReceiver() ).cancelOrder(content);
+            ( (ClientReceiverImpl) getCommand().getReceiver() ).cancelOrderByClient(content);
+        }
+    },
+
+    CANCEL_REQUEST_BY_ADMIN(new CancelRequestByAdminCommand(new AdminReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (AdminReceiverImpl) getCommand().getReceiver() ).cancelRequestByAdmin(content);
+        }
+    },
+
+    CANCEL_ORDER_BY_ADMIN(new CancelOrderByAdminCommand(new AdminReceiverImpl())){
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (AdminReceiverImpl) getCommand().getReceiver()).cancelOrderByAdmin(content);
         }
     }
-
     ;
 
     private Command command;
