@@ -23,9 +23,9 @@
             <thead>
                 <tr>
                     <th class="text-left"></th>
-                    <th class="text-center">Room type</th>
-                    <th class="text-center">Room size</th>
-                    <th class="text-right">Price</th>
+                    <th class="text-center"><fmt:message key="our-rooms.label.room-type" bundle="${ i18n }"/></th>
+                    <th class="text-center"><fmt:message key="our-rooms.label.room-size" bundle="${ i18n }"/></th>
+                    <th class="text-center"><fmt:message key="our-rooms.label.room-price" bundle="${ i18n }"/></th>
                 </tr>
             </thead>
             <tbody>
@@ -87,7 +87,7 @@
             <a class="btn btn-sm btn-info btn-space" href="<fmt:message key="path.page.signin" bundle="${ path }"/>">
                 <fmt:message key="signin.label" bundle="${ i18n }"/>
             </a>
-            <span>if you want to book a room</span>
+            <span><fmt:message key="our-rooms.label.offer-to-sigin" bundle="${ i18n }"/></span>
         </c:when>
     </c:choose>
     </div>

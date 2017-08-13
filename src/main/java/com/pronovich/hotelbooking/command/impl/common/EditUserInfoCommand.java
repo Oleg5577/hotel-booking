@@ -10,6 +10,7 @@ import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,8 @@ public class EditUserInfoCommand implements Command {
     private static final String PERSONAL_ACCOUNT_PAGE = "/controller?command=find_info_for_client_account";
     private static final String ADMIN_ACCOUNT_PAGE = "/controller?command=find_info_for_admin_account";
     private static final String EDIT_USER_INFO_PAGE = "jsp/edit-user-info.jsp";
+    private static final String USER_PARAM = "user";
+    private static final String UPDATED_USER_PARAM = "updatedUser";
 
     private Receiver receiver;
 
@@ -54,8 +57,9 @@ public class EditUserInfoCommand implements Command {
 
         RequestContent content = new RequestContent(requestParameters);
 
-        User user = (User) request.getSession().getAttribute("user");
-        content.addSessionAttribute("user", user);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        content.addSessionAttribute(USER_PARAM, user);
 
         receiver.action(CommandType.EDIT_USER_INFO, content);
 
@@ -65,10 +69,14 @@ public class EditUserInfoCommand implements Command {
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
             requestResult = new RequestResult(EDIT_USER_INFO_PAGE, NavigationType.FORWARD);
-        } else if (user.getRole() == Role.ADMIN) {
-            requestResult = new RequestResult(ADMIN_ACCOUNT_PAGE, NavigationType.REDIRECT);
         } else {
-            requestResult = new RequestResult(PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+            User updatedUser = (User) content.getSessionAttributes().get(UPDATED_USER_PARAM);
+            session.setAttribute(USER_PARAM, updatedUser);
+            if (user.getRole() == Role.ADMIN) {
+                requestResult = new RequestResult(ADMIN_ACCOUNT_PAGE, NavigationType.REDIRECT);
+            } else {
+                requestResult = new RequestResult(PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+            }
         }
         return requestResult;
     }

@@ -17,9 +17,8 @@ public class SignInCommand implements Command {
     private static final String PASSWORD_PARAM = "password";
     private static final String USER_PARAM = "user";
 
-    //TODO page path from properties??;
     private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
-    private static final String WELCOME_PAGE = "/jsp/welcome.jsp";
+    private static final String HOME_PAGE = "/jsp/home.jsp";
 
     private Receiver receiver;
 
@@ -53,6 +52,6 @@ public class SignInCommand implements Command {
             return new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
         }
         request.getSession().setAttribute(USER_PARAM, content.getSessionAttributes().get(USER_PARAM));
-        return new RequestResult(WELCOME_PAGE, NavigationType.REDIRECT);
+        return new RequestResult(HOME_PAGE, NavigationType.REDIRECT);
     }
 }

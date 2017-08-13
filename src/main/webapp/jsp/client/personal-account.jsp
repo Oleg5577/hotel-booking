@@ -19,30 +19,32 @@
         <table class="table">
             <tbody>
                 <tr>
-                    <td class="text-center">Email</td>
-                    <td class="text-center">${user.email}</td>
+                    <td class="text-right">
+                        <fmt:message key="signup.label.email" bundle="${ i18n }"/>
+                    </td>
+                    <td class="text-right">${user.email}</td>
                 </tr>
                 <tr>
-                    <td class="text-center">Name</td>
-                    <td class="text-center">${user.name}</td>
+                    <td class="text-right">
+                        <fmt:message key="signup.label.name" bundle="${ i18n }"/>
+                    </td>
+                    <td class="text-right">${user.name}</td>
                 </tr>
                 <tr>
-                    <td class="text-center">Surname</td>
-                    <td class="text-center">${user.surname}</td>
+                    <td class="text-right">
+                        <fmt:message key="signup.label.surname" bundle="${ i18n }"/>
+                    </td>
+                    <td class="text-right">${user.surname}</td>
                 </tr>
                 <tr>
-                    <td class="text-center">Phone number</td>
-                    <td class="text-center">${user.phoneNumber}</td>
+                    <td class="text-right">
+                        <fmt:message key="signup.label.phone-number" bundle="${ i18n }"/>
+                    </td>
+                    <td class="text-right">${user.phoneNumber}</td>
                 </tr>
-                <c:if test="${user.role == 'ADMIN'}">
-                    <tr>
-                        <td class="text-center">Role</td>
-                        <td class="text-center">${user.role}</td>
-                    </tr>
-                </c:if>
                 <tr>
                     <td></td>
-                    <td class="text-center">
+                    <td class="text-right">
                         <a href="<fmt:message key="path.page.user.edit-user-info" bundle="${ path }"/> " class="btn btn-xs btn-info ">
                             <fmt:message key="common.button.edit" bundle="${ i18n }"/>
                         </a>
@@ -59,11 +61,21 @@
         <table class="table vertical-align-table">
             <thead>
                 <tr>
-                    <th class="text-center">Check-in date</th>
-                    <th class="text-center">Check-out date</th>
-                    <th class="text-center">Room type</th>
-                    <th class="text-center">Room size</th>
-                    <th class="text-center">Request status</th>
+                    <th class="text-center">
+                        <fmt:message key="our-rooms.label.check-in" bundle="${ i18n }"/>
+                    </th>
+                    <th class="text-center">
+                        <fmt:message key="our-rooms.label.check-out" bundle="${ i18n }"/>
+                    </th>
+                    <th class="text-center">
+                        <fmt:message key="our-rooms.label.room-type" bundle="${ i18n }"/>
+                    </th>
+                    <th class="text-center">
+                        <fmt:message key="our-rooms.label.room-size" bundle="${ i18n }"/>
+                    </th>
+                    <th class="text-center">
+                        <fmt:message key="admin.account.label.request-status" bundle="${ i18n }"/>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -78,7 +90,10 @@
                     <td class="text-center">${roomRequest.checkInDate}</td>
                     <td class="text-center">${roomRequest.checkOutDate}</td>
                     <td class="text-center">${roomRequest.roomType}</td>
-                    <td class="text-center">${roomRequest.roomSize} person(s)</td>
+                    <td class="text-center">
+                            ${roomRequest.roomSize}
+                            <fmt:message key="admin.account.label.persons" bundle="${ i18n }"/>
+                    </td>
                     <td class="text-center">${roomRequest.requestStatus}</td>
                     <td class="text-center">
                         <c:if test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
@@ -100,11 +115,21 @@
         <table class="table vertical-align-table">
             <thead>
                 <tr>
-                    <th class="text-center">Check-in date</th>
-                    <th class="text-center">Check-out date</th>
-                    <th class="text-right">Amount</th>
-                    <th class="text-center">Room</th>
-                    <th class="text-center">Order status</th>
+                    <th class="text-center">
+                        <fmt:message key="our-rooms.label.check-in" bundle="${ i18n }"/>
+                    </th>
+                    <th class="text-center">
+                        <fmt:message key="our-rooms.label.check-out" bundle="${ i18n }"/>
+                    </th>
+                    <th class="text-right">
+                        <fmt:message key="our-rooms.label.room-price" bundle="${ i18n }"/>
+                    </th>
+                    <th class="text-center">
+                        <fmt:message key="admin.account.label.room" bundle="${ i18n }"/>
+                    </th>
+                    <th class="text-center">
+                        <fmt:message key="admin.account.label.order-status" bundle="${ i18n }"/>
+                    </th>
                     <th></th>
                 </tr>
             </thead>

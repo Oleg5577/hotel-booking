@@ -21,7 +21,7 @@ public class UserNameTag extends TagSupport {
             String out;
             if (user.getRole() != null) {
                 if ("admin".equalsIgnoreCase(user.getRole().toString())) {
-                    out = user.toString() + " <label class=\"red\"> admin </label>";
+                    out = user.toString() + " <label class=\"red\">(admin)</label>";
                 } else {
                     out = user.toString();
                 }

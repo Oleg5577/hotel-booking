@@ -2,16 +2,10 @@ package com.pronovich.hotelbooking.receiver.impl;
 
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.dao.RoomDao;
-import com.pronovich.hotelbooking.dao.RoomOrderDao;
-import com.pronovich.hotelbooking.dao.RoomRequestDao;
 import com.pronovich.hotelbooking.dao.UserDao;
 import com.pronovich.hotelbooking.dao.impl.RoomDaoImpl;
-import com.pronovich.hotelbooking.dao.impl.RoomOrderDaoImpl;
-import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.UserDaoImpl;
 import com.pronovich.hotelbooking.entity.Room;
-import com.pronovich.hotelbooking.entity.RoomOrder;
-import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.CommonReceiver;
@@ -21,8 +15,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.util.*;
 
 public class CommonReceiverImpl implements CommonReceiver {
@@ -36,6 +28,7 @@ public class CommonReceiverImpl implements CommonReceiver {
     private static final String SURNAME_PARAM = "surname";
     private static final String PHONE_NUMBER_PARAM = "phoneNumber";
     private static final String USER_PARAM = "user";
+    private static final String UPDATED_USER_PARAM = "updatedUser";
 
     private static final int MIN_PASSWORD_SIZE = 6;
 
@@ -173,13 +166,8 @@ public class CommonReceiverImpl implements CommonReceiver {
         String surname = content.getRequestParameters().get(SURNAME_PARAM);
         String phoneNumber = content.getRequestParameters().get(PHONE_NUMBER_PARAM);
         User user = (User) content.getSessionAttributes().get(USER_PARAM);
-//        //TODO add localization messages
 
         Map<String, String> wrongRequestValues = new HashMap<>();
-
-        if (StringUtils.isEmpty(password)) {
-            wrongRequestValues.put(PASSWORD_PARAM, "Please, enter a Password");
-        }
 
         if (StringUtils.isEmpty(name)) {
             wrongRequestValues.put(NAME_PARAM, "Please enter a Name");
@@ -191,6 +179,10 @@ public class CommonReceiverImpl implements CommonReceiver {
 
         if (StringUtils.isEmpty(phoneNumber)) {
             wrongRequestValues.put(PHONE_NUMBER_PARAM, "Please enter a Phone number");
+        }
+
+        if (StringUtils.isEmpty(password)) {
+            wrongRequestValues.put(PASSWORD_PARAM, "Please, enter a Password");
         }
 
         if (user == null) {
@@ -205,20 +197,22 @@ public class CommonReceiverImpl implements CommonReceiver {
 
                 String encodedSalt = userDao.findPasswordSaltByEmail(email);
                 byte[] salt = Base64.getDecoder().decode(encodedSalt);
-                String securePassword = PasswordUtils.getSecurePassword(password, salt);
 
+                String securePassword = PasswordUtils.getSecurePassword(password, salt);
                 String realPassword = userDao.findPasswordByEmail(email);
 
-                if (realPassword.equals(securePassword)) {
+                if (securePassword.equals(realPassword)) {
                     userDao.updateUser(content);
+                    User updatedUser = userDao.findUserByEmail(email);
+                    content.addSessionAttribute(UPDATED_USER_PARAM, updatedUser);
                 } else {
                     wrongRequestValues.put(PASSWORD_PARAM,"Password is incorrect");
+                    content.addWrongValues(wrongRequestValues);
                 }
             } catch (DaoException e) {
                 LOGGER.error("Sign up error", e);
             }
         }
-
     }
 
     @Override

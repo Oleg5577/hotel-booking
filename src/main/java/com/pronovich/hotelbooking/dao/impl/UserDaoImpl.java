@@ -32,6 +32,10 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
     private static final String FIND_SALT_BY_EMAIL_SQL = "SELECT password_salt FROM user WHERE email = ?";
 
+    private static final String FIND_PASSWORD_BY_EMAIL_SQL = "SELECT password FROM user WHERE email = ?";
+
+    private static final String UPDATE_USER_SQL = "UPDATE user SET name = ?, surname = ?, phone_number = ? WHERE email = ?";
+
     @Override
     public void addUser(RequestContent content) throws DaoException {
         ProxyConnection connection = null;
@@ -177,13 +181,46 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
     @Override
     public String findPasswordByEmail(String email) throws DaoException {
-        //TODO implement method
-        return null;
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String password = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(FIND_PASSWORD_BY_EMAIL_SQL);
+            statement.setString(1, email);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                password = resultSet.getString("password");
+            }
+            return password;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement, resultSet);
+        }
     }
 
     @Override
     public void updateUser(RequestContent content) throws DaoException {
-        //TODO implement method
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(UPDATE_USER_SQL);
 
+            Map<String, String> requestParameters = content.getRequestParameters();
+
+            statement.setString(1, requestParameters.get("name"));
+            statement.setString(2, requestParameters.get("surname"));
+            statement.setString(3, requestParameters.get("phoneNumber"));
+            statement.setString(4, requestParameters.get("email"));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement);
+        }
     }
 }
