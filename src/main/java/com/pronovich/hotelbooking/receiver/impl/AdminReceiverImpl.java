@@ -4,7 +4,6 @@ import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.dao.RoomOrderDao;
 import com.pronovich.hotelbooking.dao.RoomDao;
 import com.pronovich.hotelbooking.dao.RoomRequestDao;
-import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.impl.RoomOrderDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;

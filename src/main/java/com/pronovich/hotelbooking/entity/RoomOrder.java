@@ -22,7 +22,7 @@ public class RoomOrder implements Serializable {
 
     private OrderStatus orderStatus;
 
-    private boolean isPaid;
+    private boolean paid;
 
     public RoomOrder() {
     }
@@ -84,11 +84,11 @@ public class RoomOrder implements Serializable {
     }
 
     public boolean isPaid() {
-        return isPaid;
+        return paid;
     }
 
     public void setPaid(boolean paid) {
-        isPaid = paid;
+        this.paid = paid;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class RoomOrder implements Serializable {
 
         RoomOrder roomOrder = (RoomOrder) o;
 
-        if (isPaid != roomOrder.isPaid) return false;
+        if (paid != roomOrder.paid) return false;
         if (id != null ? !id.equals(roomOrder.id) : roomOrder.id != null) return false;
         if (checkInDate != null ? !checkInDate.equals(roomOrder.checkInDate) : roomOrder.checkInDate != null)
             return false;
@@ -119,7 +119,7 @@ public class RoomOrder implements Serializable {
         result = 31 * result + (room != null ? room.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
-        result = 31 * result + (isPaid ? 1 : 0);
+        result = 31 * result + (paid ? 1 : 0);
         return result;
     }
 
@@ -131,6 +131,6 @@ public class RoomOrder implements Serializable {
                 ", room № " + room +
                 ", user " + user +
                 ", status " + orderStatus +
-                ", order is paid " + isPaid;
+                ", order is paid " + paid;
     }
 }

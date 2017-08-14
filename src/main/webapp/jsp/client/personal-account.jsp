@@ -89,12 +89,39 @@
                     </c:choose>>
                     <td class="text-center">${roomRequest.checkInDate}</td>
                     <td class="text-center">${roomRequest.checkOutDate}</td>
-                    <td class="text-center">${roomRequest.roomType}</td>
+                    <td class="text-center">
+                        <c:choose>
+                            <c:when test="${roomRequest.roomType == 'STANDARD'}">
+                                <fmt:message key="room-type.label.standard" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomRequest.roomType == 'SEMILUX'}">
+                                <fmt:message key="room-type.label.semilux" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomRequest.roomType == 'LUX'}">
+                                <fmt:message key="room-type.label.lux" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomRequest.roomType == 'PRESIDENT'}">
+                                <fmt:message key="room-type.label.president" bundle="${ i18n }"/>
+                            </c:when>
+                        </c:choose>
+                    </td>
                     <td class="text-center">
                             ${roomRequest.roomSize}
                             <fmt:message key="admin.account.label.persons" bundle="${ i18n }"/>
                     </td>
-                    <td class="text-center">${roomRequest.requestStatus}</td>
+                    <td class="text-center">
+                        <c:choose>
+                            <c:when test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
+                                <fmt:message key="request.status.label.in-progress" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomRequest.requestStatus == 'CONFIRMED'}">
+                                <fmt:message key="request.status.label.confirmed" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomRequest.requestStatus == 'DENIED'}">
+                                <fmt:message key="request.status.label.denied" bundle="${ i18n }"/>
+                            </c:when>
+                        </c:choose>
+                    </td>
                     <td class="text-center">
                         <c:if test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
                             <form action="/controller" method="post">
@@ -130,6 +157,9 @@
                     <th class="text-center">
                         <fmt:message key="admin.account.label.order-status" bundle="${ i18n }"/>
                     </th>
+                    <th class="text-center">
+                        <fmt:message key="admin.account.label.payment-status" bundle="${ i18n }"/>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -144,9 +174,34 @@
                     </c:choose>>
                     <td class="text-center">${roomOrder.checkInDate}</td>
                     <td class="text-center">${roomOrder.checkOutDate}</td>
-                    <td class="text-right">${roomOrder.amount}</td>
+                    <td class="text-right">${roomOrder.amount} EUR</td>
                     <td class="text-center">${roomOrder.room}</td>
-                    <td class="text-center">${roomOrder.orderStatus}</td>
+                    <td class="text-center">
+                        <c:choose>
+                            <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
+                                <fmt:message key="order.status.label.expect-guest-arrival" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomOrder.orderStatus == 'CHECKED_IN'}">
+                                <fmt:message key="order.status.label.checked-in" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomOrder.orderStatus == 'CHECKED_OUT'}">
+                                <fmt:message key="order.status.label.checked-out" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomOrder.orderStatus == 'CANCELED'}">
+                                <fmt:message key="order.status.label.canceled" bundle="${ i18n }"/>
+                            </c:when>
+                        </c:choose>
+                    </td>
+                    <td class="text-center">
+                        <c:choose>
+                            <c:when test="${roomOrder.paid}">
+                                <label class="red"><fmt:message key="admin.account.label.order-is-paid" bundle="${ i18n }"/></label>
+                            </c:when>
+                            <c:otherwise>
+                                <fmt:message key="admin.account.label.order-is-not-paid" bundle="${ i18n }"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td class="text-center">
                         <c:if test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
                             <form action="/controller" method="post">
