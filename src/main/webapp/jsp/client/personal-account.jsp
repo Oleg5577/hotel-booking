@@ -175,7 +175,23 @@
                     <td class="text-center">${roomOrder.checkInDate}</td>
                     <td class="text-center">${roomOrder.checkOutDate}</td>
                     <td class="text-right">${roomOrder.amount} EUR</td>
-                    <td class="text-center">${roomOrder.room}</td>
+                    <td class="text-center">
+                        №${roomOrder.room.roomNumber},
+                        <c:choose>
+                            <c:when test="${roomOrder.room.roomType == 'STANDARD'}">
+                                <fmt:message key="room-type.label.standard" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomOrder.room.roomType == 'SEMILUX'}">
+                                <fmt:message key="room-type.label.semilux" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomOrder.room.roomType == 'LUX'}">
+                                <fmt:message key="room-type.label.lux" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${roomOrder.room.roomType == 'PRESIDENT'}">
+                                <fmt:message key="room-type.label.president" bundle="${ i18n }"/>
+                            </c:when>
+                        </c:choose>
+                    </td>
                     <td class="text-center">
                         <c:choose>
                             <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">

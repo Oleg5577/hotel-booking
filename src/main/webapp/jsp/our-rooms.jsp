@@ -29,48 +29,54 @@
                 </tr>
             </thead>
             <tbody>
+            <c:forEach items="${roomList}" var="room">
                 <tr>
-                    <td class="img-thumbnail"><img src="../img/room/1.1%20standard.jpg" alt="" width="200" height="150"></td>
-                    <td class="text-center">${roomList[0].roomType}</td>
-                    <td class="text-center">${roomList[0].size} person(s)</td>
-                    <td class="text-right">${roomList[0].price} EUR</td>
+                    <td class="img-thumbnail">
+                        <c:choose>
+                            <c:when test="${room.roomType == 'STANDARD' && room.size == 1}">
+                                <img src="../img/room/1.1%20standard.jpg" alt="" width="200" height="150">
+                            </c:when>
+                            <c:when test="${room.roomType == 'STANDARD' && room.size == 2}">
+                                <img src="../img/room/1.2%20standard.jpg" alt="" width="200" height="150">
+                            </c:when>
+                            <c:when test="${room.roomType == 'SEMILUX' && room.size == 1}">
+                                <img src="../img/room/2.1%20semilux.jpg" alt="" width="200" height="150">
+                            </c:when>
+                            <c:when test="${room.roomType == 'SEMILUX' && room.size == 2}">
+                                <img src="../img/room/2.2%20semilux.jpg" alt="" width="200" height="150">                            </c:when>
+                            <c:when test="${room.roomType == 'LUX' && room.size == 1}">
+                                <img src="../img/room/3.1%20lux.jpg" alt="" width="200" height="150">
+                            </c:when>
+                            <c:when test="${room.roomType == 'LUX' && room.size == 2}">
+                                <img src="../img/room/3.2%20lux.jpg" alt="" width="200" height="150">
+                            </c:when>
+                            <c:when test="${room.roomType == 'PRESIDENT'}">
+                                <img src="../img/room/4.2%20president.jpg" alt="" width="200" height="150">
+                            </c:when>
+                        </c:choose>
+                    </td>
+                    <td class="text-center">
+                        <c:choose>
+                            <c:when test="${room.roomType == 'STANDARD'}">
+                                <fmt:message key="room-type.label.standard" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${room.roomType == 'SEMILUX'}">
+                                <fmt:message key="room-type.label.semilux" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${room.roomType == 'LUX'}">
+                                <fmt:message key="room-type.label.lux" bundle="${ i18n }"/>
+                            </c:when>
+                            <c:when test="${room.roomType == 'PRESIDENT'}">
+                                <fmt:message key="room-type.label.president" bundle="${ i18n }"/>
+                            </c:when>
+                        </c:choose>
+                    </td>
+                    <td class="text-center">${room.size}
+                        <fmt:message key="admin.account.label.persons" bundle="${ i18n }"/>
+                    </td>
+                    <td class="text-right">${room.price} EUR</td>
                 </tr>
-                <tr>
-                    <td class="img-thumbnail"><img src="../img/room/1.2%20standard.jpg" alt="" width="200" height="150"></td>
-                    <td class="text-center">${roomList[1].roomType}</td>
-                    <td class="text-center">${roomList[1].size} person(s)</td>
-                    <td class="text-right">${roomList[1].price} EUR</td>
-                </tr>
-                <tr>
-                    <td class="img-thumbnail"><img src="../img/room/2.1%20semilux.jpg" alt="" width="200" height="150"></td>
-                    <td class="text-center">${roomList[2].roomType}</td>
-                    <td class="text-center">${roomList[2].size} person(s)</td>
-                    <td class="text-right">${roomList[2].price} EUR</td>
-                </tr>
-                <tr>
-                    <td class="img-thumbnail"><img src="../img/room/2.2%20semilux.jpg" alt="" width="200" height="150"></td>
-                    <td class="text-center">${roomList[3].roomType}</td>
-                    <td class="text-center">${roomList[3].size} person(s)</td>
-                    <td class="text-right">${roomList[3].price} EUR</td>
-                </tr>
-                <tr>
-                    <td class="img-thumbnail"><img src="../img/room/3.1%20lux.jpg" alt="" width="200" height="150"></td>
-                    <td class="text-center">${roomList[4].roomType}</td>
-                    <td class="text-center">${roomList[4].size} person(s)</td>
-                    <td class="text-right">${roomList[4].price} EUR</td>
-                </tr>
-                <tr>
-                    <td class="img-thumbnail"><img src="../img/room/3.2%20lux.jpg" alt="" width="200" height="150"></td>
-                    <td class="text-center">${roomList[5].roomType}</td>
-                    <td class="text-center">${roomList[5].size} person(s)</td>
-                    <td class="text-right">${roomList[5].price} EUR</td>
-                </tr>
-                <tr>
-                    <td class="img-thumbnail"><img src="../img/room/4.2%20president.jpg" alt="" width="200" height="150"></td>
-                    <td class="text-center">${roomList[6].roomType}</td>
-                    <td class="text-center">${roomList[6].size} person(s)</td>
-                    <td class="text-right">${roomList[6].price} EUR</td>
-                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

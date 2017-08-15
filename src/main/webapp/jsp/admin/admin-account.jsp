@@ -120,7 +120,10 @@
                         </c:when>
                     </c:choose>
                 </td>
-                <td class="text-center">${roomRequest.roomSize}</td>
+                <td class="text-center">
+                        ${roomRequest.roomSize}
+                        <fmt:message key="admin.account.label.persons" bundle="${ i18n }"/>
+                </td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
@@ -179,7 +182,9 @@
                 <th class="text-center">
                     <fmt:message key="admin.account.label.order-status" bundle="${ i18n }"/>
                 </th>
-                <th></th>
+                <th class="text-center">
+                    <fmt:message key="admin.account.label.change-order-status" bundle="${ i18n }"/>
+                </th>
                 <th class="text-center">
                     <fmt:message key="admin.account.label.payment-status" bundle="${ i18n }"/>
                 </th>
@@ -204,7 +209,7 @@
                 <td class="text-center">${roomOrder.user}</td>
                 <td  class="text-right">${roomOrder.amount} EUR</td>
                 <td class="text-left">
-                    № ${roomOrder.room.roomNumber},
+                    №${roomOrder.room.roomNumber},
                     <c:choose>
                         <c:when test="${roomOrder.room.roomType == 'STANDARD'}">
                             <fmt:message key="room-type.label.standard" bundle="${ i18n }"/>
@@ -256,7 +261,6 @@
                         </c:when>
                     </c:choose>
                 </td>
-
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${roomOrder.paid}">
