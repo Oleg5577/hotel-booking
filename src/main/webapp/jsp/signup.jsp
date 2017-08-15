@@ -12,6 +12,7 @@
 <head>
     <title>Sign up</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <jsp:include page="/jsp/section/header.jsp"/>
@@ -92,41 +93,6 @@
         </div>
     </div>
 </div>
-
-
-<%--<form method="post" action="/controller">
-    <input type="hidden" name="command" value="sign_up">
-
-                    <label for="email"><fmt:message key="signup.label.email" bundle="${ i18n }"/>:<span class="asterisk"> *</span></label>
-                    <input type="text" id="email" name="email" value="${requestValues.email}">
-                    <label class="wrong-values">${wrongValues.email}</label>
-                    <br>
-        <label for="password"><fmt:message key="signup.label.password" bundle="${ i18n }"/>:<span
-                class="asterisk"> *</span></label>
-        <input type="password" id="password" name="password">
-        <label class="wrong-values">${wrongValues.password}</label>
-        <br>
-        <label for="repeat-password"><fmt:message key="signup.label.repeat-password" bundle="${ i18n }"/>:<span
-                class="asterisk"> *</span></label>
-        <input type="password" id="repeat-password" name="repeatPassword">
-        <label class="wrong-values">${wrongValues.repeatPassword}</label>
-        <br>
-        <label for="name"><fmt:message key="signup.label.name" bundle="${ i18n }"/>:<span class="asterisk"> *</span></label>
-        <input type="text" id="name" name="name" value="${requestValues.name}">
-        <label class="wrong-values">${wrongValues.name}</label>
-        <br>
-        <label for="surname"><fmt:message key="signup.label.surname" bundle="${ i18n }"/>:<span
-                class="asterisk"> *</span></label>
-        <input type="text" id="surname" name="surname" value="${requestValues.surname}">
-        <label class="wrong-values">${wrongValues.surname}</label>
-        <br>
-    <label for="phoneNumber"><fmt:message key="signup.label.phone-number" bundle="${ i18n }"/>:<span
-            class="asterisk"> *</span></label>
-    <input type="text" id="phoneNumber" name="phoneNumber" value="${requestValues.phoneNumber}">
-    <label class="wrong-values">${wrongValues.phoneNumber}</label>
-    <br>
-    <fmt:message key="signup.button.submit" bundle="${ i18n }" var="buttonValue"/>
-    <input type="submit" name="submit" value="${buttonValue}">
-</form>--%>
+<jsp:include page="/jsp/section/footer.jsp"/>
 </body>
 </html>

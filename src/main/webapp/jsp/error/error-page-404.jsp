@@ -12,6 +12,7 @@
 <head>
     <title>Sign in</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <jsp:include page="/jsp/section/header.jsp"/>
@@ -26,6 +27,7 @@
         </p>
     </div>
 </div>
+<jsp:include page="/jsp/section/footer.jsp"/>
 </body>
 </html>
 
