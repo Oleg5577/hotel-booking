@@ -16,5 +16,11 @@ public interface RoomOrderDao {
 
     void createOrder(RoomRequest roomRequest, Room room) throws DaoException;
 
-    void removeOrderById(Integer orderId) throws DaoException;
+    void changeOrderStatusToCanceled(Integer orderId) throws DaoException;
+
+    void changeOrderStatusToPaid(Integer orderId) throws DaoException;
+
+    void changeOrderStatusToCheckedIn(Integer orderId) throws DaoException;
+
+    void changeOrderStatusToCheckedOut(Integer orderId) throws DaoException;
 }

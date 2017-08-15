@@ -91,9 +91,42 @@ public class AdminReceiverImpl implements AdminReceiver {
         RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
         try {
             String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
-            roomOrderDao.removeOrderById(Integer.valueOf(orderId));
+            roomOrderDao.changeOrderStatusToCanceled(Integer.valueOf(orderId));
         } catch (DaoException e) {
             LOGGER.error("Cancel order error" , e);
+        }
+    }
+
+    @Override
+    public void changeOrderStatusToPaid(RequestContent content) {
+        RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
+        try {
+            String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
+            roomOrderDao.changeOrderStatusToPaid(Integer.valueOf(orderId));
+        } catch (DaoException e) {
+            LOGGER.error("Change order status to paid error" , e);
+        }
+    }
+
+    @Override
+    public void changeOrderStatusToCheckedIn(RequestContent content) {
+        RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
+        try {
+            String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
+            roomOrderDao.changeOrderStatusToCheckedIn(Integer.valueOf(orderId));
+        } catch (DaoException e) {
+            LOGGER.error("Change order status to checked-in error" , e);
+        }
+    }
+
+    @Override
+    public void changeOrderStatusToCheckedOut(RequestContent content) {
+        RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
+        try {
+            String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
+            roomOrderDao.changeOrderStatusToCheckedOut(Integer.valueOf(orderId));
+        } catch (DaoException e) {
+            LOGGER.error("Change order status to checked-out error" , e);
         }
     }
 }

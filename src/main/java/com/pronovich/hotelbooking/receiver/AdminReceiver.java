@@ -13,4 +13,10 @@ public interface AdminReceiver extends Receiver {
     void cancelOrderByAdmin(RequestContent content);
 
     void cancelRequestByAdmin(RequestContent content);
+
+    void changeOrderStatusToPaid(RequestContent content);
+
+    void changeOrderStatusToCheckedIn(RequestContent content);
+
+    void changeOrderStatusToCheckedOut(RequestContent content);
 }

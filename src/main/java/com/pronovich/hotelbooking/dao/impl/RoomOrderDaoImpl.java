@@ -41,7 +41,16 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
     private static final java.lang.String CREATE_ORDER_SQL = "INSERT INTO `order` " +
             "(check_in, check_out, amount, fk_room_id, fk_user_id) VALUES (?, ?, ?, ?, ?)";
 
-    private static final String REMOVE_ORDER_BY_ID_SQL = "DELETE FROM `order` WHERE order_id = ?";
+    private static final String CHANGE_ORDER_STATUS_TO_CANCELED_SQL = "UPDATE `order` SET order_status = 'canceled' " +
+            "WHERE order_id = ?";
+
+    private static final String CHANGE_ORDER_STATUS_TO_CHECKED_IN_SQL = "UPDATE `order` SET order_status = 'checked_in' " +
+            "WHERE order_id = ?";
+
+    private static final String CHANGE_ORDER_STATUS_TO_CHECKED_OUT_SQL = "UPDATE `order` SET order_status = 'checked_out' " +
+            "WHERE order_id = ?";
+
+    private static final String CHANGE_ORDER_STATUS_TO_PAID_SQL = "UPDATE `order` SET is_paid = TRUE WHERE order_id = ?";
 
     @Override
     public List<RoomOrder> findAllOrdersByUser(User user) throws DaoException {
@@ -122,12 +131,31 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
     }
 
     @Override
-    public void removeOrderById(Integer orderId) throws DaoException {
+    public void changeOrderStatusToCanceled(Integer orderId) throws DaoException {
+        updateOrder(orderId, CHANGE_ORDER_STATUS_TO_CANCELED_SQL);
+    }
+
+    @Override
+    public void changeOrderStatusToCheckedIn(Integer orderId) throws DaoException {
+        updateOrder(orderId, CHANGE_ORDER_STATUS_TO_CHECKED_IN_SQL);
+    }
+
+    @Override
+    public void changeOrderStatusToCheckedOut(Integer orderId) throws DaoException {
+        updateOrder(orderId, CHANGE_ORDER_STATUS_TO_CHECKED_OUT_SQL);
+    }
+
+    @Override
+    public void changeOrderStatusToPaid(Integer orderId) throws DaoException {
+        updateOrder(orderId, CHANGE_ORDER_STATUS_TO_PAID_SQL);
+    }
+
+    private void updateOrder(Integer orderId, String sql) throws DaoException {
         ProxyConnection connection = null;
         PreparedStatement statement = null;
         try {
             connection = ConnectionPool.getPool().getConnection();
-            statement = connection.prepareStatement(REMOVE_ORDER_BY_ID_SQL);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, orderId);
             statement.executeUpdate();
         } catch (SQLException e) {

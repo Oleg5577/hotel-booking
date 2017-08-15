@@ -107,7 +107,7 @@ public class ClientReceiverImpl implements ClientReceiver {
         RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
         try {
             String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
-            roomOrderDao.removeOrderById(Integer.valueOf(orderId));
+            roomOrderDao.changeOrderStatusToCanceled(Integer.valueOf(orderId));
         } catch (DaoException e) {
             LOGGER.error("Cancel order error" , e);
         }

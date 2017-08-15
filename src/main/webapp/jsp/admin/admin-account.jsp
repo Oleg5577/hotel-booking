@@ -179,10 +179,12 @@
                 <th class="text-center">
                     <fmt:message key="admin.account.label.order-status" bundle="${ i18n }"/>
                 </th>
+                <th></th>
                 <th class="text-center">
                     <fmt:message key="admin.account.label.payment-status" bundle="${ i18n }"/>
                 </th>
-                <th class="text-center"></th>
+                <th></th>
+                <th></th>
                 <th class="text-center">
                     <fmt:message key="admin.account.label.cancel-order" bundle="${ i18n }"/>
                 </th>
@@ -201,7 +203,23 @@
                 <td class="text-center">${roomOrder.checkOutDate}</td>
                 <td class="text-center">${roomOrder.user}</td>
                 <td  class="text-right">${roomOrder.amount} EUR</td>
-                <td class="text-center">${roomOrder.room}</td>
+                <td class="text-left">
+                    № ${roomOrder.room.roomNumber},
+                    <c:choose>
+                        <c:when test="${roomOrder.room.roomType == 'STANDARD'}">
+                            <fmt:message key="room-type.label.standard" bundle="${ i18n }"/>
+                        </c:when>
+                        <c:when test="${roomOrder.room.roomType == 'SEMILUX'}">
+                            <fmt:message key="room-type.label.semilux" bundle="${ i18n }"/>
+                        </c:when>
+                        <c:when test="${roomOrder.room.roomType == 'LUX'}">
+                            <fmt:message key="room-type.label.lux" bundle="${ i18n }"/>
+                        </c:when>
+                        <c:when test="${roomOrder.room.roomType == 'PRESIDENT'}">
+                            <fmt:message key="room-type.label.president" bundle="${ i18n }"/>
+                        </c:when>
+                    </c:choose>
+                </td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
@@ -220,6 +238,27 @@
                 </td>
                 <td class="text-center">
                     <c:choose>
+                        <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
+                            <form action="/controller" method="post">
+                                <input type="hidden" name="command" value="change_order_status_to_checked_in">
+                                <input type="hidden" name="roomOrderId" value="${roomOrder.id}">
+                                <fmt:message key="order.status.label.checked-in" bundle="${ i18n }" var="buttonValue"/>
+                                <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-success">
+                            </form>
+                        </c:when>
+                        <c:when test="${roomOrder.orderStatus == 'CHECKED_IN' && roomOrder.paid}">
+                            <form action="/controller" method="post">
+                                <input type="hidden" name="command" value="change_order_status_to_checked_out">
+                                <input type="hidden" name="roomOrderId" value="${roomOrder.id}">
+                                <fmt:message key="order.status.label.checked-out" bundle="${ i18n }" var="buttonValue"/>
+                                <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-primary">
+                            </form>
+                        </c:when>
+                    </c:choose>
+                </td>
+
+                <td class="text-center">
+                    <c:choose>
                         <c:when test="${roomOrder.paid}">
                             <label class="red"><fmt:message key="admin.account.label.order-is-paid" bundle="${ i18n }"/></label>
                         </c:when>
@@ -228,13 +267,23 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td class="text-center">
-                    <c:if test="${!roomOrder.paid && roomOrder.orderStatus != 'CANCELED'}">
-                        <form action="/controller" method="post">
-                            <input type="hidden" name="command" value="order_is_paid">
+                <td>
+                    <c:if test="${!roomOrder.paid && roomOrder.orderStatus == 'CHECKED_IN'}">
+                        <form action="/controller" method="get">
+                            <input type="hidden" name="command" value="issue_invoice">
                             <input type="hidden" name="roomOrderId" value="${roomOrder.id}">
-                            <fmt:message key="admin.account.button.change-order-status-to-paid" bundle="${ i18n }" var="buttonValue"/>
+                                <fmt:message key="admin.account.button.invoice" bundle="${ i18n }" var="buttonValue"/>
                             <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-info">
+                        </form>
+                    </c:if>
+                </td>
+                <td class="text-center">
+                    <c:if test="${!roomOrder.paid && roomOrder.orderStatus == 'CHECKED_IN'}">
+                        <form action="/controller" method="post">
+                            <input type="hidden" name="command" value="change_order_status_to_paid">
+                            <input type="hidden" name="roomOrderId" value="${roomOrder.id}">
+                                <fmt:message key="admin.account.button.change-order-status-to-paid" bundle="${ i18n }" var="buttonValue"/>
+                            <input type="submit" name="submit" value="${buttonValue}" class="btn btn-xs btn-success">
                         </form>
                     </c:if>
                 </td>

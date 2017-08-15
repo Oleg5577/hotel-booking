@@ -118,7 +118,29 @@ public enum CommandType {
         public void doReceiver(RequestContent content) {
             ( (AdminReceiverImpl) getCommand().getReceiver()).cancelOrderByAdmin(content);
         }
-    }
+    },
+
+    CHANGE_ORDER_STATUS_TO_PAID(new ChangeOrderStatusToPaidCommand(new AdminReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (AdminReceiverImpl) getCommand().getReceiver() ).changeOrderStatusToPaid(content);
+        }
+    },
+
+    CHANGE_ORDER_STATUS_TO_CHECKED_IN(new ChangeOrderStatusToCheckedInCommand(new AdminReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (AdminReceiverImpl) getCommand().getReceiver() ).changeOrderStatusToCheckedIn(content);
+        }
+    },
+
+    CHANGE_ORDER_STATUS_TO_CHECKED_OUT(new ChangeOrderStatusToCheckedOutCommand(new AdminReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (AdminReceiverImpl) getCommand().getReceiver() ).changeOrderStatusToCheckedOut(content);
+        }
+    },
+
     ;
 
     private Command command;
