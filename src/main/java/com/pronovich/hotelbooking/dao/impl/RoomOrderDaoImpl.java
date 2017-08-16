@@ -38,7 +38,14 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
             "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
             "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` ORDER BY `order_status`";
 
-    private static final java.lang.String CREATE_ORDER_SQL = "INSERT INTO `order` " +
+    private static final String FIND_ROOM_ORDER_BY_ID = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
+            "`room_id`, `fk_user_id` , `number`, `size`, `price`, " +
+            "`room_type_id`, `type_name`, `is_paid`, `order_status` FROM `order` " +
+            "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
+            "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` " +
+            "WHERE `order_id` = ?";
+
+    private static final String CREATE_ORDER_SQL = "INSERT INTO `order` " +
             "(check_in, check_out, amount, fk_room_id, fk_user_id) VALUES (?, ?, ?, ?, ?)";
 
     private static final String CHANGE_ORDER_STATUS_TO_CANCELED_SQL = "UPDATE `order` SET order_status = 'canceled' " +
@@ -51,6 +58,8 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
             "WHERE order_id = ?";
 
     private static final String CHANGE_ORDER_STATUS_TO_PAID_SQL = "UPDATE `order` SET is_paid = TRUE WHERE order_id = ?";
+
+
 
     @Override
     public List<RoomOrder> findAllOrdersByUser(User user) throws DaoException {
@@ -65,7 +74,7 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
 
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                roomOrders.add(ResultSetConverter.createOrderEntity(resultSet, user));
+                roomOrders.add(ResultSetConverter.createRoomOrderEntity(resultSet, user));
             }
             return roomOrders;
         } catch (SQLException e) {
@@ -89,9 +98,34 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = userDao.findUserById( resultSet.getInt("fk_user_id") );
-                roomOrders.add(ResultSetConverter.createOrderEntity(resultSet, user));
+                roomOrders.add(ResultSetConverter.createRoomOrderEntity(resultSet, user));
             }
             return roomOrders;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement, resultSet);
+        }
+    }
+
+    @Override
+    public RoomOrder findOrderById(Integer orderId) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        RoomOrder roomOrder = null;
+        UserDao userDao = new UserDaoImpl();
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(FIND_ROOM_ORDER_BY_ID);
+            statement.setInt(1, orderId);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                User user = userDao.findUserById( resultSet.getInt("fk_user_id") );
+                roomOrder = ResultSetConverter.createRoomOrderEntity(resultSet, user);
+            }
+            return roomOrder;
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
@@ -132,25 +166,25 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
 
     @Override
     public void changeOrderStatusToCanceled(Integer orderId) throws DaoException {
-        updateOrder(orderId, CHANGE_ORDER_STATUS_TO_CANCELED_SQL);
+        updateOrderById(orderId, CHANGE_ORDER_STATUS_TO_CANCELED_SQL);
     }
 
     @Override
     public void changeOrderStatusToCheckedIn(Integer orderId) throws DaoException {
-        updateOrder(orderId, CHANGE_ORDER_STATUS_TO_CHECKED_IN_SQL);
+        updateOrderById(orderId, CHANGE_ORDER_STATUS_TO_CHECKED_IN_SQL);
     }
 
     @Override
     public void changeOrderStatusToCheckedOut(Integer orderId) throws DaoException {
-        updateOrder(orderId, CHANGE_ORDER_STATUS_TO_CHECKED_OUT_SQL);
+        updateOrderById(orderId, CHANGE_ORDER_STATUS_TO_CHECKED_OUT_SQL);
     }
 
     @Override
     public void changeOrderStatusToPaid(Integer orderId) throws DaoException {
-        updateOrder(orderId, CHANGE_ORDER_STATUS_TO_PAID_SQL);
+        updateOrderById(orderId, CHANGE_ORDER_STATUS_TO_PAID_SQL);
     }
 
-    private void updateOrder(Integer orderId, String sql) throws DaoException {
+    private void updateOrderById(Integer orderId, String sql) throws DaoException {
         ProxyConnection connection = null;
         PreparedStatement statement = null;
         try {

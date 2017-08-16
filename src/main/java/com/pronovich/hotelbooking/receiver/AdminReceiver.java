@@ -19,4 +19,6 @@ public interface AdminReceiver extends Receiver {
     void changeOrderStatusToCheckedIn(RequestContent content);
 
     void changeOrderStatusToCheckedOut(RequestContent content);
+
+    void issueInvoice(RequestContent content);
 }

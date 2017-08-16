@@ -14,6 +14,8 @@ public interface RoomOrderDao {
 
     List<RoomOrder> findAllOrdersForAllUsers() throws DaoException;
 
+    RoomOrder findOrderById(Integer orderId) throws DaoException;
+
     void createOrder(RoomRequest roomRequest, Room room) throws DaoException;
 
     void changeOrderStatusToCanceled(Integer orderId) throws DaoException;
@@ -23,4 +25,5 @@ public interface RoomOrderDao {
     void changeOrderStatusToCheckedIn(Integer orderId) throws DaoException;
 
     void changeOrderStatusToCheckedOut(Integer orderId) throws DaoException;
+
 }

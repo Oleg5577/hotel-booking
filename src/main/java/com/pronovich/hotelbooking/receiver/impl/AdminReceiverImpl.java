@@ -15,6 +15,8 @@ import com.pronovich.hotelbooking.receiver.AdminReceiver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class AdminReceiverImpl implements AdminReceiver {
@@ -128,5 +130,25 @@ public class AdminReceiverImpl implements AdminReceiver {
         } catch (DaoException e) {
             LOGGER.error("Change order status to checked-out error" , e);
         }
+    }
+
+    @Override
+    public void issueInvoice(RequestContent content) {
+        RoomOrderDao roomOrderDao = new RoomOrderDaoImpl();
+        try {
+            String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
+
+            RoomOrder roomOrder = roomOrderDao.findOrderById(Integer.valueOf(orderId));
+            long daysNumber = calculateDaysBetweenDates(roomOrder.getCheckInDate(), roomOrder.getCheckOutDate());
+
+            content.addRequestAttributes("roomOrder", roomOrder);
+            content.addRequestAttributes("daysNumber", daysNumber);
+        } catch (DaoException e) {
+            LOGGER.error("Issue invoice error" , e);
+        }
+    }
+
+    private long calculateDaysBetweenDates(LocalDate checkInDate, LocalDate checkOutDate) {
+        return ChronoUnit.DAYS.between(checkInDate, checkOutDate);
     }
 }

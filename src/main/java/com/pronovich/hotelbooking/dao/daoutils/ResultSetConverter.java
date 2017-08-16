@@ -39,7 +39,7 @@ public class ResultSetConverter {
         return user;
     }
 
-    public static RoomOrder createOrderEntity(ResultSet resultSet, User user) throws DaoException {
+    public static RoomOrder createRoomOrderEntity(ResultSet resultSet, User user) throws DaoException {
         RoomOrder roomOrder = new RoomOrder();
         try {
             Integer orderId = resultSet.getInt("order_id");

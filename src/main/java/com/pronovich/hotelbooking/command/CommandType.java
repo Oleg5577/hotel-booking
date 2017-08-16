@@ -141,6 +141,13 @@ public enum CommandType {
         }
     },
 
+    ISSUE_INVOICE(new IssueInvoiceCommand(new AdminReceiverImpl())) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (AdminReceiverImpl) getCommand().getReceiver() ).issueInvoice(content);
+        }
+    }
+
     ;
 
     private Command command;
