@@ -2,6 +2,7 @@ package com.pronovich.hotelbooking.command.impl.admin;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
+import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
@@ -12,7 +13,6 @@ import java.util.HashMap;
 
 public class IssueInvoiceCommand implements Command {
 
-    private static final String INVOICE_PAGE = "jsp/admin/invoice.jsp";
     private static final String ROOM_ORDER_ID = "roomOrderId";
     private static final String ROOM_ORDER_PARAM = "roomOrder";
     private static final String DAYS_NUMBER_PARAM = "daysNumber";
@@ -41,6 +41,7 @@ public class IssueInvoiceCommand implements Command {
 
         request.setAttribute(ROOM_ORDER_PARAM, content.getRequestAttributes().get(ROOM_ORDER_PARAM));
         request.setAttribute(DAYS_NUMBER_PARAM, content.getRequestAttributes().get(DAYS_NUMBER_PARAM));
-        return new RequestResult(INVOICE_PAGE, NavigationType.FORWARD);
+
+        return new RequestResult(ProjectConstants.INVOICE_PAGE, NavigationType.FORWARD);
     }
 }

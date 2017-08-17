@@ -1,6 +1,7 @@
 package com.pronovich.hotelbooking.command.impl.common;
 
 import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestResult;
 import com.pronovich.hotelbooking.receiver.Receiver;
@@ -10,7 +11,6 @@ import java.util.Locale;
 
 public class ChangeLocaleCommand implements Command {
 
-    private static final String HOME_PAGE = "/jsp/home.jsp";
     private static final String LANGUAGE_PARAM = "language";
 
     @Override
@@ -29,6 +29,6 @@ public class ChangeLocaleCommand implements Command {
             Locale.setDefault(Locale.US);
         }
         request.getSession().setAttribute("language", language);
-        return new RequestResult(HOME_PAGE, NavigationType.FORWARD);
+        return new RequestResult(ProjectConstants.HOME_PAGE, NavigationType.FORWARD);
     }
 }

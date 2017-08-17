@@ -2,6 +2,7 @@ package com.pronovich.hotelbooking.command.impl.client;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
+import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
@@ -20,9 +21,6 @@ public class AddRoomRequestCommand implements Command {
     private static final String ROOM_TYPE_PARAM = "roomTypeRequest";
     private static final String USER_PARAM = "user";
     private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
-
-    private static final String ADD_ROOM_REQUEST_PAGE = "jsp/client/add-room-request.jsp";
-    private static final String PERSONAL_ACCOUNT_PAGE = "jsp/client/personal-account.jsp";
 
     private Receiver receiver;
 
@@ -61,10 +59,10 @@ public class AddRoomRequestCommand implements Command {
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
             request.setAttribute("requestValues", content.getRequestParameters());
-            requestResult = new RequestResult(ADD_ROOM_REQUEST_PAGE, NavigationType.FORWARD);
+            requestResult = new RequestResult(ProjectConstants.ADD_ROOM_REQUEST_PAGE, NavigationType.FORWARD);
         } else {
             request.getSession().setAttribute(LIST_ROOM_REQUESTS, content.getSessionAttributes().get(LIST_ROOM_REQUESTS));
-            requestResult = new RequestResult(PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+            requestResult = new RequestResult(ProjectConstants.PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
         }
         return requestResult;
     }

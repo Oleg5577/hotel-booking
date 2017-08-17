@@ -21,6 +21,28 @@
     <%--<script src="../../js/jquery.popconfirm.js" type="text/javascript"></script>--%>
 </head>
 <body>
-    FOOOTEEEER!!!!
+<div class="container">
+    <hr>
+    <div class="row">
+        <div class="col-xs-offset-4 col-xs-4">
+            <ul class="list-unstyled">
+                <li>Hotel Booking<li>
+                <li>Minsk, Belarus</li>
+            </ul>
+        </div>
+        <div class="col-xs-4">
+            <ul class="list-unstyled text-right">
+                <li><li>
+                <li><ctg:current-date/><li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-offset-8 col-xs-4">
+            <p class="text-muted pull-right">© 2017 Hotel Booking. All rights reserved</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>

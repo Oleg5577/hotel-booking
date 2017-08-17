@@ -2,6 +2,7 @@ package com.pronovich.hotelbooking.command.impl.client;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
+import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
@@ -13,9 +14,9 @@ import java.util.HashMap;
 
 public class CancelOrderByClientCommand implements Command {
 
-    private static final String PERSONAL_ACCOUNT_PAGE = "/controller?command=find_info_for_client_account";
     private static final String ROOM_ORDER_ID = "orderId";
     private static final String USER = "user";
+
     private Receiver receiver;
 
     public CancelOrderByClientCommand(Receiver receiver) {
@@ -40,6 +41,6 @@ public class CancelOrderByClientCommand implements Command {
 
         receiver.action(CommandType.CANCEL_ORDER_BY_CLIENT, content);
 
-        return new RequestResult(PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+        return new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
     }
 }

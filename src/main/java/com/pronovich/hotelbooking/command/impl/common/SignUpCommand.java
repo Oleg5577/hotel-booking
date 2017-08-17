@@ -2,6 +2,7 @@ package com.pronovich.hotelbooking.command.impl.common;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
+import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
@@ -22,9 +23,6 @@ public class SignUpCommand implements Command {
     private static final String ROLE_PARAM = "role";
 
     private static final String DEFAULT_ROLE = "client";
-
-    private static final String SIGN_UP_PAGE = "jsp/signup.jsp";
-    private static final String SIGN_IN_PAGE = "jsp/signin.jsp";
 
     private Receiver receiver;
 
@@ -65,8 +63,8 @@ public class SignUpCommand implements Command {
         if ( !wrongValues.isEmpty()) {
             request.setAttribute("wrongValues", wrongValues);
             request.setAttribute("requestValues", content.getRequestParameters());
-            return new RequestResult(SIGN_UP_PAGE, NavigationType.FORWARD);
+            return new RequestResult(ProjectConstants.SIGN_UP_PAGE, NavigationType.FORWARD);
         }
-        return  new RequestResult(SIGN_IN_PAGE, NavigationType.REDIRECT);
+        return  new RequestResult(ProjectConstants.SIGN_IN_PAGE, NavigationType.REDIRECT);
     }
 }

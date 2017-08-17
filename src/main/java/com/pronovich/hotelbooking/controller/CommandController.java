@@ -35,15 +35,7 @@ public class CommandController extends HttpServlet {
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = new CommandFactory().initCommand(request);
         RequestResult requestResult = command.execute(request);
-        if (isSignOutCommand(command)) {
-            request.getSession().invalidate();
-        }
         navigateToPage(requestResult, request, response);
-    }
-
-    //TODO check result
-    private boolean isSignOutCommand(Command command) {
-        return command instanceof SignOutCommand;
     }
 
     private void navigateToPage(RequestResult requestResult, HttpServletRequest request, HttpServletResponse response)

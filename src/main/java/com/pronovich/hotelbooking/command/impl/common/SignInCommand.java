@@ -2,6 +2,7 @@ package com.pronovich.hotelbooking.command.impl.common;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
+import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
@@ -16,9 +17,6 @@ public class SignInCommand implements Command {
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
     private static final String USER_PARAM = "user";
-
-    private static final String SIGN_IN_PAGE = "/jsp/signin.jsp";
-    private static final String HOME_PAGE = "/jsp/home.jsp";
 
     private Receiver receiver;
 
@@ -49,9 +47,9 @@ public class SignInCommand implements Command {
         if ( !wrongValues.isEmpty() ) {
             request.setAttribute("wrongValues", wrongValues);
             request.setAttribute("requestValues", content.getRequestParameters());
-            return new RequestResult(SIGN_IN_PAGE, NavigationType.FORWARD);
+            return new RequestResult(ProjectConstants.SIGN_IN_PAGE, NavigationType.FORWARD);
         }
         request.getSession().setAttribute(USER_PARAM, content.getSessionAttributes().get(USER_PARAM));
-        return new RequestResult(HOME_PAGE, NavigationType.REDIRECT);
+        return new RequestResult(ProjectConstants.HOME_PAGE, NavigationType.REDIRECT);
     }
 }

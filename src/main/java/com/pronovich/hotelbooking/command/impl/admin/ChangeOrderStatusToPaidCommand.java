@@ -2,6 +2,7 @@ package com.pronovich.hotelbooking.command.impl.admin;
 
 import com.pronovich.hotelbooking.command.Command;
 import com.pronovich.hotelbooking.command.CommandType;
+import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
@@ -12,7 +13,6 @@ import java.util.HashMap;
 
 public class ChangeOrderStatusToPaidCommand implements Command {
 
-    private static final String ADMIN_ACCOUNT_PAGE = "/controller?command=find_info_for_admin_account";
     private static final String ROOM_ORDER_ID = "roomOrderId";
 
     private Receiver receiver;
@@ -37,6 +37,6 @@ public class ChangeOrderStatusToPaidCommand implements Command {
 
         receiver.action(CommandType.CHANGE_ORDER_STATUS_TO_PAID, content);
 
-        return new RequestResult(ADMIN_ACCOUNT_PAGE, NavigationType.REDIRECT);
+        return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
     }
 }

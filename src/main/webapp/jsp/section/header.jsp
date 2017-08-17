@@ -124,9 +124,9 @@
         </div>
     </div>
 </div>
-<div class="text-right date-tag">
+<%--<div class="text-right date-tag">
     <ctg:current-date/>
-</div>
+</div>--%>
 <div class="modal fade" id="modal-1">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
