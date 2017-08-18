@@ -33,7 +33,7 @@ public class FindRoomCommand implements Command {
 
         RequestContent content = new RequestContent(requestValues);
 
-        receiver.action(CommandType.FIND_ROOM, content);
+        receiver.action(CommandType.FIND_ROOMS_ACCORDING_REQUEST, content);
 
         request.setAttribute("allRoomsAccordingRequest", content.getRequestAttributes().get("allRoomsAccordingRequest"));
         request.setAttribute("requestId", requestId);

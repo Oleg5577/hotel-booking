@@ -140,7 +140,8 @@
                 </td>
                 <td class="text-center">
                     <c:if test="${roomRequest.requestStatus == 'IN_PROGRESS'}">
-                        <a class="btn btn-xs btn-info" href="/controller?command=find_room&requestId=${roomRequest.id}">
+                        <a class="btn btn-xs btn-info"
+                           href="/controller?command=find_rooms_according_request&requestId=${roomRequest.id}">
                             <fmt:message key="admin.account.button.find-room" bundle="${ i18n }"/>
                         </a>
                     </c:if>

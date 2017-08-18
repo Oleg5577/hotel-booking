@@ -2,6 +2,8 @@ package com.pronovich.hotelbooking.constant;
 
 public class ProjectConstants {
 
+    public static final String INDEX_PAGE = "/index.jsp";
+
     public static final String HOME_PAGE = "/jsp/home.jsp";
 
     public static final String OUR_ROOMS_PAGE = "jsp/our-rooms.jsp";

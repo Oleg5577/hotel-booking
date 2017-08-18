@@ -169,6 +169,12 @@ public class CommonReceiverImpl implements CommonReceiver {
 
         Map<String, String> wrongRequestValues = new HashMap<>();
 
+        if (user == null) {
+            wrongRequestValues.put(USER_PARAM, "Please sign in");
+        } else if (!emailBelongsUser(email, user)) {
+            wrongRequestValues.put(USER_PARAM, "Please sign in by your account");
+        }
+
         if (StringUtils.isEmpty(name)) {
             wrongRequestValues.put(NAME_PARAM, "Please enter a Name");
         }
@@ -185,9 +191,7 @@ public class CommonReceiverImpl implements CommonReceiver {
             wrongRequestValues.put(PASSWORD_PARAM, "Please, enter a Password");
         }
 
-        if (user == null) {
-            wrongRequestValues.put(USER_PARAM, "Please sign in");
-        }
+
 
         if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
@@ -213,6 +217,10 @@ public class CommonReceiverImpl implements CommonReceiver {
                 LOGGER.error("Sign up error", e);
             }
         }
+    }
+
+    private boolean emailBelongsUser(String email, User user) {
+        return email.equals(user.getEmail());
     }
 
     @Override

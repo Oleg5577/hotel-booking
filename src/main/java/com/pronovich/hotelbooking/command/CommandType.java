@@ -49,7 +49,7 @@ public enum CommandType {
         }
     },
 
-    FIND_ROOM( new FindRoomCommand( new AdminReceiverImpl()) ) {
+    FIND_ROOMS_ACCORDING_REQUEST( new FindRoomCommand( new AdminReceiverImpl()) ) {
         @Override
         public void doReceiver(RequestContent content) {
             ( (AdminReceiverImpl) getCommand().getReceiver() ).findAllRoomsAccordingRequest(content);

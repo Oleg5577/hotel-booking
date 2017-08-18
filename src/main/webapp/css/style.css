@@ -69,3 +69,22 @@
 .table > tbody > tr > .thick-line {
     border-top: 2px solid;
 }
+
+/*
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    !* Margin bottom by footer height *!
+    margin-bottom: 110px;
+}
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    !* Set the fixed height of the footer here *!
+    height: 110px;
+    !*background-color: #f5f5f5;*!
+}*/
