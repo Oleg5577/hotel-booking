@@ -18,7 +18,6 @@
     <script src="../../js/jquery-1.12.4.min.js"></script>
     <script src="../../js/bootstrap.js"></script>
     <script src="../../js/main.js"></script>
-    <%--<script src="../../js/jquery.popconfirm.js" type="text/javascript"></script>--%>
 </head>
 <body>
 <div id="footer" class="container">

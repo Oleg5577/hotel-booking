@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <jsp:include page="/jsp/section/header.jsp"/>
+<jsp:include page="/jsp/section/header.jsp"/>
 <div class="container col-md-8 col-md-offset-2">
     <table class="table vertical-align-table">
         <tr>
@@ -33,9 +33,9 @@
                 <td class="text-center">${room.roomType}</td>
                 <td class="text-center">
                     <form action="/controller" method="post">
-                        <input hidden name="command" value="create_order">
-                        <input hidden name="roomId" value="${room.id}">
-                        <input hidden name="requestId" value="${requestId}">
+                        <input type="hidden" name="command" value="create_order">
+                        <input type="hidden" name="roomId" value="${room.id}">
+                        <input type="hidden" name="requestId" value="${requestId}">
                         <fmt:message key="admin.create-order.button.submit" bundle="${ i18n }" var="buttonValue"/>
                         <input class="btn btn-xs btn-info" type="submit" name="submit" value="${buttonValue}">
                     </form>
@@ -44,6 +44,5 @@
         </c:forEach>
     </table>
 </div>
-<jsp:include page="/jsp/section/footer.jsp"/>
 </body>
 </html>
