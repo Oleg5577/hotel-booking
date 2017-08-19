@@ -10,8 +10,8 @@ import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.CommonReceiver;
 import com.pronovich.hotelbooking.utils.PasswordUtils;
+import com.pronovich.hotelbooking.validator.CommonReceiverValidator;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,18 +35,16 @@ public class CommonReceiverImpl implements CommonReceiver {
     @Override
     public void signUp(RequestContent content) {
         //TODO validate in separate method
-//        Map<String, String> wrongRequestValues = ContentValidator.signUpValidate(content);
+        Map<String, String> wrongRequestValues = CommonReceiverValidator.signUpValidate(content);
 
-        String email = content.getRequestParameters().get(EMAIL_PARAM);
+/*        String email = content.getRequestParameters().get(EMAIL_PARAM);
         String password = content.getRequestParameters().get(PASSWORD_PARAM);
         String repeatPassword = content.getRequestParameters().get(REPEAT_PASSWORD_PARAM);
         String name = content.getRequestParameters().get(NAME_PARAM);
         String surname = content.getRequestParameters().get(SURNAME_PARAM);
-        String phoneNumber = content.getRequestParameters().get(PHONE_NUMBER_PARAM);
+        String phoneNumber = content.getRequestParameters().get(PHONE_NUMBER_PARAM);*/
 
-//        //TODO add localization messages
-
-        Map<String, String> wrongRequestValues = new HashMap<>();
+       /* Map<String, String> wrongRequestValues = new HashMap<>();
 
         EmailValidator emailValidator = EmailValidator.getInstance();
         if (StringUtils.isEmpty(email)) {
@@ -79,13 +77,14 @@ public class CommonReceiverImpl implements CommonReceiver {
 
         if (StringUtils.isEmpty(phoneNumber)) {
             wrongRequestValues.put(PHONE_NUMBER_PARAM, "Please enter a Phone number");
-        }
+        }*/
 
         if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);
         } else {
             try {
                 byte[] salt = PasswordUtils.getSalt();
+                String password = content.getRequestParameters().get(PASSWORD_PARAM);
                 String securePassword = PasswordUtils.getSecurePassword(password, salt);
 
                 String encodedSalt = Base64.getEncoder().encodeToString(salt);
@@ -101,7 +100,7 @@ public class CommonReceiverImpl implements CommonReceiver {
         }
     }
 
-    private boolean emailExists(String email) {
+/*    private boolean emailExists(String email) {
         UserDao userDao = new UserDaoImpl();
         boolean emailExists = false;
         try {
@@ -110,7 +109,7 @@ public class CommonReceiverImpl implements CommonReceiver {
             LOGGER.error("Check if email exists error", e);
         }
         return emailExists;
-    }
+    }*/
 
 
     @Override
