@@ -24,15 +24,22 @@ public class AdminReceiverImpl implements AdminReceiver {
     private static final Logger LOGGER = LogManager.getLogger(AdminReceiverImpl.class);
     private static final String ROOM_ORDER_ID = "roomOrderId";
     private static final String ROOM_REQUEST_ID = "roomRequestId";
+    private static final String REQUEST_ID_PARAM = "requestId";
+    private static final String LIST_ROOM_ORDERS_PARAM = "listRoomOrders";
+    private static final String LIST_ROOM_REQUESTS_PARAM = "listRoomRequests";
+    private static final String ROOM_ID_PARAM = "roomId";
+    private static final String ROOM_ORDER_PARAM = "roomOrder";
+    private static final String DAYS_NUMBER_PARAM = "daysNumber";
+    private static final String ALL_ROOMS_ACCORDING_REQUEST_PARAM = "allRoomsAccordingRequest";
 
     public void findAllRoomsAccordingRequest(RequestContent content) {
-        String requestId = content.getRequestParameters().get("requestId");
+        String requestId = content.getRequestParameters().get(REQUEST_ID_PARAM);
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
         RoomDao roomDao = new RoomDaoImpl();
         try {
             RoomRequest roomRequest = roomRequestDao.findRequestById(Integer.valueOf(requestId));
             List<Room> allRoomsAccordingRequest = roomDao.findAllRoomsAccordingRequest(roomRequest);
-            content.addRequestAttributes("allRoomsAccordingRequest", allRoomsAccordingRequest);
+            content.addRequestAttributes(ALL_ROOMS_ACCORDING_REQUEST_PARAM, allRoomsAccordingRequest);
         } catch (DaoException e) {
             LOGGER.error("Find room according request error", e);
         }
@@ -47,8 +54,8 @@ public class AdminReceiverImpl implements AdminReceiver {
             List<RoomOrder>  roomOrders = orderDao.findAllOrdersForAllUsers();
             List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsForAllUser();
 
-            content.addRequestAttributes("listRoomOrders", roomOrders);
-            content.addRequestAttributes("listRoomRequests", roomRequests);
+            content.addRequestAttributes(LIST_ROOM_ORDERS_PARAM, roomOrders);
+            content.addRequestAttributes(LIST_ROOM_REQUESTS_PARAM, roomRequests);
         } catch (DaoException e) {
             LOGGER.error("Find info for admin account error", e);
         }
@@ -56,8 +63,8 @@ public class AdminReceiverImpl implements AdminReceiver {
 
     @Override
     public void createOrder(RequestContent content) {
-        String roomId = content.getRequestParameters().get("roomId");
-        String requestId = content.getRequestParameters().get("requestId");
+        String roomId = content.getRequestParameters().get(ROOM_ID_PARAM);
+        String requestId = content.getRequestParameters().get(REQUEST_ID_PARAM);
 
         RoomDao roomDao = new RoomDaoImpl();
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
@@ -70,8 +77,8 @@ public class AdminReceiverImpl implements AdminReceiver {
             List<RoomOrder>  roomOrders = orderDao.findAllOrdersForAllUsers();
             List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsForAllUser();
 
-            content.addRequestAttributes("listRoomOrders", roomOrders);
-            content.addRequestAttributes("listRoomRequests", roomRequests);
+            content.addRequestAttributes(LIST_ROOM_ORDERS_PARAM, roomOrders);
+            content.addRequestAttributes(LIST_ROOM_REQUESTS_PARAM, roomRequests);
         } catch (DaoException e) {
             LOGGER.error("Create order error", e);
         }
@@ -141,8 +148,8 @@ public class AdminReceiverImpl implements AdminReceiver {
             RoomOrder roomOrder = roomOrderDao.findOrderById(Integer.valueOf(orderId));
             long daysNumber = calculateDaysBetweenDates(roomOrder.getCheckInDate(), roomOrder.getCheckOutDate());
 
-            content.addRequestAttributes("roomOrder", roomOrder);
-            content.addRequestAttributes("daysNumber", daysNumber);
+            content.addRequestAttributes(ROOM_ORDER_PARAM, roomOrder);
+            content.addRequestAttributes(DAYS_NUMBER_PARAM, daysNumber);
         } catch (DaoException e) {
             LOGGER.error("Issue invoice error" , e);
         }

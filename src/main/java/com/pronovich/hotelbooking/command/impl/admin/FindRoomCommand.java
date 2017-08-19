@@ -13,6 +13,8 @@ import java.util.HashMap;
 
 public class FindRoomCommand implements Command {
 
+    private static final String REQUEST_ID_PARAM = "requestId";
+    private static final String ALL_ROOMS_ACCORDING_REQUEST_PARAM = "allRoomsAccordingRequest";
     private Receiver receiver;
 
     public FindRoomCommand(Receiver receiver) {
@@ -26,17 +28,17 @@ public class FindRoomCommand implements Command {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
-        String requestId =  request.getParameter("requestId");
+        String requestId =  request.getParameter(REQUEST_ID_PARAM);
 
         HashMap<String, String> requestValues = new HashMap<>();
-        requestValues.put("requestId", requestId);
+        requestValues.put(REQUEST_ID_PARAM, requestId);
 
         RequestContent content = new RequestContent(requestValues);
 
         receiver.action(CommandType.FIND_ROOMS_ACCORDING_REQUEST, content);
 
-        request.setAttribute("allRoomsAccordingRequest", content.getRequestAttributes().get("allRoomsAccordingRequest"));
-        request.setAttribute("requestId", requestId);
+        request.setAttribute(ALL_ROOMS_ACCORDING_REQUEST_PARAM, content.getRequestAttributes().get(ALL_ROOMS_ACCORDING_REQUEST_PARAM));
+        request.setAttribute(REQUEST_ID_PARAM, requestId);
         return new RequestResult(ProjectConstants.FIND_ROOM_PAGE, NavigationType.FORWARD);
     }
 }
