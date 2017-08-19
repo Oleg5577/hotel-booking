@@ -20,5 +20,7 @@ public interface RoomRequestDao {
 
     void changeStatusTo(Integer requestId, RequestStatus newStatus) throws DaoException;
 
-    void removeRequestById(Integer requestId) throws DaoException;
+    void removeRoomRequestById(Integer requestId) throws DaoException;
+
+//    void changeRequestStatusToDenied(Integer requestId) throws DaoException;
 }

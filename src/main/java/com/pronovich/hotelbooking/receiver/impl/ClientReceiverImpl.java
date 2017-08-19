@@ -100,7 +100,8 @@ public class ClientReceiverImpl implements ClientReceiver {
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
         try {
             String requestId = content.getRequestParameters().get(ROOM_REQUEST_ID);
-            roomRequestDao.removeRequestById(Integer.valueOf(requestId));
+//            roomRequestDao.changeRequestStatusToDenied(Integer.valueOf(requestId));
+            roomRequestDao.removeRoomRequestById(Integer.valueOf(requestId));
         } catch (DaoException e) {
             LOGGER.error("Cancel request error" , e);
         }

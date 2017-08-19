@@ -7,6 +7,7 @@ import com.pronovich.hotelbooking.dao.RoomRequestDao;
 import com.pronovich.hotelbooking.dao.impl.RoomOrderDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomDaoImpl;
 import com.pronovich.hotelbooking.dao.impl.RoomRequestDaoImpl;
+import com.pronovich.hotelbooking.entity.RequestStatus;
 import com.pronovich.hotelbooking.entity.Room;
 import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
@@ -89,7 +90,7 @@ public class AdminReceiverImpl implements AdminReceiver {
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
         try {
             String requestId = content.getRequestParameters().get(ROOM_REQUEST_ID);
-            roomRequestDao.removeRequestById(Integer.valueOf(requestId));
+            roomRequestDao.changeStatusTo(Integer.valueOf(requestId), RequestStatus.DENIED);
         } catch (DaoException e) {
             LOGGER.error("Cancel request error" , e);
         }

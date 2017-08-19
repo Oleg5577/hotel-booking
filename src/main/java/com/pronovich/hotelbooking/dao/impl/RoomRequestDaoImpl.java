@@ -159,7 +159,7 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
     }
 
     @Override
-    public void removeRequestById(Integer requestId) throws DaoException {
+    public void removeRoomRequestById(Integer requestId) throws DaoException {
         ProxyConnection connection = null;
         PreparedStatement statement = null;
         try {
@@ -173,4 +173,20 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             closeDbResources(connection, statement);
         }
     }
+
+    //    @Override
+//    public void changeRequestStatusToDenied(Integer requestId) throws DaoException {
+//        ProxyConnection connection = null;
+//        PreparedStatement statement = null;
+//        try {
+//            connection = ConnectionPool.getPool().getConnection();
+//            statement = connection.prepareStatement(REMOVE_REQUEST_BY_ID_SQL);
+//            statement.setInt(1, requestId);
+//            statement.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new DaoException(e);
+//        } finally {
+//            closeDbResources(connection, statement);
+//        }
+//    }
 }
