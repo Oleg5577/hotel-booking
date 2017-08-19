@@ -6,17 +6,16 @@ import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.content.RequestResult;
+import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class FindInfoForClientAccountCommand implements Command {
 
-    private static final String LIST_ROOM_ORDERS = "listRoomOrders";
-    private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
-
     private static final String USER = "user";
+    private static final String ROOM_REQUESTS_LIST = "listRoomRequests";
+    private static final String ROOM_ORDERS_LIST = "listRoomOrders";
 
     private Receiver receiver;
 
@@ -31,16 +30,16 @@ public class FindInfoForClientAccountCommand implements Command {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+        User user = (User) request.getSession().getAttribute(USER);
 
         RequestContent content = new RequestContent();
-        content.addSessionAttribute(USER, session.getAttribute(USER));
+        content.addSessionAttribute(USER, user);
 
         receiver.action(CommandType.FIND_INFO_FOR_CLIENT_ACCOUNT, content);
 
-        session.setAttribute(LIST_ROOM_ORDERS, content.getSessionAttributes().get(LIST_ROOM_ORDERS));
-        session.setAttribute(LIST_ROOM_REQUESTS, content.getSessionAttributes().get(LIST_ROOM_REQUESTS));
+        request.setAttribute(ROOM_REQUESTS_LIST, content.getRequestAttributes().get(ROOM_REQUESTS_LIST));
+        request.setAttribute(ROOM_ORDERS_LIST, content.getRequestAttributes().get(ROOM_ORDERS_LIST));
 
-        return new RequestResult(ProjectConstants.PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+        return new RequestResult(ProjectConstants.PERSONAL_ACCOUNT_PAGE, NavigationType.FORWARD);
     }
 }

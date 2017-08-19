@@ -20,7 +20,8 @@ public class AddRoomRequestCommand implements Command {
     private static final String ROOM_SIZE_PARAM = "roomSizeRequest";
     private static final String ROOM_TYPE_PARAM = "roomTypeRequest";
     private static final String USER_PARAM = "user";
-    private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
+    private static final String WRONG_VALUES_PARAM = "wrongValues";
+    private static final String REQUEST_VALUES_PARAM = "requestValues";
 
     private Receiver receiver;
 
@@ -54,15 +55,13 @@ public class AddRoomRequestCommand implements Command {
         receiver.action(CommandType.ADD_ROOM_REQUEST, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
-
         RequestResult requestResult;
         if ( !wrongValues.isEmpty()) {
-            request.setAttribute("wrongValues", wrongValues);
-            request.setAttribute("requestValues", content.getRequestParameters());
+            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
+            request.setAttribute(REQUEST_VALUES_PARAM, content.getRequestParameters());
             requestResult = new RequestResult(ProjectConstants.ADD_ROOM_REQUEST_PAGE, NavigationType.FORWARD);
         } else {
-            request.getSession().setAttribute(LIST_ROOM_REQUESTS, content.getSessionAttributes().get(LIST_ROOM_REQUESTS));
-            requestResult = new RequestResult(ProjectConstants.PERSONAL_ACCOUNT_PAGE, NavigationType.REDIRECT);
+            requestResult = new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
         }
         return requestResult;
     }

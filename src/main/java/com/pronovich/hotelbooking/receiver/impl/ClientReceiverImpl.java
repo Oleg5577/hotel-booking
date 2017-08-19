@@ -22,22 +22,28 @@ public class ClientReceiverImpl implements ClientReceiver {
 
     private static final Logger LOGGER = LogManager.getLogger(ClientReceiverImpl.class);
 
-    private static final String USER = "user";
+    private static final String USER_PARAM = "user";
     private static final String ROOM_REQUEST_ID = "roomRequestId";
     private static final String ROOM_ORDER_ID = "orderId";
+    private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
+    private static final String LIST_ROOM_ORDERS = "listRoomOrders";
+    private static final String CHECK_IN_REQUEST_PARAM = "checkInRequest";
+    private static final String CHECK_OUT_REQUEST_PARAM = "checkOutRequest";
+    private static final String ROOM_SIZE_REQUEST_PARAM = "roomSizeRequest";
+    private static final String ROOM_TYPE_REQUEST_PARAM = "roomTypeRequest";
 
     @Override
     public void findInfoForClientAccount(RequestContent content) {
         RoomOrderDao orderDao = new RoomOrderDaoImpl();
         RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
         try {
-            User user = (User) content.getSessionAttributes().get(USER);
+            User user = (User) content.getSessionAttributes().get(USER_PARAM);
 
-            List<RoomOrder> roomOrders  = orderDao.findAllOrdersByUser(user);
             List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
+            List<RoomOrder> roomOrders  = orderDao.findAllOrdersByUser(user);
 
-            content.addSessionAttribute("listRoomOrders", roomOrders);
-            content.addSessionAttribute("listRoomRequests", roomRequests);
+            content.addRequestAttributes(LIST_ROOM_REQUESTS, roomRequests);
+            content.addRequestAttributes(LIST_ROOM_ORDERS, roomOrders);
         } catch (DaoException e) {
             LOGGER.error("Fill content by Orders and Requests error", e);
         }
@@ -45,37 +51,37 @@ public class ClientReceiverImpl implements ClientReceiver {
 
     @Override
     public void addRoomRequest(RequestContent content) {
-        String checkInRequest = content.getRequestParameters().get("checkInRequest");
-        String checkOutRequest = content.getRequestParameters().get("checkOutRequest");
-        String roomSizeRequest = content.getRequestParameters().get("roomSizeRequest");
-        String roomTypeRequest = content.getRequestParameters().get("roomTypeRequest");
-        User user = (User) content.getSessionAttributes().get("user");
+        String checkInRequest = content.getRequestParameters().get(CHECK_IN_REQUEST_PARAM);
+        String checkOutRequest = content.getRequestParameters().get(CHECK_OUT_REQUEST_PARAM);
+        String roomSizeRequest = content.getRequestParameters().get(ROOM_SIZE_REQUEST_PARAM);
+        String roomTypeRequest = content.getRequestParameters().get(ROOM_TYPE_REQUEST_PARAM);
+        User user = (User) content.getSessionAttributes().get(USER_PARAM);
 
         Map<String, String> wrongRequestValues = new HashMap<>();
 
         if (checkInRequest.isEmpty()) {
-            wrongRequestValues.put("checkInRequest", "Enter check-in date");
+            wrongRequestValues.put(CHECK_IN_REQUEST_PARAM, "Enter check-in date");
         }
         if (checkOutRequest.isEmpty()) {
-            wrongRequestValues.put("checkOutRequest", "Enter check-out date");
+            wrongRequestValues.put(CHECK_OUT_REQUEST_PARAM, "Enter check-out date");
         }
         if ( !checkInRequest.isEmpty() && !checkOutRequest.isEmpty() ) {
             LocalDate checkInRequestDate = LocalDate.parse(checkInRequest);
             LocalDate checkOutRequestDate = LocalDate.parse(checkOutRequest);
             if (checkInRequestDate.isBefore(LocalDate.now())) {
-                wrongRequestValues.put("checkOutRequest", "Check-in can not be at later then today");
+                wrongRequestValues.put(CHECK_OUT_REQUEST_PARAM, "Check-in can not be at later then today");
             } else if ( !checkInRequestDate.isBefore(checkOutRequestDate)) {
-                wrongRequestValues.put("checkOutRequest", "Check-out date has to be after check-in date");
+                wrongRequestValues.put(CHECK_OUT_REQUEST_PARAM, "Check-out date has to be after check-in date");
             }
         }
         if (roomSizeRequest.isEmpty()) {
-            wrongRequestValues.put("roomSizeRequest", "Choose quantity of guests");
+            wrongRequestValues.put(ROOM_SIZE_REQUEST_PARAM, "Choose quantity of guests");
         }
         if (roomTypeRequest.isEmpty()) {
-            wrongRequestValues.put("roomTypeRequest", "Choose type of room");
+            wrongRequestValues.put(ROOM_TYPE_REQUEST_PARAM, "Choose type of room");
         }
         if (user == null) {
-            wrongRequestValues.put("user", "Sign in or Sign up");
+            wrongRequestValues.put(USER_PARAM, "Sign in or Sign up");
         }
 
         if (!wrongRequestValues.isEmpty()) {
@@ -84,9 +90,6 @@ public class ClientReceiverImpl implements ClientReceiver {
             RoomRequestDao roomRequestDao = new RoomRequestDaoImpl();
             try {
                 roomRequestDao.addRoomRequest(content);
-
-                List<RoomRequest> roomRequests = roomRequestDao.findAllRequestsByUser(user);
-                content.addSessionAttribute("listRoomRequests", roomRequests);
             } catch (DaoException e) {
                 LOGGER.error("Add room request error" , e);
             }

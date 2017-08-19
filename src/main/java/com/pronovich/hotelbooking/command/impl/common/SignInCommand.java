@@ -17,6 +17,8 @@ public class SignInCommand implements Command {
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
     private static final String USER_PARAM = "user";
+    private static final String WRONG_VALUES_PARAM = "wrongValues";
+    private static final String REQUEST_VALUES_PARAM = "requestValues";
 
     private Receiver receiver;
 
@@ -43,10 +45,9 @@ public class SignInCommand implements Command {
         receiver.action(CommandType.SIGN_IN, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
-
         if ( !wrongValues.isEmpty() ) {
-            request.setAttribute("wrongValues", wrongValues);
-            request.setAttribute("requestValues", content.getRequestParameters());
+            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
+            request.setAttribute(REQUEST_VALUES_PARAM, content.getRequestParameters());
             return new RequestResult(ProjectConstants.SIGN_IN_PAGE, NavigationType.FORWARD);
         }
         request.getSession().setAttribute(USER_PARAM, content.getSessionAttributes().get(USER_PARAM));

@@ -21,8 +21,9 @@ public class SignUpCommand implements Command {
     private static final String SURNAME_PARAM = "surname";
     private static final String PHONE_NUMBER_PARAM = "phoneNumber";
     private static final String ROLE_PARAM = "role";
-
     private static final String DEFAULT_ROLE = "client";
+    private static final String WRONG_VALUES_PARAM = "wrongValues";
+    private static final String REQUEST_VALUES_PARAM = "requestValues";
 
     private Receiver receiver;
 
@@ -59,12 +60,11 @@ public class SignUpCommand implements Command {
         receiver.action(CommandType.SIGN_UP, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
-
         if ( !wrongValues.isEmpty()) {
-            request.setAttribute("wrongValues", wrongValues);
-            request.setAttribute("requestValues", content.getRequestParameters());
+            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
+            request.setAttribute(REQUEST_VALUES_PARAM, content.getRequestParameters());
             return new RequestResult(ProjectConstants.SIGN_UP_PAGE, NavigationType.FORWARD);
         }
-        return  new RequestResult(ProjectConstants.SIGN_IN_PAGE, NavigationType.REDIRECT);
+        return new RequestResult(ProjectConstants.SIGN_IN_PAGE, NavigationType.REDIRECT);
     }
 }

@@ -24,6 +24,7 @@ public class EditUserInfoCommand implements Command {
     private static final String PHONE_NUMBER_PARAM = "phoneNumber";
     private static final String USER_PARAM = "user";
     private static final String UPDATED_USER_PARAM = "updatedUser";
+    private static final String WRONG_VALUES_PARAM = "wrongValues";
 
     private Receiver receiver;
 
@@ -55,16 +56,15 @@ public class EditUserInfoCommand implements Command {
         RequestContent content = new RequestContent(requestParameters);
 
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(USER_PARAM);
         content.addSessionAttribute(USER_PARAM, user);
 
         receiver.action(CommandType.EDIT_USER_INFO, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
-
         RequestResult requestResult;
         if ( !wrongValues.isEmpty()) {
-            request.setAttribute("wrongValues", wrongValues);
+            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
             requestResult = new RequestResult(ProjectConstants.EDIT_USER_INFO_PAGE, NavigationType.FORWARD);
         } else {
             User updatedUser = (User) content.getSessionAttributes().get(UPDATED_USER_PARAM);
