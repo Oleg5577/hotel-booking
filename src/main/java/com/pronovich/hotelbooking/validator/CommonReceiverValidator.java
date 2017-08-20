@@ -33,8 +33,6 @@ public class CommonReceiverValidator {
     private static final String BUNDLE = "property/wrongValues";
 
     public static Map<String, String> signUpValidate(RequestContent content) {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
-
         String email = content.getRequestParameters().get(EMAIL_PARAM);
         String password = content.getRequestParameters().get(PASSWORD_PARAM);
         String repeatPassword = content.getRequestParameters().get(REPEAT_PASSWORD_PARAM);
@@ -42,59 +40,51 @@ public class CommonReceiverValidator {
         String surname = content.getRequestParameters().get(SURNAME_PARAM);
         String phoneNumber = content.getRequestParameters().get(PHONE_NUMBER_PARAM);
 
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
+
         Map<String, String> wrongRequestValues = new HashMap<>();
 
         EmailValidator emailValidator = EmailValidator.getInstance();
         if (StringUtils.isEmpty(email)) {
             wrongRequestValues.put(EMAIL_PARAM, resourceBundle.getString("email-empty"));
-//            wrongRequestValues.put(EMAIL_PARAM, "Please enter a email");
         } else if (!emailValidator.isValid(email)) {
             wrongRequestValues.put(EMAIL_PARAM, resourceBundle.getString("email-is-not-valid"));
-//            wrongRequestValues.put(EMAIL_PARAM, "Email is not valid");
         } else if (emailExists(email)) {
             wrongRequestValues.put(EMAIL_PARAM, resourceBundle.getString("email-already-exists"));
-//            wrongRequestValues.put(EMAIL_PARAM, "Email already exists");
         }
 
         if (StringUtils.isEmpty(password)) {
-//            wrongRequestValues.put(PASSWORD_PARAM, "Please, enter a Password");
             wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString("password-empty"));
         } else if (password.length() < MIN_PASSWORD_SIZE) {
             wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString("password-too-short-begin")
                     + " " + MIN_PASSWORD_SIZE + " " + resourceBundle.getString("password-too-short-end"));
-//            wrongRequestValues.put(PASSWORD_PARAM, "Enter " + MIN_PASSWORD_SIZE + " or more characters");
         }
 
         if (StringUtils.isEmpty(repeatPassword)) {
-//            wrongRequestValues.put(REPEAT_PASSWORD_PARAM, "Please, repeat the Password");
             wrongRequestValues.put(REPEAT_PASSWORD_PARAM, resourceBundle.getString("password-repeat-empty"));
         } else if (!password.equals(repeatPassword)) {
-//            wrongRequestValues.put(REPEAT_PASSWORD_PARAM, "Passwords don't match");
             wrongRequestValues.put(REPEAT_PASSWORD_PARAM, resourceBundle.getString("password-repeat-not-match"));
         }
 
         if (StringUtils.isEmpty(name)) {
-//            wrongRequestValues.put(NAME_PARAM, "Please enter a Name");
             wrongRequestValues.put(NAME_PARAM, resourceBundle.getString("name-empty"));
         }
 
         if (StringUtils.isEmpty(surname)) {
-//            wrongRequestValues.put(SURNAME_PARAM, "Please enter a Surname");
             wrongRequestValues.put(SURNAME_PARAM, resourceBundle.getString("surname-empty"));
         }
 
         if (StringUtils.isEmpty(phoneNumber)) {
-//            wrongRequestValues.put(PHONE_NUMBER_PARAM, "Please enter a Phone number");
             wrongRequestValues.put(PHONE_NUMBER_PARAM, resourceBundle.getString("phone-number-empty"));
         }
         return wrongRequestValues;
     }
 
     public static Map<String, String> signInValidate(RequestContent content) {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
-
         String email = content.getRequestParameters().get(EMAIL_PARAM);
         String password = content.getRequestParameters().get(PASSWORD_PARAM);
+
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
 
         Map<String, String> wrongRequestValues = new HashMap<>();
         if (StringUtils.isEmpty(email)) {
@@ -119,26 +109,28 @@ public class CommonReceiverValidator {
 
         Map<String, String> wrongRequestValues = new HashMap<>();
 
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
+
         if (user == null) {
-            wrongRequestValues.put(USER_PARAM, "Please sign in");
+            wrongRequestValues.put(USER_PARAM, resourceBundle.getString("user-unauthorized"));
         } else if (!emailBelongsUser(email, user)) {
-            wrongRequestValues.put(USER_PARAM, "Please sign in by your account");
+            wrongRequestValues.put(USER_PARAM, resourceBundle.getString("user-edit-foreign-account"));
         }
 
         if (StringUtils.isEmpty(name)) {
-            wrongRequestValues.put(NAME_PARAM, "Please enter a Name");
+            wrongRequestValues.put(NAME_PARAM, resourceBundle.getString("name-empty"));
         }
 
         if (StringUtils.isEmpty(surname)) {
-            wrongRequestValues.put(SURNAME_PARAM, "Please enter a Surname");
+            wrongRequestValues.put(SURNAME_PARAM, resourceBundle.getString("surname-empty"));
         }
 
         if (StringUtils.isEmpty(phoneNumber)) {
-            wrongRequestValues.put(PHONE_NUMBER_PARAM, "Please enter a Phone number");
+            wrongRequestValues.put(PHONE_NUMBER_PARAM, resourceBundle.getString("phone-number-empty"));
         }
 
         if (StringUtils.isEmpty(password)) {
-            wrongRequestValues.put(PASSWORD_PARAM, "Please, enter a Password");
+            wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString("password-empty"));
         }
         return wrongRequestValues;
     }
@@ -153,7 +145,7 @@ public class CommonReceiverValidator {
         try {
             emailExists = userDao.findUserByEmail(email) != null;
         } catch (DaoException e) {
-            LOGGER.error("Check if email exists error", e);
+            LOGGER.error("Checking if email exists error", e);
         }
         return emailExists;
     }

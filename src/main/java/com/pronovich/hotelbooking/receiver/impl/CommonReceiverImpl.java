@@ -112,7 +112,8 @@ public class CommonReceiverImpl implements CommonReceiver {
                 User updatedUser = userDao.findUserByEmail(email);
                 content.addSessionAttribute(UPDATED_USER_PARAM, updatedUser);
             } else {
-                wrongRequestValues.put(PASSWORD_PARAM, "Password is incorrect");
+                ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
+                wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString("password-incorrect"));
                 content.addWrongValues(wrongRequestValues);
             }
         } catch (DaoException e) {
