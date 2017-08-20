@@ -12,6 +12,7 @@ import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.entity.RequestStatus;
 import com.pronovich.hotelbooking.exception.DaoException;
+import com.pronovich.hotelbooking.utils.LocalDateUtils;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -58,8 +59,6 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
             "WHERE order_id = ?";
 
     private static final String CHANGE_ORDER_STATUS_TO_PAID_SQL = "UPDATE `order` SET is_paid = TRUE WHERE order_id = ?";
-
-
 
     @Override
     public List<RoomOrder> findAllOrdersByUser(User user) throws DaoException {
@@ -160,7 +159,7 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
     }
 
      private BigDecimal calculateAmount(BigDecimal price, LocalDate checkInDate, LocalDate checkOutDate) {
-        long daysNumber = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        long daysNumber = LocalDateUtils.calculateDaysBetweenDates(checkInDate, checkOutDate);
         return price.multiply(BigDecimal.valueOf(daysNumber));
     }
 
