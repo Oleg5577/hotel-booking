@@ -20,12 +20,16 @@ public class CommonReceiverImpl implements CommonReceiver {
 
     private static final Logger LOGGER = LogManager.getLogger(CommonReceiverImpl.class);
 
+    private static final String BUNDLE = "property/wrongValues";
+
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
     private static final String USER_PARAM = "user";
     private static final String UPDATED_USER_PARAM = "updatedUser";
     private static final String EMAIL_OR_PASSWORD_PARAM = "emailOrPassword";
     private static final String ROOM_LIST_PARAM = "roomList";
+    private static final String SECURE_PASSWORD_PARAM = "securePassword";
+    private static final String ENCODED_SALT_PARAM = "encodedSalt";
 
     @Override
     public void signUp(RequestContent content) {
@@ -43,8 +47,8 @@ public class CommonReceiverImpl implements CommonReceiver {
 
             String encodedSalt = Base64.getEncoder().encodeToString(salt);
 
-            content.addRequestAttributes("securePassword", securePassword);
-            content.addRequestAttributes("encodedSalt", encodedSalt);
+            content.addRequestAttributes(SECURE_PASSWORD_PARAM, securePassword);
+            content.addRequestAttributes(ENCODED_SALT_PARAM, encodedSalt);
 
             UserDao userDao = new UserDaoImpl();
             userDao.addUser(content);
@@ -55,6 +59,7 @@ public class CommonReceiverImpl implements CommonReceiver {
 
     @Override
     public void signIn(RequestContent content) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
         Map<String, String> wrongRequestValues = CommonReceiverValidator.signInValidate(content);
 
         if (!wrongRequestValues.isEmpty()) {
@@ -73,7 +78,7 @@ public class CommonReceiverImpl implements CommonReceiver {
 
             user = userDao.findUserByEmailAndPassword(email, securePassword);
             if (user == null) {
-                wrongRequestValues.put(EMAIL_OR_PASSWORD_PARAM, "Password or Email are incorrect");
+                wrongRequestValues.put(EMAIL_OR_PASSWORD_PARAM, resourceBundle.getString("email-or-password-incorrect"));
                 content.addWrongValues(wrongRequestValues);
                 return;
             }
