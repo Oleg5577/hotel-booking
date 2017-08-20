@@ -12,15 +12,12 @@ import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.entity.RequestStatus;
 import com.pronovich.hotelbooking.exception.DaoException;
-import com.pronovich.hotelbooking.utils.LocalDateUtils;
+import com.pronovich.hotelbooking.utils.AmountUtils;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +28,13 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
             "`room_type_id`, `type_name`, `is_paid`, `order_status` FROM `order` " +
             "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
             "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` " +
-            "WHERE `fk_user_id` = ?";
+            "WHERE `fk_user_id` = ? ORDER BY `order_status`, `check_in`";
 
     private static final String FIND_ALL_ORDERS_FOR_ALL_USERS_SQL = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
             "`room_id`, `fk_user_id` , `number`, `size`, `price`, " +
             "`room_type_id`, `type_name`, `is_paid`, `order_status` FROM `order` " +
             "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
-            "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` ORDER BY `order_status`";
+            "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` ORDER BY `order_status`, `check_in`";
 
     private static final String FIND_ROOM_ORDER_BY_ID = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
             "`room_id`, `fk_user_id` , `number`, `size`, `price`, " +
@@ -143,24 +140,18 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
             statement = connection.prepareStatement(CREATE_ORDER_SQL);
             statement.setDate( 1, Date.valueOf(roomRequest.getCheckInDate()) );
             statement.setDate( 2, Date.valueOf(roomRequest.getCheckOutDate()) );
-            statement.setBigDecimal(3, calculateAmount(room.getPrice(), roomRequest.getCheckInDate(), roomRequest.getCheckOutDate()));
+            statement.setBigDecimal(3,
+                    AmountUtils.calculateAmount(room.getPrice(), roomRequest.getCheckInDate(), roomRequest.getCheckOutDate()));
             statement.setInt(4, room.getId());
             statement.setInt(5, roomRequest.getUser().getId());
             statement.executeUpdate();
 
             requestDao.changeStatusTo(roomRequest.getId(), RequestStatus.CONFIRMED);
-
-
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {
             closeDbResources(connection, statement);
         }
-    }
-
-     private BigDecimal calculateAmount(BigDecimal price, LocalDate checkInDate, LocalDate checkOutDate) {
-        long daysNumber = LocalDateUtils.calculateDaysBetweenDates(checkInDate, checkOutDate);
-        return price.multiply(BigDecimal.valueOf(daysNumber));
     }
 
     @Override

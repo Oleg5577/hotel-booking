@@ -25,11 +25,11 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
     private static final String FIND_ALL_ROOM_REQUESTS_BY_USER_SQL = "SELECT `request_id`, `check_in`, `check_out`, `room_size`, " +
             "`request_status`, `type_name` FROM `hotel_booking_db`.`room_request` " +
             "LEFT JOIN `room_type` ON `room_request`.`fk_room_type_id` = `room_type`.`room_type_id` " +
-            "WHERE `fk_user_id` = ?;";
+            "WHERE `fk_user_id` = ? ORDER BY `request_status`, `check_in`;";
 
     private static final String FIND_ALL_ROOM_REQUESTS_FOR_ALL_USERS_SQL = "SELECT `request_id`, `check_in`, `check_out`, `room_size`, " +
             "`request_status`, `type_name`, `fk_user_id` FROM `hotel_booking_db`.`room_request` " +
-            "LEFT JOIN `room_type` ON `room_request`.`fk_room_type_id` = `room_type`.`room_type_id` ORDER BY `request_status`";
+            "LEFT JOIN `room_type` ON `room_request`.`fk_room_type_id` = `room_type`.`room_type_id` ORDER BY `request_status`, `check_in`";
 
     private static final String FIND_ROOM_REQUEST_BY_ID_SQL = "SELECT request_id, check_in, check_out, room_size," +
             " request_status, fk_user_id, type_name FROM room_request " +
