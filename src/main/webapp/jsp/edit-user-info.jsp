@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title>Edit personal info</title>
+    <title><fmt:message key="edit-user-info.edit-user" bundle="${ i18n }"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
 </head>

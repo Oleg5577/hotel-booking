@@ -11,7 +11,6 @@
 <jsp:useBean id="user" scope="session" class="com.pronovich.hotelbooking.entity.User"/>
 <html lang="${language}">
 <head>
-    <title>Footer</title>
     <link href="../../css/bootstrap.css" rel="stylesheet">
     <link href="../../css/font-awesome.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
@@ -25,8 +24,8 @@
     <div class="row">
         <div class="col-xs-offset-4 col-xs-4">
             <ul class="list-unstyled">
-                <li>Hotel Booking<li>
-                <li>Minsk, Belarus</li>
+                <li><fmt:message key="home.label" bundle="${ i18n }"/><li>
+                <li><fmt:message key="home.label.address" bundle="${ i18n }"/></li>
             </ul>
         </div>
         <div class="col-xs-4">
@@ -38,7 +37,9 @@
     </div>
     <div class="row">
         <div class="col-xs-offset-8 col-xs-4">
-            <p class="text-muted pull-right">© 2017 Hotel Booking. All rights reserved</p>
+            <p class="text-muted pull-right">
+                <fmt:message key="home.label.rights" bundle="${ i18n }"/>
+            </p>
         </div>
     </div>
 </div>

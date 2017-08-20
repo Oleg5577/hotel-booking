@@ -11,7 +11,6 @@
 <jsp:useBean id="user" scope="session" class="com.pronovich.hotelbooking.entity.User"/>
 <html lang="${language}">
 <head>
-    <%--<title>Title</title>--%>
     <link href="../../css/bootstrap.css" rel="stylesheet">
     <link href="../../css/font-awesome.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">

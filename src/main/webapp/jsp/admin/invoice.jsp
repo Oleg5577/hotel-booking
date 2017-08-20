@@ -20,105 +20,122 @@
     <script src="../../js/jquery-1.12.4.min.js"></script>
     <script src="../../js/bootstrap.js"></script>
     <script src="../../js/main.js"></script>
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
 </head>
 <body>
+<jsp:include page="/jsp/section/header.jsp"/>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="invoice-title">
-                <h2>Invoice / Счет</h2>
-                <h3 class="pull-right">Order / Заказ № ${roomOrder.id}</h3>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-6">
-                    <address>
-                        <strong>Bill to / Плательщик: </strong><br>
-                        ${roomOrder.user.name} ${roomOrder.user.surname}<br>
-                        ${roomOrder.user.email}<br>
-                        ${roomOrder.user.phoneNumber}<br>
-                    </address>
+    <div id="printableArea">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="invoice-title">
+                    <h2>Invoice / Счет</h2>
+                    <h3 class="pull-right">Order / Заказ № ${roomOrder.id}</h3>
                 </div>
-                <div class="col-xs-6 text-right">
-                    <address>
-                        <strong>Payment to / Получатель:</strong><br>
-                        Hotel name <br>
-                        1234 Main<br>
-                        Apt. 4B<br>
-                        Springfield, ST 54321
-                    </address>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <address>
+                            <strong>Bill to / Плательщик: </strong><br>
+                            ${roomOrder.user.name} ${roomOrder.user.surname}<br>
+                            ${roomOrder.user.email}<br>
+                            ${roomOrder.user.phoneNumber}<br>
+                        </address>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <address>
+                            <strong>Payment to / Получатель:</strong><br>
+                            Booking hotel<br>
+                            Nemiga str, 1<br>
+                            Minsk, Belarus<br>
+                        </address>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 col-xs-offset-6 text-right">
-                    <address>
-                        <strong>Invoice Date / Дата счета:</strong><br>
-                        <ctg:current-date/><br><br>
-                    </address>
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-6 text-right">
+                        <address>
+                            <strong>Invoice Date / Дата счета:</strong><br>
+                            <ctg:current-date/><br><br>
+                        </address>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Order summary / Итог заказа</strong></h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-condensed">
-                            <thead>
-                            <tr>
-                                <th><strong>Room / Номер</strong></th>
-                                <th class="text-center"><strong>Check-in / Заселение</strong></th>
-                                <th class="text-center"><strong>Check-out / Выезд</strong></th>
-                                <th class="text-center"><strong>Quantity / Количество дней</strong></th>
-                                <th class="text-center"><strong>Price / Цена</strong></th>
-                                <td class="text-right"><strong>Amount / Сумма</strong></td>
-                            </tr>
-                            </thead>
-                            <tbody>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Order summary / Итог заказа</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-condensed">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        №${roomOrder.room.roomNumber},
-                                        <c:choose>
-                                            <c:when test="${roomOrder.room.roomType == 'STANDARD'}">
-                                                standard / стандартный
-                                            </c:when>
-                                            <c:when test="${roomOrder.room.roomType == 'SEMILUX'}">
-                                                semilux / полулюкс
-                                            </c:when>
-                                            <c:when test="${roomOrder.room.roomType == 'LUX'}">
-                                                lux / люкс
-                                            </c:when>
-                                            <c:when test="${roomOrder.room.roomType == 'PRESIDENT'}">
-                                                president / президентский
-                                            </c:when>
-                                        </c:choose>
-                                    </td>
-                                    <td class="text-center">${roomOrder.checkInDate}</td>
-                                    <td class="text-center">${roomOrder.checkOutDate}</td>
-                                    <td class="text-center">${daysNumber}</td>
-                                    <td class="text-center">${roomOrder.room.price} EUR</td>
-                                    <td class="text-right">${roomOrder.amount} EUR</td>
+                                    <th><strong>Room / Номер</strong></th>
+                                    <th class="text-center"><strong>Check-in / Заселение</strong></th>
+                                    <th class="text-center"><strong>Check-out / Выезд</strong></th>
+                                    <th class="text-center"><strong>Quantity / Количество дней</strong></th>
+                                    <th class="text-center"><strong>Price / Цена</strong></th>
+                                    <td class="text-right"><strong>Amount / Сумма</strong></td>
                                 </tr>
-                                <tr>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line text-center"><strong>Total / Итого</strong></td>
-                                    <td class="thick-line text-right">${roomOrder.amount} EUR</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            №${roomOrder.room.roomNumber},
+                                            <c:choose>
+                                                <c:when test="${roomOrder.room.roomType == 'STANDARD'}">
+                                                    standard / стандартный
+                                                </c:when>
+                                                <c:when test="${roomOrder.room.roomType == 'SEMILUX'}">
+                                                    semilux / полулюкс
+                                                </c:when>
+                                                <c:when test="${roomOrder.room.roomType == 'LUX'}">
+                                                    lux / люкс
+                                                </c:when>
+                                                <c:when test="${roomOrder.room.roomType == 'PRESIDENT'}">
+                                                    president / президентский
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td class="text-center">${roomOrder.checkInDate}</td>
+                                        <td class="text-center">${roomOrder.checkOutDate}</td>
+                                        <td class="text-center">${daysNumber}</td>
+                                        <td class="text-center">${roomOrder.room.price} EUR</td>
+                                        <td class="text-right">${roomOrder.amount} EUR</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line text-center"><strong>Total / Итого</strong></td>
+                                        <td class="thick-line text-right">${roomOrder.amount} EUR</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <button onclick="print_doc()">Print invoice</button>
+    <button onclick="printDiv('printableArea')" class="btn btn-info">
+        <fmt:message key="admin.account.label.invoice.print" bundle="${ i18n }"/>
+    </button>
+    <a href="/controller?command=find_info_for_admin_account" class="btn btn-default">
+        <span class="green"><fmt:message key="admin.account.label" bundle="${ i18n }"/></span>
+    </a>
 </div>
+<jsp:include page="/jsp/section/footer.jsp"/>
 </body>
 </html>

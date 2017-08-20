@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title>Add room request</title>
+    <title><fmt:message key="add-room-request.label.search-room" bundle="${ i18n }"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
 </head>
@@ -22,7 +22,7 @@
             <input type="hidden" name="command" value="add_room_request">
             <div class="form-group">
                 <label class="control-label col-sm-4" for="checkInRequest">
-                    <fmt:message key="add-room-request.label.check-in" bundle="${ i18n }"/>:
+                    <fmt:message key="add-room-request.label.search-room" bundle="${ i18n }"/>:
                     <span class="asterisk"> *</span>
                 </label>
                 <div class="col-sm-4">

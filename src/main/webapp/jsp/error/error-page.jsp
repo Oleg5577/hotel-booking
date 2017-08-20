@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title>Server error</title>
+    <title><fmt:message key="error-page-500.label" bundle="${ i18n }"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
 </head>
@@ -18,13 +18,13 @@
 <jsp:include page="/jsp/section/header.jsp"/>
 <div class="container">
     <div class="jumbotron">
-        <h1><span class="glyphicon glyphicon-fire red"></span>500 Internal Server Error</h1>
-        <p class="lead">The web server is returning an internal error for <em><span id="display-domain"></span></em>.</p>
+        <h1><span class="glyphicon glyphicon-fire red"></span><fmt:message key="error-page-500.label" bundle="${ i18n }"/></h1>
+        <p class="lead"><fmt:message key="error-page-500.message" bundle="${ i18n }"/></p>
         <a href="javascript:document.location.reload(true);" class="btn btn-default btn-lg text-center">
-            <span class="green">Try This Page Again</span>
+            <span class="green"><fmt:message key="error-page.button.repeat" bundle="${ i18n }"/></span>
         </a>
         <a href="<fmt:message key="path.page.home" bundle="${ path }"/>" class="btn btn-default btn-lg">
-            <span class="green">To Home page</span>
+            <span class="green"><fmt:message key="error-page.button.to-home" bundle="${ i18n }"/></span>
         </a>
     </div>
 </div>

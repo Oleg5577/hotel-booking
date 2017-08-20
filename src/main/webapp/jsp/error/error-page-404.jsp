@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title>Sign in</title>
+    <title><fmt:message key="error-page-404.label" bundle="${ i18n }"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
 </head>
@@ -18,11 +18,11 @@
 <jsp:include page="/jsp/section/header.jsp"/>
 <div class="container">
     <div class="jumbotron">
-        <h1><i class="fa fa-frown-o red"></i>404 Page Not Found</h1>
-        <p class="lead">We couldn't find what you're looking for on <em><span id="display-domain"></span></em>.</p>
+        <h1><i class="fa fa-frown-o red"></i><fmt:message key="error-page-404.label" bundle="${ i18n }"/></h1>
+        <p class="lead"><fmt:message key="error-page-404.message" bundle="${ i18n }"/></p>
         <p>
             <a href="<fmt:message key="path.page.home" bundle="${ path }"/>" class="btn btn-default btn-lg">
-                <span class="green">To Home page</span>
+                <span class="green"><fmt:message key="error-page.button.to-home" bundle="${ i18n }"/></span>
             </a>
         </p>
     </div>
