@@ -33,6 +33,7 @@
 <body>
 <jsp:include page="/jsp/section/header.jsp"/>
 <div class="container">
+    <div class="row">
     <div id="printableArea">
         <div class="row">
             <div class="col-xs-12">
@@ -135,6 +136,7 @@
     <a href="/controller?command=find_info_for_admin_account" class="btn btn-default">
         <span class="green"><fmt:message key="admin.account.label" bundle="${ i18n }"/></span>
     </a>
+</div>
 </div>
 <jsp:include page="/jsp/section/footer.jsp"/>
 </body>
