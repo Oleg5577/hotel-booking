@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-xs-6 text-right">
                         <address>
-                            <strong>Payment to / Получатель:</strong><br>
+                            <strong>Payment to / Получатель оплаты:</strong><br>
                             Booking hotel<br>
                             Nemiga str, 1<br>
                             Minsk, Belarus<br>
