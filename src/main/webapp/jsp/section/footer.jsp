@@ -6,7 +6,7 @@
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}" scope="session"/>
-<fmt:setBundle basename="property.bundler" var="i18n"/>
+<fmt:setBundle basename="property.locale" var="i18n"/>
 <fmt:setBundle basename="property.page" var="path"/>
 <jsp:useBean id="user" scope="session" class="com.pronovich.hotelbooking.entity.User"/>
 <html lang="${language}">
