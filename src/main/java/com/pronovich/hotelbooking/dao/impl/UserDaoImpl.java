@@ -36,6 +36,8 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
     private static final String UPDATE_USER_SQL = "UPDATE user SET name = ?, surname = ?, phone_number = ? WHERE email = ?";
 
+    private static final String UPDATE_PASSWORD_SQL = "UPDATE `user` SET password = ? WHERE email = ?";
+
     @Override
     public void addUser(RequestContent content) throws DaoException {
         ProxyConnection connection = null;
@@ -216,6 +218,23 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
             statement.setString(2, requestParameters.get("surname"));
             statement.setString(3, requestParameters.get("phoneNumber"));
             statement.setString(4, requestParameters.get("email"));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            closeDbResources(connection, statement);
+        }
+    }
+
+    @Override
+    public void changePasswordForUser(String email, String newPassword) throws DaoException {
+        ProxyConnection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getPool().getConnection();
+            statement = connection.prepareStatement(UPDATE_PASSWORD_SQL);
+            statement.setString(1, newPassword);
+            statement.setString(2, email);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);

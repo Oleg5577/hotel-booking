@@ -10,6 +10,8 @@ public class ProjectConstants {
 
     public static final String SIGN_UP_PAGE = "jsp/signup.jsp";
 
+    public static final String CHANGE_PASSWORD_PAGE = "jsp/change-password.jsp";
+
     public static final String ADD_ROOM_REQUEST_PAGE = "jsp/client/add-room-request.jsp";
 
     public static final String PERSONAL_ACCOUNT_PAGE = "jsp/client/personal-account.jsp";

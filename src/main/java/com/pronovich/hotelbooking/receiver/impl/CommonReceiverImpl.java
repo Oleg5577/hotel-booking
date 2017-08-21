@@ -24,6 +24,7 @@ public class CommonReceiverImpl implements CommonReceiver {
 
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
+    private static final String NEW_PASSWORD_PARAM = "newPassword";
     private static final String USER_PARAM = "user";
     private static final String UPDATED_USER_PARAM = "updatedUser";
     private static final String EMAIL_OR_PASSWORD_PARAM = "emailOrPassword";
@@ -130,5 +131,44 @@ public class CommonReceiverImpl implements CommonReceiver {
         } catch (DaoException e) {
             LOGGER.error("Find rooms descriptions error", e);
         }
+    }
+
+    @Override
+    public void changePassword(RequestContent content) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
+        Map<String, String> wrongRequestValues = CommonReceiverValidator.changePasswordValidate(content);
+
+        if (!wrongRequestValues.isEmpty()) {
+            content.addWrongValues(wrongRequestValues);
+            return;
+        }
+
+        User user = (User) content.getSessionAttributes().get(USER_PARAM);
+        String password = content.getRequestParameters().get(PASSWORD_PARAM);
+        String newPassword = content.getRequestParameters().get(NEW_PASSWORD_PARAM);
+
+        String email = user.getEmail();
+        UserDao userDao = new UserDaoImpl();
+        try {
+            String encodedSalt = userDao.findPasswordSaltByEmail(email);
+            byte[] salt = Base64.getDecoder().decode(encodedSalt);
+            String securePassword = PasswordUtils.getSecurePassword(password, salt);
+
+            if (isCorrectPassword(email, securePassword)) {
+                String newSecurePassword = PasswordUtils.getSecurePassword(newPassword, salt);
+                userDao.changePasswordForUser(email, newSecurePassword);
+            } else {
+                wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString("password-incorrect"));
+                content.addWrongValues(wrongRequestValues);
+            }
+        } catch (DaoException e) {
+            LOGGER.error("Sign in error", e);
+        }
+    }
+
+    private boolean isCorrectPassword(String email, String securePassword) throws DaoException {
+        UserDao userDao = new UserDaoImpl();
+        return userDao.findUserByEmailAndPassword(email, securePassword) != null;
+
     }
 }

@@ -22,6 +22,8 @@ public class CommonReceiverValidator {
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
     private static final String REPEAT_PASSWORD_PARAM = "repeatPassword";
+    private static final String NEW_PASSWORD_PARAM = "newPassword";
+    private static final String REPEAT_NEW_PASSWORD_PARAM = "repeatNewPassword";
     private static final String NAME_PARAM = "name";
     private static final String SURNAME_PARAM = "surname";
     private static final String PHONE_NUMBER_PARAM = "phoneNumber";
@@ -148,5 +150,40 @@ public class CommonReceiverValidator {
             LOGGER.error("Checking if email exists error", e);
         }
         return emailExists;
+    }
+
+    public static Map<String,String> changePasswordValidate(RequestContent content) {
+        String password = content.getRequestParameters().get(PASSWORD_PARAM);
+        String newPassword = content.getRequestParameters().get(NEW_PASSWORD_PARAM);
+        String repeatNewPassword = content.getRequestParameters().get(REPEAT_NEW_PASSWORD_PARAM);
+        User user = (User) content.getSessionAttributes().get(USER_PARAM);
+
+        Map<String, String> wrongRequestValues = new HashMap<>();
+
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
+
+        if (user == null) {
+            wrongRequestValues.put(USER_PARAM, resourceBundle.getString("user-unauthorized"));
+        }
+
+        if (StringUtils.isEmpty(password)) {
+            wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString("password-empty"));
+        }
+
+        if (StringUtils.isEmpty(newPassword)) {
+            wrongRequestValues.put(NEW_PASSWORD_PARAM, resourceBundle.getString("password-empty"));
+        } else if (newPassword.length() < MIN_PASSWORD_SIZE) {
+            wrongRequestValues.put(NEW_PASSWORD_PARAM, resourceBundle.getString("password-too-short-begin")
+                    + " " + MIN_PASSWORD_SIZE + " " + resourceBundle.getString("password-too-short-end"));
+        } else if (newPassword.equals(password)) {
+            wrongRequestValues.put(NEW_PASSWORD_PARAM, resourceBundle.getString("password-equals-new-password"));
+        }
+
+        if (StringUtils.isEmpty(repeatNewPassword)) {
+            wrongRequestValues.put(REPEAT_NEW_PASSWORD_PARAM, resourceBundle.getString("password-empty"));
+        } else if (!repeatNewPassword.equals(newPassword)) {
+            wrongRequestValues.put(REPEAT_NEW_PASSWORD_PARAM, resourceBundle.getString("password-repeat-not-match"));
+        }
+        return wrongRequestValues;
     }
 }

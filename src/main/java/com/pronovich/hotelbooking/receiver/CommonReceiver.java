@@ -12,4 +12,6 @@ public interface CommonReceiver extends Receiver {
     void findRoomsDescription(RequestContent content);
 
     void editUserInfo(RequestContent content);
+
+    void changePassword(RequestContent content);
 }

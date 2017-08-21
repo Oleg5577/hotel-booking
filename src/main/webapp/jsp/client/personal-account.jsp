@@ -46,7 +46,12 @@
                             <td class="text-right">${user.phoneNumber}</td>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td class="text-right">
+                                <a href="<fmt:message key="path.page.user.change-password" bundle="${ path }"/>"
+                                   class="btn btn-xs btn-default green">
+                                    <fmt:message key="change-password.label" bundle="${ i18n }"/>
+                                </a>
+                            </td>
                             <td class="text-right">
                                 <a href="<fmt:message key="path.page.user.edit-user-info" bundle="${ path }"/> " class="btn btn-xs btn-info ">
                                     <fmt:message key="common.button.edit" bundle="${ i18n }"/>

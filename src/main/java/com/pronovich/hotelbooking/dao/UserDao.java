@@ -21,4 +21,6 @@ public interface UserDao {
     String findPasswordByEmail(String email) throws DaoException;
 
     void updateUser(RequestContent content) throws DaoException;
+
+    void changePasswordForUser(String email, String newPassword) throws DaoException;
 }

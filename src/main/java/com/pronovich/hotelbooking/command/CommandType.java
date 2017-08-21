@@ -34,6 +34,13 @@ public enum CommandType {
         }
     },
 
+    CHANGE_PASSWORD( new ChangePasswordCommand(new CommonReceiverImpl()) ) {
+        @Override
+        public void doReceiver(RequestContent content) {
+            ( (CommonReceiverImpl) getCommand().getReceiver() ).changePassword(content);
+        }
+    },
+
     SIGN_OUT( new SignOutCommand() ) {
         @Override
         public void doReceiver(RequestContent content) {

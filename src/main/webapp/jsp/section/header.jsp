@@ -135,10 +135,10 @@
                     <input type="hidden" name="command" value="sign_in">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
+                            <input class="form-control" placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>" name="email" type="email" autofocus="">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                            <input class="form-control" placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>" name="password" type="password" value="">
                         </div>
                         <fmt:message key="signin.button.submit" var="buttonValue" bundle="${ i18n }"/>
                         <input type="submit" name="submit" value="${buttonValue}" class="btn btn-sm btn-success">
