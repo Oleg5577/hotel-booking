@@ -1,7 +1,6 @@
 package com.pronovich.hotelbooking.controller;
 
 import com.pronovich.hotelbooking.command.Command;
-import com.pronovich.hotelbooking.command.impl.common.SignOutCommand;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestResult;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;

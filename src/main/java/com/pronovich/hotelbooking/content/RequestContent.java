@@ -21,10 +21,6 @@ public class RequestContent {
         return requestParameters;
     }
 
-    public void setRequestParameters(Map<String,String> requestParameters) {
-        this.requestParameters = requestParameters;
-    }
-
     public HashMap<String, Object> getRequestAttributes() {
         return requestAttributes;
     }

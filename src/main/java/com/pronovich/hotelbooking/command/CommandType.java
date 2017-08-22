@@ -153,9 +153,7 @@ public enum CommandType {
         public void doReceiver(RequestContent content) {
             ( (AdminReceiverImpl) getCommand().getReceiver() ).issueInvoice(content);
         }
-    }
-
-    ;
+    };
 
     private Command command;
 
