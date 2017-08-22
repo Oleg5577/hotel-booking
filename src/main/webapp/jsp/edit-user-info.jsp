@@ -33,7 +33,7 @@
                                 </label>
                                 <input class="form-control" id="email" name="email" value="${user.email}"
                                        placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>"
-                                       type="email" readonly>
+                                       type="email" readonly required>
                                 <label class="wrong-values">${wrongValues.email}</label>
                             </div>
                             <div class="control-group">
@@ -42,7 +42,7 @@
                                 </label>
                                 <input class="form-control"
                                        placeholder="<fmt:message key="signup.label.name" bundle="${ i18n }"/>"
-                                       type="text"
+                                       type="text" required
                                        id="name" name="name" value="${user.name}">
                                 <label class="wrong-values">${wrongValues.name}</label>
                             </div>
@@ -50,7 +50,7 @@
                                 <label for="surname">
                                     <fmt:message key="signup.label.surname" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
                                 </label>
-                                <input class="form-control" id="surname" name="surname" value="${user.surname}"
+                                <input class="form-control" id="surname" name="surname" value="${user.surname}" required
                                        placeholder="<fmt:message key="signup.label.surname" bundle="${ i18n }"/>">
                                 <label class="wrong-values">${wrongValues.surname}</label>
                             </div>
@@ -61,7 +61,7 @@
                                 </label>
                                 <input class="form-control" name="phoneNumber"
                                        placeholder="<fmt:message key="signup.label.phone-number" bundle="${ i18n }"/>"
-                                       id="phoneNumber"
+                                       id="phoneNumber" required
                                        value="${user.phoneNumber}" type="text">
                                 <label class="wrong-values">${wrongValues.phoneNumber}</label>
                             </div>
@@ -71,7 +71,7 @@
                                 </label>
                                 <input class="form-control"
                                        placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
-                                       id="password" name="password" type="password">
+                                       id="password" name="password" type="password" required>
                                 <label class="wrong-values">${wrongValues.password}</label>
                             </div>
                             <div class="control-group">

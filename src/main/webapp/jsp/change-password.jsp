@@ -33,7 +33,7 @@
                                 </label>
                                 <input class="form-control"
                                        placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
-                                       id="password" name="password" type="password">
+                                       id="password" name="password" type="password" required>
                                 <label class="wrong-values">${wrongValues.password}</label>
                             </div>
                             <div class="control-group">
@@ -42,7 +42,7 @@
                                 </label>
                                 <input class="form-control" id="newPassword" name="newPassword" value="${requestValues.email}"
                                        placeholder="<fmt:message key="change-password.label.new-password" bundle="${ i18n }"/>"
-                                       type="password">
+                                       type="password" required>
                                 <label class="wrong-values">${wrongValues.newPassword}</label>
                             </div>
                             <div class="control-group">
@@ -50,7 +50,7 @@
                                     <fmt:message key="change-password.label.repeat-new-password" bundle="${ i18n }"/>:<span class="asterisk"> *</span></label>
                                 <input class="form-control"
                                        placeholder="<fmt:message key="change-password.label.repeat-new-password" bundle="${ i18n }"/>"
-                                       type="password" id="repeat-new-password" name="repeatNewPassword">
+                                       type="password" id="repeat-new-password" name="repeatNewPassword" required>
                                 <label class="wrong-values">${wrongValues.repeatNewPassword}</label>
                             </div>
                             <div class="control-group">

@@ -135,10 +135,12 @@
                     <input type="hidden" name="command" value="sign_in">
                     <fieldset>
                         <div class="form-group">
-                            <input class="form-control" placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>" name="email" type="email" autofocus="">
+                            <input class="form-control" placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>"
+                                   name="email" type="email" autofocus="" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>" name="password" type="password" value="">
+                            <input class="form-control" placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
+                                   name="password" type="password" value="" required>
                         </div>
                         <fmt:message key="signin.button.submit" var="buttonValue" bundle="${ i18n }"/>
                         <input type="submit" name="submit" value="${buttonValue}" class="btn btn-sm btn-success">
@@ -168,7 +170,7 @@
                             </label>
                             <input class="form-control" id="email" name="email" value="${requestValues.email}"
                                    placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>"
-                                   type="email">
+                                   type="email" required>
                         </div>
                         <div class="form-group">
                             <label for="password">
@@ -176,14 +178,14 @@
                             </label>
                             <input class="form-control"
                                    placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
-                                   id="password" name="password" type="password">
+                                   id="password" name="password" type="password" required>
                         </div>
                         <div class="form-group">
                             <label for="repeat-password">
                                 <fmt:message key="signup.label.repeat-password" bundle="${ i18n }"/>:<span class="asterisk"> *</span></label>
                             <input class="form-control"
                                    placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
-                                   type="password" id="repeat-password" name="repeatPassword">
+                                   type="password" id="repeat-password" name="repeatPassword" required>
                         </div>
                         <div class="form-group">
                             <label for="name">
@@ -192,14 +194,14 @@
                             <input class="form-control"
                                    placeholder="<fmt:message key="signup.label.name" bundle="${ i18n }"/>"
                                    type="text"
-                                   id="name" name="name" value="${requestValues.name}">
+                                   id="name" name="name" value="${requestValues.name}" required>
                         </div>
                         <div class="form-group">
                             <label for="surname">
                                 <fmt:message key="signup.label.surname" bundle="${ i18n }"/>:<span class="asterisk"> *</span>
                             </label>
                             <input class="form-control" id="surname" name="surname" value="${requestValues.surname}"
-                                   placeholder="<fmt:message key="signup.label.surname" bundle="${ i18n }"/>">
+                                   placeholder="<fmt:message key="signup.label.surname" bundle="${ i18n }"/>" required>
                         </div>
                         <div class="form-group">
                             <label for="phoneNumber">
@@ -209,7 +211,7 @@
                             <input class="form-control" name="phoneNumber"
                                    placeholder="<fmt:message key="signup.label.phone-number" bundle="${ i18n }"/>"
                                    id="phoneNumber"
-                                   value="${requestValues.phoneNumber}" type="text">
+                                   value="${requestValues.phoneNumber}" type="text" required>
                         </div>
                         <div class="form-group">
                             <fmt:message key="signup.button.submit" bundle="${ i18n }" var="buttonValue"/>

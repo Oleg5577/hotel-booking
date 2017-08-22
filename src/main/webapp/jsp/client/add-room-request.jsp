@@ -27,7 +27,7 @@
                 </label>
                 <div class="col-sm-4">
                     <input type="date" class="form-control" id="checkInRequest" name="checkInRequest"
-                           value="${requestValues.checkInRequest}">
+                           value="${requestValues.checkInRequest}" required>
                     <label class="wrong-values">${wrongValues.checkInRequest}</label>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 </label>
                 <div class="col-sm-4">
                     <input type="date" class="form-control" id="checkOutRequest" name="checkOutRequest"
-                           value="${requestValues.checkOutRequest}">
+                           value="${requestValues.checkOutRequest}" required>
                     <label class="wrong-values">${wrongValues.checkOutRequest}</label>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <span class="asterisk"> *</span>
                 </label>
                 <div class="col-sm-4">
-                    <select class="select form-control" id="roomSizeRequest" name="roomSizeRequest">
+                    <select class="select form-control" id="roomSizeRequest" name="roomSizeRequest" required>
                         <option value=""></option>
                         <option value="1" ${requestValues.roomSizeRequest == '1' ? 'selected' : ''}>
                             <fmt:message key="add-room-request.label.room-size.1-person" bundle="${ i18n }"/>
@@ -66,7 +66,7 @@
                     <span class="asterisk"> *</span>
                 </label>
                 <div class="col-sm-4">
-                    <select class="select form-control" id="roomTypeRequest" name="roomTypeRequest" >
+                    <select class="select form-control" id="roomTypeRequest" name="roomTypeRequest" required>
                         <option value=""></option>
                         <option value="standard" ${requestValues.roomTypeRequest == 'standard' ? 'selected' : ''}>
                             <fmt:message key="add-room-request.label.room-type.standard" bundle="${ i18n }"/>

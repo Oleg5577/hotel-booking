@@ -28,12 +28,14 @@
                         <input type="hidden" name="command" value="sign_in">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>" name="email" type="email"
+                                <input class="form-control" placeholder="<fmt:message key="signup.label.email" bundle="${ i18n }"/>"
+                                       name="email" type="email" required
                                        autofocus="" value="${requestValues.email}">
                                 <label class="wrong-values">${wrongValues.email}</label>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>" name="password" type="password">
+                                <input class="form-control" placeholder="<fmt:message key="signup.label.password" bundle="${ i18n }"/>"
+                                       name="password" type="password" required>
                                 <label class="wrong-values">${wrongValues.password}</label>
                                 <label class="wrong-values">${wrongValues.emailOrPassword}</label>
                             </div>
