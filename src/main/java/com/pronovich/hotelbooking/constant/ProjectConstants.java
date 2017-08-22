@@ -27,4 +27,7 @@ public class ProjectConstants {
     public static final String FIND_INFO_FOR_CLIENT_ACCOUNT = "/controller?command=find_info_for_client_account";
 
     public static final String FIND_INFO_FOR_ADMIN_ACCOUNT = "/controller?command=find_info_for_admin_account";
+
+    private ProjectConstants() {
+    }
 }

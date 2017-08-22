@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 abstract class AbstractBaseDao {
 
-    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
+    private static final Logger LOGGER = LogManager.getLogger(AbstractBaseDao.class);
 
     void closeDbResources(ProxyConnection connection, Statement statement) throws DaoException {
         closeStatement(statement);

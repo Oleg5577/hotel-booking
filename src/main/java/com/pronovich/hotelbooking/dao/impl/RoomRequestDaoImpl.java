@@ -6,7 +6,6 @@ import com.pronovich.hotelbooking.dao.RoomRequestDao;
 import com.pronovich.hotelbooking.dao.UserDao;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
-import com.pronovich.hotelbooking.dao.daoutils.ResultSetConverter;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.entity.RequestStatus;
@@ -18,6 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDao {
+
+    private static final String USER_PARAM = "user";
+    private static final String ROOM_TYPE_REQUEST_PARAM = "roomTypeRequest";
+    private static final String CHECK_IN_REQUEST_PARAM = "checkInRequest";
+    private static final String CHECK_OUT_REQUEST_PARAM = "checkOutRequest";
+    private static final String ROOM_SIZE_REQUEST_PARAM = "roomSizeRequest";
+    private static final String FK_USER_ID_PARAM = "fk_user_id";
 
     private static final String ADD_ROOM_REQUEST_SQL = "INSERT INTO hotel_booking_db.room_request " +
             "(check_in, check_out, room_size, fk_user_id, fk_room_type_id) VALUES (?, ?, ?, ?, ?)";
@@ -51,14 +57,14 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             statement = connection.prepareStatement(ADD_ROOM_REQUEST_SQL);
 
             Map<String, String> requestParameters = requestContent.getRequestParameters();
-            User user = (User) requestContent.getSessionAttributes().get("user");
+            User user = (User) requestContent.getSessionAttributes().get(USER_PARAM);
 
             RoomDao roomDao = new RoomDaoImpl();
-            int roomId = roomDao.findRoomTypeIdByName(requestParameters.get("roomTypeRequest"));
+            int roomId = roomDao.findRoomTypeIdByName(requestParameters.get(ROOM_TYPE_REQUEST_PARAM));
 
-            statement.setDate(1, Date.valueOf( requestParameters.get("checkInRequest")) );
-            statement.setDate(2, Date.valueOf( requestParameters.get("checkOutRequest")) );
-            statement.setInt(3, Integer.valueOf(requestParameters.get("roomSizeRequest")) );
+            statement.setDate(1, Date.valueOf( requestParameters.get(CHECK_IN_REQUEST_PARAM)) );
+            statement.setDate(2, Date.valueOf( requestParameters.get(CHECK_OUT_REQUEST_PARAM)) );
+            statement.setInt(3, Integer.valueOf(requestParameters.get(ROOM_SIZE_REQUEST_PARAM)) );
             statement.setInt(4, user.getId());
             statement.setInt(5, roomId);
 
@@ -106,7 +112,7 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
 
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                User user = userDao.findUserById( resultSet.getInt("fk_user_id") );
+                User user = userDao.findUserById( resultSet.getInt(FK_USER_ID_PARAM) );
                 roomRequests.add(ResultSetConverter.createRequestEntity(resultSet, user));
             }
             return roomRequests;
@@ -130,7 +136,7 @@ public class RoomRequestDaoImpl extends AbstractBaseDao implements RoomRequestDa
             statement.setInt(1, requestId);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                User user = userDao.findUserById(resultSet.getInt("fk_user_id"));
+                User user = userDao.findUserById(resultSet.getInt(FK_USER_ID_PARAM));
                 roomRequest = ResultSetConverter.createRequestEntity(resultSet, user);
             }
             return roomRequest;

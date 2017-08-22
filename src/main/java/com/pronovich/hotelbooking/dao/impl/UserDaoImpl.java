@@ -4,7 +4,6 @@ import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.dao.UserDao;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
-import com.pronovich.hotelbooking.dao.daoutils.ResultSetConverter;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
 
@@ -14,6 +13,17 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class UserDaoImpl extends AbstractBaseDao implements UserDao {
+
+    private static final String NAME_PARAM = "name";
+    private static final String SURNAME_PARAM = "surname";
+    private static final String PHONE_NUMBER_PARAM = "phoneNumber";
+    private static final String EMAIL_PARAM = "email";
+    private static final String PASSWORD_PARAM = "password";
+    private static final String PASSWORD_SALT_PARAM = "password_salt";
+    private static final String ROLE_ID_PARAM = "role_id";
+    private static final String ROLE_PARAM = "role";
+    private static final String SECURE_PASSWORD_PARAM = "securePassword";
+    private static final String ENCODED_SALT_PARAM = "encodedSalt";
 
     private static final String ADD_USER_SQL = "INSERT INTO hotel_booking_db.user " +
             "(email, password, password_salt, name, surname, phone_number, fk_role_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -49,13 +59,13 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
             Map<String, String> requestParameters = content.getRequestParameters();
             Map<String, Object> requestAttributes = content.getRequestAttributes();
 
-            statement.setString(1, requestParameters.get("email"));
-            statement.setString(2, (String) requestAttributes.get("securePassword"));
-            statement.setString(3, (String) requestAttributes.get("encodedSalt"));
-            statement.setString(4, requestParameters.get("name"));
-            statement.setString(5, requestParameters.get("surname"));
-            statement.setString(6, requestParameters.get("phoneNumber"));
-            statement.setInt(7, findRoleIdByName(requestParameters.get("role")));
+            statement.setString(1, requestParameters.get(EMAIL_PARAM));
+            statement.setString(2, (String) requestAttributes.get(SECURE_PASSWORD_PARAM));
+            statement.setString(3, (String) requestAttributes.get(ENCODED_SALT_PARAM));
+            statement.setString(4, requestParameters.get(NAME_PARAM));
+            statement.setString(5, requestParameters.get(SURNAME_PARAM));
+            statement.setString(6, requestParameters.get(PHONE_NUMBER_PARAM));
+            statement.setInt(7, findRoleIdByName(requestParameters.get(ROLE_PARAM)));
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -78,7 +88,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                roleId = resultSet.getInt("role_id");
+                roleId = resultSet.getInt(ROLE_ID_PARAM);
             }
             return roleId;
         } catch (SQLException e) {
@@ -100,7 +110,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
             statement.setString(1, email);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                salt = resultSet.getString("password_salt");
+                salt = resultSet.getString(PASSWORD_SALT_PARAM);
             }
             return salt;
         } catch (SQLException e) {
@@ -194,7 +204,7 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                password = resultSet.getString("password");
+                password = resultSet.getString(PASSWORD_PARAM);
             }
             return password;
         } catch (SQLException e) {
@@ -214,10 +224,10 @@ public class UserDaoImpl extends AbstractBaseDao implements UserDao {
 
             Map<String, String> requestParameters = content.getRequestParameters();
 
-            statement.setString(1, requestParameters.get("name"));
-            statement.setString(2, requestParameters.get("surname"));
-            statement.setString(3, requestParameters.get("phoneNumber"));
-            statement.setString(4, requestParameters.get("email"));
+            statement.setString(1, requestParameters.get(NAME_PARAM));
+            statement.setString(2, requestParameters.get(SURNAME_PARAM));
+            statement.setString(3, requestParameters.get(PHONE_NUMBER_PARAM));
+            statement.setString(4, requestParameters.get(EMAIL_PARAM));
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);

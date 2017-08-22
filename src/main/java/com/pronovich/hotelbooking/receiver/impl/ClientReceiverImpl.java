@@ -10,7 +10,7 @@ import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.ClientReceiver;
-import com.pronovich.hotelbooking.validator.ClientReceiverValidator;
+import com.pronovich.hotelbooking.validator.ClientValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +46,7 @@ public class ClientReceiverImpl implements ClientReceiver {
 
     @Override
     public void addRoomRequest(RequestContent content) {
-        Map<String, String> wrongRequestValues = ClientReceiverValidator.addRoomRequestValidate(content);
+        Map<String, String> wrongRequestValues = ClientValidator.addRoomRequestValidate(content);
 
         if (!wrongRequestValues.isEmpty()) {
             content.addWrongValues(wrongRequestValues);

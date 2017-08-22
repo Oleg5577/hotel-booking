@@ -13,7 +13,7 @@ import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.exception.DaoException;
 import com.pronovich.hotelbooking.receiver.AdminReceiver;
-import com.pronovich.hotelbooking.utils.LocalDateUtils;
+import com.pronovich.hotelbooking.util.LocalDateUtility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -147,7 +147,7 @@ public class AdminReceiverImpl implements AdminReceiver {
             String orderId = content.getRequestParameters().get(ROOM_ORDER_ID);
 
             RoomOrder roomOrder = roomOrderDao.findOrderById(Integer.valueOf(orderId));
-            long daysNumber = LocalDateUtils.calculateDaysBetweenDates(roomOrder.getCheckInDate(), roomOrder.getCheckOutDate());
+            long daysNumber = LocalDateUtility.calculateDaysBetweenDates(roomOrder.getCheckInDate(), roomOrder.getCheckOutDate());
 
             content.addRequestAttributes(ROOM_ORDER_PARAM, roomOrder);
             content.addRequestAttributes(DAYS_NUMBER_PARAM, daysNumber);

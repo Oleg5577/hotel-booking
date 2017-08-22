@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/controller")
-public class CommandController extends HttpServlet {
+public class ProjectController extends HttpServlet {
 
-    private static final Logger LOGGER = LogManager.getLogger(CommandController.class);
+    private static final Logger LOGGER = LogManager.getLogger(ProjectController.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,11 +34,7 @@ public class CommandController extends HttpServlet {
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = new CommandFactory().initCommand(request);
         RequestResult requestResult = command.execute(request);
-        navigateToPage(requestResult, request, response);
-    }
 
-    private void navigateToPage(RequestResult requestResult, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
         String page = requestResult.getPage();
         NavigationType navigationType = requestResult.getNavigationType();
 

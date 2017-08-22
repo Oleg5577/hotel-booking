@@ -1,4 +1,4 @@
-package com.pronovich.hotelbooking.utils;
+package com.pronovich.hotelbooking.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,9 +8,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
-public class PasswordUtils {
+public class PasswordUtility {
 
-    private static final Logger LOGGER = LogManager.getLogger(PasswordUtils.class);
+    private static final Logger LOGGER = LogManager.getLogger(PasswordUtility.class);
 
     public static byte[] getSalt() {
         SecureRandom sr;

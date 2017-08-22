@@ -5,14 +5,13 @@ import com.pronovich.hotelbooking.dao.RoomRequestDao;
 import com.pronovich.hotelbooking.dao.UserDao;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
-import com.pronovich.hotelbooking.dao.daoutils.ResultSetConverter;
 import com.pronovich.hotelbooking.entity.Room;
 import com.pronovich.hotelbooking.entity.RoomOrder;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.entity.User;
 import com.pronovich.hotelbooking.entity.RequestStatus;
 import com.pronovich.hotelbooking.exception.DaoException;
-import com.pronovich.hotelbooking.utils.AmountUtils;
+import com.pronovich.hotelbooking.util.AmountUtility;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
+
+    private static final String FK_USER_ID_PARAM = "fk_user_id";
 
     private static final String FIND_ALL_ORDERS_BY_USER_SQL = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
             "`room_id`, `number`, `size`, `price`, " +
@@ -36,7 +37,7 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
             "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
             "LEFT JOIN `room_type` ON `room`.`fk_room_type_id` = `room_type`.`room_type_id` ORDER BY `order_status`, `check_in`";
 
-    private static final String FIND_ROOM_ORDER_BY_ID = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
+    private static final String FIND_ROOM_ORDER_BY_ID_SQL = "SELECT `order_id`, `check_in`, `check_out`, `amount`, " +
             "`room_id`, `fk_user_id` , `number`, `size`, `price`, " +
             "`room_type_id`, `type_name`, `is_paid`, `order_status` FROM `order` " +
             "LEFT JOIN `room` ON `order`.`fk_room_id` = `room`.`room_id` " +
@@ -93,7 +94,7 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
 
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                User user = userDao.findUserById( resultSet.getInt("fk_user_id") );
+                User user = userDao.findUserById( resultSet.getInt(FK_USER_ID_PARAM) );
                 roomOrders.add(ResultSetConverter.createRoomOrderEntity(resultSet, user));
             }
             return roomOrders;
@@ -113,12 +114,12 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
         UserDao userDao = new UserDaoImpl();
         try {
             connection = ConnectionPool.getPool().getConnection();
-            statement = connection.prepareStatement(FIND_ROOM_ORDER_BY_ID);
+            statement = connection.prepareStatement(FIND_ROOM_ORDER_BY_ID_SQL);
             statement.setInt(1, orderId);
 
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                User user = userDao.findUserById( resultSet.getInt("fk_user_id") );
+                User user = userDao.findUserById( resultSet.getInt(FK_USER_ID_PARAM) );
                 roomOrder = ResultSetConverter.createRoomOrderEntity(resultSet, user);
             }
             return roomOrder;
@@ -141,7 +142,7 @@ public class RoomOrderDaoImpl extends AbstractBaseDao implements RoomOrderDao {
             statement.setDate( 1, Date.valueOf(roomRequest.getCheckInDate()) );
             statement.setDate( 2, Date.valueOf(roomRequest.getCheckOutDate()) );
             statement.setBigDecimal(3,
-                    AmountUtils.calculateAmount(room.getPrice(), roomRequest.getCheckInDate(), roomRequest.getCheckOutDate()));
+                    AmountUtility.calculateAmount(room.getPrice(), roomRequest.getCheckInDate(), roomRequest.getCheckOutDate()));
             statement.setInt(4, room.getId());
             statement.setInt(5, roomRequest.getUser().getId());
             statement.executeUpdate();

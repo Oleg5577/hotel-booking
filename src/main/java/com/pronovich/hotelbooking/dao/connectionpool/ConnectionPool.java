@@ -89,8 +89,7 @@ public class ConnectionPool {
     public void closeAllConnections() {
         for (int i = 0; i < connectionQueue.size(); i++) {
             try {
-                ProxyConnection connection = connectionQueue.take();
-                connection.close();
+                connectionQueue.take().close();
             } catch (SQLException | InterruptedException e) {
                 LOGGER.error("Close connection error");
             }

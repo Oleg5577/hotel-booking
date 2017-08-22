@@ -12,6 +12,9 @@ import java.util.Locale;
 public class ChangeLocaleCommand implements Command {
 
     private static final String LANGUAGE_PARAM = "language";
+    private static final String RU_LOCALE = "ru_RU";
+    private static final String RU_LANGUAGE = "ru";
+    private static final String RU_COUNTRY = "RU";
 
     @Override
     public Receiver getReceiver() {
@@ -23,12 +26,12 @@ public class ChangeLocaleCommand implements Command {
     public RequestResult execute(HttpServletRequest request) {
         String language = request.getParameter(LANGUAGE_PARAM);
 
-        if (language.equals("ru_RU")) {
-            Locale.setDefault(new Locale("ru", "RU"));
+        if (RU_LOCALE.equals(language)) {
+            Locale.setDefault(new Locale(RU_LANGUAGE, RU_COUNTRY));
         } else {
             Locale.setDefault(Locale.US);
         }
-        request.getSession().setAttribute("language", language);
+        request.getSession().setAttribute(LANGUAGE_PARAM, language);
         return new RequestResult(ProjectConstants.HOME_PAGE, NavigationType.FORWARD);
     }
 }

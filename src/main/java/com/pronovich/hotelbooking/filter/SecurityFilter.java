@@ -45,6 +45,7 @@ public class SecurityFilter implements Filter {
         clientCommands.add("cancel_request_by_client");
         clientCommands.add("cancel_request_by_client");
         adminCommands.add("cancel_order_by_client");
+        adminCommands.add("change_password");
     }
 
     private void initAdminCommands() {

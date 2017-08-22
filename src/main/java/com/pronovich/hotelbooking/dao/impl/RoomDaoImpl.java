@@ -3,7 +3,6 @@ package com.pronovich.hotelbooking.dao.impl;
 import com.pronovich.hotelbooking.dao.RoomDao;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
 import com.pronovich.hotelbooking.dao.connectionpool.ProxyConnection;
-import com.pronovich.hotelbooking.dao.daoutils.ResultSetConverter;
 import com.pronovich.hotelbooking.entity.Room;
 import com.pronovich.hotelbooking.entity.RoomRequest;
 import com.pronovich.hotelbooking.exception.DaoException;

@@ -1,4 +1,4 @@
-package com.pronovich.hotelbooking.dao.daoutils;
+package com.pronovich.hotelbooking.dao.impl;
 
 import com.pronovich.hotelbooking.entity.Room;
 import com.pronovich.hotelbooking.entity.RoomOrder;
@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class ResultSetConverter {
+class ResultSetConverter {
 
     private static final String USER_ID = "user_id";
     private static final String EMAIL = "email";
@@ -38,7 +38,7 @@ public class ResultSetConverter {
     private static final String ROOM_SIZE = "room_size";
     private static final String REQUEST_STATUS = "request_status";
 
-    public static User createUserEntity(ResultSet resultSet) throws DaoException {
+    static User createUserEntity(ResultSet resultSet) throws DaoException {
         User user = new User();
         try {
             Integer userId = resultSet.getInt(USER_ID);
@@ -60,7 +60,7 @@ public class ResultSetConverter {
         return user;
     }
 
-    public static RoomOrder createRoomOrderEntity(ResultSet resultSet, User user) throws DaoException {
+    static RoomOrder createRoomOrderEntity(ResultSet resultSet, User user) throws DaoException {
         RoomOrder roomOrder = new RoomOrder();
         try {
             Integer orderId = resultSet.getInt(ORDER_ID);
@@ -85,7 +85,7 @@ public class ResultSetConverter {
         return roomOrder;
     }
 
-    public static Room createRoomEntity(ResultSet resultSet) throws DaoException {
+    static Room createRoomEntity(ResultSet resultSet) throws DaoException {
         Room room = new Room();
         try {
             Integer roomId = resultSet.getInt(ROOM_ID);
@@ -105,7 +105,7 @@ public class ResultSetConverter {
         return room;
     }
 
-    public static RoomRequest createRequestEntity(ResultSet resultSet, User user) throws DaoException {
+    static RoomRequest createRequestEntity(ResultSet resultSet, User user) throws DaoException {
         RoomRequest roomRequest = new RoomRequest();
         try {
             Integer requestId = resultSet.getInt(REQUEST_ID);

@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class ClientReceiverValidator {
+public class ClientValidator {
 
     private static final String BUNDLE = "property/wrongValues";
 
