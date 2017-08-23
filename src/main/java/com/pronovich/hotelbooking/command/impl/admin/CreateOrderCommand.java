@@ -38,6 +38,7 @@ public class CreateOrderCommand  extends AbstractCommand {
 
         request.setAttribute(LIST_ROOM_ORDERS, content.getRequestAttributes().get(LIST_ROOM_ORDERS));
         request.setAttribute(LIST_ROOM_REQUESTS, content.getRequestAttributes().get(LIST_ROOM_REQUESTS));
-        return new RequestResult(ProjectConstants.ADMIN_ACCOUNT_PAGE, NavigationType.FORWARD);
+
+        return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
     }
 }

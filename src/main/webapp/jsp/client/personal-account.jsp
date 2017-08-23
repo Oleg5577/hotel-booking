@@ -219,7 +219,7 @@
                             <td class="text-center">
                                 <c:choose>
                                     <c:when test="${roomOrder.paid}">
-                                        <label class="red"><fmt:message key="admin.account.label.order-is-paid" bundle="${ i18n }"/></label>
+                                        <label class="green"><fmt:message key="admin.account.label.order-is-paid" bundle="${ i18n }"/></label>
                                     </c:when>
                                     <c:otherwise>
                                         <fmt:message key="admin.account.label.order-is-not-paid" bundle="${ i18n }"/>

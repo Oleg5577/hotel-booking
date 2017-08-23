@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="now" class="java.util.Date"/>
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="currentDate"/>
+
 <c:set var="language"
        value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
        scope="session"/>
@@ -207,12 +211,13 @@
                 <tbody>
                 <c:forEach items="${listRoomOrders}" var="roomOrder">
                     <tr <c:choose>
-                        <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">class="info"</c:when>
-                        <c:when test="${roomOrder.orderStatus == 'CHECKED_IN'}">class="active"</c:when>
-                        <c:when test="${roomOrder.orderStatus == 'CHECKED_OUT'}">class="success"</c:when>
-                        <c:when test="${roomOrder.orderStatus == 'CANCELED'}">class="danger"</c:when>
-                        <c:otherwise>class="default"</c:otherwise>
-                    </c:choose>>
+                            <c:when test="${roomOrder.checkInDate == currentDate}">class="warning red font-bold"</c:when>
+                            <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">class="info"</c:when>
+                            <c:when test="${roomOrder.orderStatus == 'CHECKED_IN'}">class="active"</c:when>
+                            <c:when test="${roomOrder.orderStatus == 'CHECKED_OUT'}">class="success"</c:when>
+                            <c:when test="${roomOrder.orderStatus == 'CANCELED'}">class="danger"</c:when>
+                            <c:otherwise>class="default"</c:otherwise>
+                        </c:choose>>
                         <td class="text-center">${roomOrder.checkInDate}</td>
                         <td class="text-center">${roomOrder.checkOutDate}</td>
                         <td class="text-center">${roomOrder.user}</td>
@@ -273,7 +278,7 @@
                         <td class="text-center">
                             <c:choose>
                                 <c:when test="${roomOrder.paid}">
-                                    <label class="red"><fmt:message key="admin.account.label.order-is-paid" bundle="${ i18n }"/></label>
+                                    <label class="green"><fmt:message key="admin.account.label.order-is-paid" bundle="${ i18n }"/></label>
                                 </c:when>
                                 <c:otherwise>
                                     <fmt:message key="admin.account.label.order-is-not-paid" bundle="${ i18n }"/>
