@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.common;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestResult;
@@ -9,17 +9,15 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
-public class ChangeLocaleCommand implements Command {
+public class ChangeLocaleCommand extends AbstractCommand {
 
     private static final String LANGUAGE_PARAM = "language";
     private static final String RU_LOCALE = "ru_RU";
     private static final String RU_LANGUAGE = "ru";
     private static final String RU_COUNTRY = "RU";
 
-    @Override
-    public Receiver getReceiver() {
-        //TODO throw new UnsupportedOperationException ????
-        throw new UnsupportedOperationException();
+    public ChangeLocaleCommand(Receiver receiver) {
+        super(receiver);
     }
 
     @Override

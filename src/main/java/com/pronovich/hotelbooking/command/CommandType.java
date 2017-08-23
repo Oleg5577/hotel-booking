@@ -41,11 +41,9 @@ public enum CommandType {
         }
     },
 
-    SIGN_OUT( new SignOutCommand() ) {
+    SIGN_OUT( new SignOutCommand(null) ) {
         @Override
         public void doReceiver(RequestContent content) {
-            //TODO throw new UnsupportedOperationException ????
-            throw new UnsupportedOperationException();
         }
     },
 
@@ -91,11 +89,9 @@ public enum CommandType {
         }
     },
 
-    CHANGE_LOCALE(new ChangeLocaleCommand()) {
+    CHANGE_LOCALE(new ChangeLocaleCommand(null)) {
         @Override
         public void doReceiver(RequestContent content) {
-            //TODO throw new UnsupportedOperationException ????
-            throw new UnsupportedOperationException();
         }
     },
 
@@ -155,13 +151,13 @@ public enum CommandType {
         }
     };
 
-    private Command command;
+    private AbstractCommand command;
 
-    CommandType(Command command) {
+    CommandType(AbstractCommand command) {
         this.command = command;
     }
 
-    public Command getCommand() {
+    public AbstractCommand getCommand() {
         return command;
     }
 

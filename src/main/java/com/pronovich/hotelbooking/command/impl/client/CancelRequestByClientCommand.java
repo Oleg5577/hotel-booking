@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.client;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
@@ -11,19 +11,12 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
-public class CancelRequestByClientCommand implements Command {
+public class CancelRequestByClientCommand  extends AbstractCommand {
 
     private static final String ROOM_REQUEST_ID = "roomRequestId";
 
-    private Receiver receiver;
-
     public CancelRequestByClientCommand(Receiver receiver) {
-        this.receiver = receiver;
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
+        super(receiver);
     }
 
     @Override
@@ -35,7 +28,7 @@ public class CancelRequestByClientCommand implements Command {
 
         RequestContent content = new RequestContent(requestValues);
 
-        receiver.action(CommandType.CANCEL_REQUEST_BY_CLIENT, content);
+        getReceiver().action(CommandType.CANCEL_REQUEST_BY_CLIENT, content);
 
         return new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
     }

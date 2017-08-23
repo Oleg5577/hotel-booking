@@ -21,8 +21,6 @@ public class CommonReceiverImpl implements CommonReceiver {
 
     private static final Logger LOGGER = LogManager.getLogger(CommonReceiverImpl.class);
 
-    private static final String BUNDLE = "property/wrongValues";
-
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
     private static final String NEW_PASSWORD_PARAM = "newPassword";
@@ -33,15 +31,22 @@ public class CommonReceiverImpl implements CommonReceiver {
     private static final String SECURE_PASSWORD_PARAM = "securePassword";
     private static final String ENCODED_SALT_PARAM = "encodedSalt";
 
+    private static final String BUNDLE = "property/wrongValues";
+
+    private static final String EMAIL_ALREADY_EXISTS = "email-already-exists";
+    private static final String EMAIL_OR_PASSWORD_INCORRECT = "email-or-password-incorrect";
+    private static final String USER_UNAUTHORIZED = "user-unauthorized";
+    private static final String USER_EDIT_FOREIGN_ACCOUNT = "user-edit-foreign-account";
+    private static final String PASSWORD_INCORRECT = "password-incorrect";
+
     @Override
     public void signUp(RequestContent content) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
         Map<String, String> wrongRequestValues = CommonValidator.signUpValidate(content);
 
         String email = content.getRequestParameters().get(EMAIL_PARAM);
-
         if (emailExists(email)) {
-            wrongRequestValues.put(EMAIL_PARAM, resourceBundle.getString("email-already-exists"));
+            wrongRequestValues.put(EMAIL_PARAM, resourceBundle.getString(EMAIL_ALREADY_EXISTS));
         }
 
         if (!wrongRequestValues.isEmpty()) {
@@ -71,13 +76,11 @@ public class CommonReceiverImpl implements CommonReceiver {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, Locale.getDefault());
         Map<String, String> wrongRequestValues = CommonValidator.signInValidate(content);
 
-        User user = null;
-
         String email = content.getRequestParameters().get(EMAIL_PARAM);
         String password = content.getRequestParameters().get(PASSWORD_PARAM);
 
         if (!emailExists(email) && !StringUtils.isEmpty(password)) {
-            wrongRequestValues.put(EMAIL_OR_PASSWORD_PARAM, resourceBundle.getString("email-or-password-incorrect"));
+            wrongRequestValues.put(EMAIL_OR_PASSWORD_PARAM, resourceBundle.getString(EMAIL_OR_PASSWORD_INCORRECT));
         }
 
         if (!wrongRequestValues.isEmpty()) {
@@ -85,6 +88,7 @@ public class CommonReceiverImpl implements CommonReceiver {
             return;
         }
 
+        User user = null;
         UserDao userDao = new UserDaoImpl();
         try {
             String encodedSalt = userDao.findPasswordSaltByEmail(email);
@@ -93,7 +97,7 @@ public class CommonReceiverImpl implements CommonReceiver {
 
             user = userDao.findUserByEmailAndPassword(email, securePassword);
             if (user == null) {
-                wrongRequestValues.put(EMAIL_OR_PASSWORD_PARAM, resourceBundle.getString("email-or-password-incorrect"));
+                wrongRequestValues.put(EMAIL_OR_PASSWORD_PARAM, resourceBundle.getString(EMAIL_OR_PASSWORD_INCORRECT));
                 content.addWrongValues(wrongRequestValues);
                 return;
             }
@@ -113,9 +117,9 @@ public class CommonReceiverImpl implements CommonReceiver {
 
         User user = (User) content.getSessionAttributes().get(USER_PARAM);
         if (user == null) {
-            wrongRequestValues.put(USER_PARAM, resourceBundle.getString("user-unauthorized"));
+            wrongRequestValues.put(USER_PARAM, resourceBundle.getString(USER_UNAUTHORIZED));
         } else if (!emailBelongsUser(email, user)) {
-            wrongRequestValues.put(USER_PARAM, resourceBundle.getString("user-edit-foreign-account"));
+            wrongRequestValues.put(USER_PARAM, resourceBundle.getString(USER_EDIT_FOREIGN_ACCOUNT));
         }
 
         if (!wrongRequestValues.isEmpty()) {
@@ -136,7 +140,7 @@ public class CommonReceiverImpl implements CommonReceiver {
                 User updatedUser = userDao.findUserByEmail(email);
                 content.addSessionAttribute(UPDATED_USER_PARAM, updatedUser);
             } else {
-                wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString("password-incorrect"));
+                wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString(PASSWORD_INCORRECT));
                 content.addWrongValues(wrongRequestValues);
             }
         } catch (DaoException e) {
@@ -176,11 +180,11 @@ public class CommonReceiverImpl implements CommonReceiver {
             byte[] salt = Base64.getDecoder().decode(encodedSalt);
             String securePassword = PasswordUtility.getSecurePassword(password, salt);
 
-            if (isCorrectPassword(email, securePassword)) {
+            if (isValidEmailAndPassword(email, securePassword)) {
                 String newSecurePassword = PasswordUtility.getSecurePassword(newPassword, salt);
                 userDao.changePasswordForUser(email, newSecurePassword);
             } else {
-                wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString("password-incorrect"));
+                wrongRequestValues.put(PASSWORD_PARAM, resourceBundle.getString(PASSWORD_INCORRECT));
                 content.addWrongValues(wrongRequestValues);
             }
         } catch (DaoException e) {
@@ -188,10 +192,9 @@ public class CommonReceiverImpl implements CommonReceiver {
         }
     }
 
-    private boolean isCorrectPassword(String email, String securePassword) throws DaoException {
+    private boolean isValidEmailAndPassword(String email, String securePassword) throws DaoException {
         UserDao userDao = new UserDaoImpl();
         return userDao.findUserByEmailAndPassword(email, securePassword) != null;
-
     }
 
     private static boolean emailBelongsUser(String email, User user) {

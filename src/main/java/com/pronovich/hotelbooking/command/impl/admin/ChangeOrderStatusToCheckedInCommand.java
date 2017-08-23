@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.admin;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
@@ -11,19 +11,12 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
-public class ChangeOrderStatusToCheckedInCommand implements Command {
+public class ChangeOrderStatusToCheckedInCommand  extends AbstractCommand {
 
     private static final String ROOM_ORDER_ID = "roomOrderId";
 
-    private Receiver receiver;
-
     public ChangeOrderStatusToCheckedInCommand(Receiver receiver) {
-        this.receiver = receiver;
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
+        super(receiver);
     }
 
     @Override
@@ -35,7 +28,7 @@ public class ChangeOrderStatusToCheckedInCommand implements Command {
 
         RequestContent content = new RequestContent(requestValues);
 
-        receiver.action(CommandType.CHANGE_ORDER_STATUS_TO_CHECKED_IN, content);
+        getReceiver().action(CommandType.CHANGE_ORDER_STATUS_TO_CHECKED_IN, content);
 
         return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
     }

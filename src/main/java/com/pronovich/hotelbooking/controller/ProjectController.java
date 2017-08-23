@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.controller;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestResult;
 import com.pronovich.hotelbooking.dao.connectionpool.ConnectionPool;
@@ -32,7 +32,7 @@ public class ProjectController extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Command command = new CommandFactory().initCommand(request);
+         AbstractCommand command = new CommandFactory().initCommand(request);
         RequestResult requestResult = command.execute(request);
 
         String page = requestResult.getPage();

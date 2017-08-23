@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.client;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
@@ -11,21 +11,14 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class FindInfoForClientAccountCommand implements Command {
+public class FindInfoForClientAccountCommand  extends AbstractCommand {
 
     private static final String USER = "user";
     private static final String ROOM_REQUESTS_LIST = "listRoomRequests";
     private static final String ROOM_ORDERS_LIST = "listRoomOrders";
 
-    private Receiver receiver;
-
     public FindInfoForClientAccountCommand(Receiver receiver) {
-        this.receiver = receiver;
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
+        super(receiver);
     }
 
     @Override
@@ -35,7 +28,7 @@ public class FindInfoForClientAccountCommand implements Command {
         RequestContent content = new RequestContent();
         content.addSessionAttribute(USER, user);
 
-        receiver.action(CommandType.FIND_INFO_FOR_CLIENT_ACCOUNT, content);
+        getReceiver().action(CommandType.FIND_INFO_FOR_CLIENT_ACCOUNT, content);
 
         request.setAttribute(ROOM_REQUESTS_LIST, content.getRequestAttributes().get(ROOM_REQUESTS_LIST));
         request.setAttribute(ROOM_ORDERS_LIST, content.getRequestAttributes().get(ROOM_ORDERS_LIST));

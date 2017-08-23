@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.admin;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
@@ -11,21 +11,14 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
-public class IssueInvoiceCommand implements Command {
+public class IssueInvoiceCommand  extends AbstractCommand {
 
     private static final String ROOM_ORDER_ID = "roomOrderId";
     private static final String ROOM_ORDER_PARAM = "roomOrder";
     private static final String DAYS_NUMBER_PARAM = "daysNumber";
 
-    private Receiver receiver;
-
     public IssueInvoiceCommand(Receiver receiver) {
-        this.receiver = receiver;
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
+        super(receiver);
     }
 
     @Override
@@ -37,7 +30,7 @@ public class IssueInvoiceCommand implements Command {
 
         RequestContent content = new RequestContent(requestValues);
 
-        receiver.action(CommandType.ISSUE_INVOICE, content);
+        getReceiver().action(CommandType.ISSUE_INVOICE, content);
 
         request.setAttribute(ROOM_ORDER_PARAM, content.getRequestAttributes().get(ROOM_ORDER_PARAM));
         request.setAttribute(DAYS_NUMBER_PARAM, content.getRequestAttributes().get(DAYS_NUMBER_PARAM));

@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.admin;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
@@ -10,20 +10,13 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class FindInfoForAdminAccountCommand implements Command {
+public class FindInfoForAdminAccountCommand extends AbstractCommand {
 
     private static final String LIST_ROOM_ORDERS = "listRoomOrders";
     private static final String LIST_ROOM_REQUESTS = "listRoomRequests";
 
-    private Receiver receiver;
-
     public FindInfoForAdminAccountCommand(Receiver receiver) {
-        this.receiver = receiver;
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
+        super(receiver);
     }
 
     @Override
@@ -31,7 +24,7 @@ public class FindInfoForAdminAccountCommand implements Command {
 
         RequestContent content = new RequestContent();
 
-        receiver.action(CommandType.FIND_INFO_FOR_ADMIN_ACCOUNT, content);
+        getReceiver().action(CommandType.FIND_INFO_FOR_ADMIN_ACCOUNT, content);
 
         request.setAttribute(LIST_ROOM_ORDERS, content.getRequestAttributes().get(LIST_ROOM_ORDERS));
         request.setAttribute(LIST_ROOM_REQUESTS, content.getRequestAttributes().get(LIST_ROOM_REQUESTS));

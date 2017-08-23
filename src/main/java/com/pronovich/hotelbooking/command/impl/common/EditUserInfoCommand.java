@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.common;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditUserInfoCommand implements Command {
+public class EditUserInfoCommand  extends AbstractCommand {
 
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
@@ -26,15 +26,8 @@ public class EditUserInfoCommand implements Command {
     private static final String UPDATED_USER_PARAM = "updatedUser";
     private static final String WRONG_VALUES_PARAM = "wrongValues";
 
-    private Receiver receiver;
-
     public EditUserInfoCommand(Receiver receiver) {
-        this.receiver = receiver;
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
+        super(receiver);
     }
 
     @Override
@@ -59,7 +52,7 @@ public class EditUserInfoCommand implements Command {
         User user = (User) session.getAttribute(USER_PARAM);
         content.addSessionAttribute(USER_PARAM, user);
 
-        receiver.action(CommandType.EDIT_USER_INFO, content);
+        getReceiver().action(CommandType.EDIT_USER_INFO, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
         RequestResult requestResult;

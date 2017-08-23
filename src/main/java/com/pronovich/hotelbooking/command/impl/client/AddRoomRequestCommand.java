@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.client;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.command.CommandType;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddRoomRequestCommand implements Command {
+public class AddRoomRequestCommand  extends AbstractCommand {
 
     private static final String CHECK_IN_REQUEST_PARAM = "checkInRequest";
     private static final String CHECK_OUT_REQUEST_PARAM = "checkOutRequest";
@@ -23,15 +23,8 @@ public class AddRoomRequestCommand implements Command {
     private static final String WRONG_VALUES_PARAM = "wrongValues";
     private static final String REQUEST_VALUES_PARAM = "requestValues";
 
-    private Receiver receiver;
-
     public AddRoomRequestCommand(Receiver receiver) {
-        this.receiver = receiver;
-    }
-
-    @Override
-    public Receiver getReceiver() {
-        return receiver;
+        super(receiver);
     }
 
     @Override
@@ -52,7 +45,7 @@ public class AddRoomRequestCommand implements Command {
         RequestContent content = new RequestContent(requestValues);
         content.addSessionAttribute(USER_PARAM, user);
 
-        receiver.action(CommandType.ADD_ROOM_REQUEST, content);
+        getReceiver().action(CommandType.ADD_ROOM_REQUEST, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
         RequestResult requestResult;

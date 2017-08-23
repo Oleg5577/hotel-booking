@@ -1,6 +1,6 @@
 package com.pronovich.hotelbooking.command.impl.common;
 
-import com.pronovich.hotelbooking.command.Command;
+import com.pronovich.hotelbooking.command.AbstractCommand;
 import com.pronovich.hotelbooking.constant.ProjectConstants;
 import com.pronovich.hotelbooking.content.NavigationType;
 import com.pronovich.hotelbooking.content.RequestResult;
@@ -9,12 +9,10 @@ import com.pronovich.hotelbooking.receiver.Receiver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class SignOutCommand implements Command {
+public class SignOutCommand  extends AbstractCommand {
 
-    @Override
-    public Receiver getReceiver() {
-        //TODO throw new UnsupportedOperationException ????
-        throw new UnsupportedOperationException();
+    public SignOutCommand(Receiver receiver) {
+        super(receiver);
     }
 
     @Override
