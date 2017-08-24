@@ -2,6 +2,8 @@ package com.pronovich.hotelbooking.validator;
 
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.entity.User;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ public class ClientValidator {
     private static final String CHECK_IN_BEFORE_TODAY = "check-in-before-today";
     private static final String CHECK_OUT_BEFORE_CHECK_IN = "check-out-before-check-in";
     private static final String ROOM_SIZE_EMPTY = "room-size-empty";
+    private static final String ROOM_SIZE_NOT_INTEGER = "room-size-not-integer";
     private static final String ROOM_TYPE_EMPTY = "room-type-empty";
     private static final String USER_UNAUTHORIZED = "user-unauthorized";
 
@@ -38,13 +41,13 @@ public class ClientValidator {
 
         Map<String, String> wrongRequestValues = new HashMap<>();
 
-        if (checkInRequest.isEmpty()) {
+        if (checkInRequest == null || checkInRequest.isEmpty()) {
             wrongRequestValues.put(CHECK_IN_REQUEST_PARAM, resourceBundle.getString(CHECK_IN_EMPTY));
         }
-        if (checkOutRequest.isEmpty()) {
+        if (checkOutRequest == null || checkOutRequest.isEmpty()) {
             wrongRequestValues.put(CHECK_OUT_REQUEST_PARAM, resourceBundle.getString(CHECK_OUT_EMPTY));
         }
-        if ( !checkInRequest.isEmpty() && !checkOutRequest.isEmpty() ) {
+        if ( checkInRequest != null && !checkInRequest.isEmpty() && checkOutRequest != null && !checkOutRequest.isEmpty() ) {
             LocalDate checkInRequestDate = LocalDate.parse(checkInRequest);
             LocalDate checkOutRequestDate = LocalDate.parse(checkOutRequest);
 
@@ -56,10 +59,13 @@ public class ClientValidator {
             }
         }
 
-        if (roomSizeRequest.isEmpty()) {
+        if (roomSizeRequest == null || roomSizeRequest.isEmpty()) {
             wrongRequestValues.put(ROOM_SIZE_REQUEST_PARAM, resourceBundle.getString(ROOM_SIZE_EMPTY));
+        } else if ( !NumberUtils.isCreatable(roomSizeRequest) ) {
+            wrongRequestValues.put(ROOM_SIZE_REQUEST_PARAM, resourceBundle.getString(ROOM_SIZE_NOT_INTEGER));
         }
-        if (roomTypeRequest.isEmpty()) {
+
+        if (roomTypeRequest == null || roomTypeRequest.isEmpty()) {
             wrongRequestValues.put(ROOM_TYPE_REQUEST_PARAM, resourceBundle.getString(ROOM_TYPE_EMPTY));
         }
         if (user == null) {
