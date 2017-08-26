@@ -32,13 +32,13 @@ public class ProjectController extends HttpServlet {
     }
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         AbstractCommand command = new CommandFactory().initCommand(request);
+        AbstractCommand command = new CommandFactory().initCommand(request);
         RequestResult requestResult = command.execute(request);
 
         String page = requestResult.getPage();
         NavigationType navigationType = requestResult.getNavigationType();
 
-        if (navigationType == NavigationType.FORWARD ) {
+        if (navigationType == NavigationType.FORWARD) {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
             requestDispatcher.forward(request, response);
         } else if (navigationType == NavigationType.REDIRECT) {

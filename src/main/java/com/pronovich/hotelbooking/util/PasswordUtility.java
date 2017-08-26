@@ -31,8 +31,8 @@ public class PasswordUtility {
             md.update(salt);
             byte[] bytes = md.digest(passwordToHash.getBytes());
             StringBuilder sb = new StringBuilder();
-            for (byte aByte : bytes) {
-                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+            for (byte b : bytes) {
+                sb.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
             }
             generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {

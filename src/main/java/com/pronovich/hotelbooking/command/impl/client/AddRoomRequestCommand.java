@@ -48,14 +48,11 @@ public class AddRoomRequestCommand  extends AbstractCommand {
         getReceiver().action(CommandType.ADD_ROOM_REQUEST, content);
 
         Map<String, String> wrongValues = content.getWrongValues();
-        RequestResult requestResult;
         if ( !wrongValues.isEmpty()) {
             request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
             request.setAttribute(REQUEST_VALUES_PARAM, content.getRequestParameters());
-            requestResult = new RequestResult(ProjectConstants.ADD_ROOM_REQUEST_PAGE, NavigationType.FORWARD);
-        } else {
-            requestResult = new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
+            return new RequestResult(ProjectConstants.ADD_ROOM_REQUEST_PAGE, NavigationType.FORWARD);
         }
-        return requestResult;
+        return new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
     }
 }

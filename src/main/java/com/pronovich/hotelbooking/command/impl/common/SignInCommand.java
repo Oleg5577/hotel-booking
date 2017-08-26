@@ -26,6 +26,12 @@ public class SignInCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
+        RequestContent content = putRequestParametersInRequestContent(request);
+        getReceiver().action(CommandType.SIGN_IN, content);
+        return defineRequestResult(request, content);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
         String email = request.getParameter(EMAIL_PARAM).trim();
         String password = request.getParameter(PASSWORD_PARAM).trim();
 
@@ -33,10 +39,10 @@ public class SignInCommand  extends AbstractCommand {
         requestParameters.put(EMAIL_PARAM, email);
         requestParameters.put(PASSWORD_PARAM, password);
 
-        RequestContent content = new RequestContent(requestParameters);
+        return new RequestContent(requestParameters);
+    }
 
-        getReceiver().action(CommandType.SIGN_IN, content);
-
+    private RequestResult defineRequestResult(HttpServletRequest request, RequestContent content) {
         Map<String, String> wrongValues = content.getWrongValues();
         if ( !wrongValues.isEmpty() ) {
             request.setAttribute(WRONG_VALUES_PARAM, wrongValues);

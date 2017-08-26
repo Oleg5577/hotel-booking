@@ -28,6 +28,12 @@ public class ChangePasswordCommand extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
+        RequestContent content = putRequestParametersInRequestContent(request);
+        getReceiver().action(CommandType.CHANGE_PASSWORD, content);
+        return defineRequestResult(request, content);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
         String password = request.getParameter(PASSWORD_PARAM).trim();
         String newPassword = request.getParameter(NEW_PASSWORD_PARAM).trim();
         String repeatNewPassword = request.getParameter(REPEAT_NEW_PASSWORD_PARAM).trim();
@@ -41,9 +47,10 @@ public class ChangePasswordCommand extends AbstractCommand {
 
         RequestContent content = new RequestContent(requestParameters);
         content.addSessionAttribute(USER_PARAM, user);
+        return content;
+    }
 
-        getReceiver().action(CommandType.CHANGE_PASSWORD, content);
-
+    private RequestResult defineRequestResult(HttpServletRequest request, RequestContent content) {
         Map<String, String> wrongValues = content.getWrongValues();
         if ( !wrongValues.isEmpty()) {
             request.setAttribute(WRONG_VALUES_PARAM, wrongValues);

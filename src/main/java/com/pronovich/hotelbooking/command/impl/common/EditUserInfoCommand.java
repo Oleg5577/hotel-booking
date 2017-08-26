@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditUserInfoCommand  extends AbstractCommand {
+public class EditUserInfoCommand extends AbstractCommand {
 
     private static final String EMAIL_PARAM = "email";
     private static final String PASSWORD_PARAM = "password";
@@ -32,6 +32,30 @@ public class EditUserInfoCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
+        RequestContent content = putRequestParametersInRequestContent(request);
+
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute(USER_PARAM);
+        content.addSessionAttribute(USER_PARAM, user);
+
+        getReceiver().action(CommandType.EDIT_USER_INFO, content);
+
+        Map<String, String> wrongValues = content.getWrongValues();
+        if (!wrongValues.isEmpty()) {
+            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
+            return new RequestResult(ProjectConstants.EDIT_USER_INFO_PAGE, NavigationType.FORWARD);
+        }
+
+        User updatedUser = (User) content.getSessionAttributes().get(UPDATED_USER_PARAM);
+        session.setAttribute(USER_PARAM, updatedUser);
+
+        if (user.getRole() == Role.ADMIN) {
+            return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
+        }
+        return new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
         String email = request.getParameter(EMAIL_PARAM).trim();
         String name = request.getParameter(NAME_PARAM).trim();
         String surname = request.getParameter(SURNAME_PARAM).trim();
@@ -46,28 +70,6 @@ public class EditUserInfoCommand  extends AbstractCommand {
         requestParameters.put(PHONE_NUMBER_PARAM, phoneNumber);
         requestParameters.put(PASSWORD_PARAM, password);
 
-        RequestContent content = new RequestContent(requestParameters);
-
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(USER_PARAM);
-        content.addSessionAttribute(USER_PARAM, user);
-
-        getReceiver().action(CommandType.EDIT_USER_INFO, content);
-
-        Map<String, String> wrongValues = content.getWrongValues();
-        RequestResult requestResult;
-        if ( !wrongValues.isEmpty()) {
-            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
-            requestResult = new RequestResult(ProjectConstants.EDIT_USER_INFO_PAGE, NavigationType.FORWARD);
-        } else {
-            User updatedUser = (User) content.getSessionAttributes().get(UPDATED_USER_PARAM);
-            session.setAttribute(USER_PARAM, updatedUser);
-            if (user.getRole() == Role.ADMIN) {
-                requestResult = new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
-            } else {
-                requestResult = new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
-            }
-        }
-        return requestResult;
+        return new RequestContent(requestParameters);
     }
 }
