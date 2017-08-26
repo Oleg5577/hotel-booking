@@ -29,6 +29,12 @@ public class AddRoomRequestCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
+        RequestContent content = putRequestParametersInRequestContent(request);
+        getReceiver().action(CommandType.ADD_ROOM_REQUEST, content);
+        return defineRequestResult(request, content);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
         String checkInRequest = request.getParameter(CHECK_IN_REQUEST_PARAM);
         String checkOutRequest = request.getParameter(CHECK_OUT_REQUEST_PARAM);
         String roomSizeRequest = request.getParameter(ROOM_SIZE_PARAM);
@@ -44,9 +50,10 @@ public class AddRoomRequestCommand  extends AbstractCommand {
 
         RequestContent content = new RequestContent(requestValues);
         content.addSessionAttribute(USER_PARAM, user);
+        return content;
+    }
 
-        getReceiver().action(CommandType.ADD_ROOM_REQUEST, content);
-
+    private RequestResult defineRequestResult(HttpServletRequest request, RequestContent content) {
         Map<String, String> wrongValues = content.getWrongValues();
         if ( !wrongValues.isEmpty()) {
             request.setAttribute(WRONG_VALUES_PARAM, wrongValues);

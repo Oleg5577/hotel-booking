@@ -22,17 +22,21 @@ public class FindRoomCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
+        RequestContent content = putRequestParametersInRequestContent(request);
+
+        getReceiver().action(CommandType.FIND_ROOMS_ACCORDING_REQUEST, content);
+
+        request.setAttribute(ALL_ROOMS_ACCORDING_REQUEST_PARAM, content.getRequestAttributes().get(ALL_ROOMS_ACCORDING_REQUEST_PARAM));
+        request.setAttribute(REQUEST_ID_PARAM, request.getParameter(REQUEST_ID_PARAM));
+        return new RequestResult(ProjectConstants.FIND_ROOM_PAGE, NavigationType.FORWARD);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
         String requestId =  request.getParameter(REQUEST_ID_PARAM);
 
         HashMap<String, String> requestValues = new HashMap<>();
         requestValues.put(REQUEST_ID_PARAM, requestId);
 
-        RequestContent content = new RequestContent(requestValues);
-
-        getReceiver().action(CommandType.FIND_ROOMS_ACCORDING_REQUEST, content);
-
-        request.setAttribute(ALL_ROOMS_ACCORDING_REQUEST_PARAM, content.getRequestAttributes().get(ALL_ROOMS_ACCORDING_REQUEST_PARAM));
-        request.setAttribute(REQUEST_ID_PARAM, requestId);
-        return new RequestResult(ProjectConstants.FIND_ROOM_PAGE, NavigationType.FORWARD);
+        return new RequestContent(requestValues);
     }
 }

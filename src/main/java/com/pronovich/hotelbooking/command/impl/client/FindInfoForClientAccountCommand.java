@@ -23,10 +23,7 @@ public class FindInfoForClientAccountCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute(USER);
-
-        RequestContent content = new RequestContent();
-        content.addSessionAttribute(USER, user);
+        RequestContent content = putRequestParametersInRequestContent(request);
 
         getReceiver().action(CommandType.FIND_INFO_FOR_CLIENT_ACCOUNT, content);
 
@@ -34,5 +31,13 @@ public class FindInfoForClientAccountCommand  extends AbstractCommand {
         request.setAttribute(ROOM_ORDERS_LIST, content.getRequestAttributes().get(ROOM_ORDERS_LIST));
 
         return new RequestResult(ProjectConstants.PERSONAL_ACCOUNT_PAGE, NavigationType.FORWARD);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute(USER);
+
+        RequestContent content = new RequestContent();
+        content.addSessionAttribute(USER, user);
+        return content;
     }
 }

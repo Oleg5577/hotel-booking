@@ -23,6 +23,12 @@ public class CancelOrderByClientCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
+        RequestContent content = putRequestParametersInRequestContent(request);
+        getReceiver().action(CommandType.CANCEL_ORDER_BY_CLIENT, content);
+        return new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
         String roomOrderId = request.getParameter(ROOM_ORDER_ID);
         HttpSession session = request.getSession();
 
@@ -31,9 +37,6 @@ public class CancelOrderByClientCommand  extends AbstractCommand {
 
         RequestContent content = new RequestContent(requestValues);
         content.addSessionAttribute(USER, session.getAttribute(USER));
-
-        getReceiver().action(CommandType.CANCEL_ORDER_BY_CLIENT, content);
-
-        return new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
+        return content;
     }
 }

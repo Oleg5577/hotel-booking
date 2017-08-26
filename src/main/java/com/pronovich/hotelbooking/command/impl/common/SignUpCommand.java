@@ -32,16 +32,8 @@ public class SignUpCommand  extends AbstractCommand {
     @Override
     public RequestResult execute(HttpServletRequest request) {
         RequestContent content = putRequestParametersInRequestContent(request);
-
         getReceiver().action(CommandType.SIGN_UP, content);
-
-        Map<String, String> wrongValues = content.getWrongValues();
-        if ( !wrongValues.isEmpty()) {
-            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
-            request.setAttribute(REQUEST_VALUES_PARAM, content.getRequestParameters());
-            return new RequestResult(ProjectConstants.SIGN_UP_PAGE, NavigationType.FORWARD);
-        }
-        return new RequestResult(ProjectConstants.SIGN_IN_PAGE, NavigationType.REDIRECT);
+        return defineRequestResult(request, content);
     }
 
     private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
@@ -63,5 +55,15 @@ public class SignUpCommand  extends AbstractCommand {
         requestParameters.put(ROLE_PARAM, DEFAULT_ROLE);
 
         return new RequestContent(requestParameters);
+    }
+
+    private RequestResult defineRequestResult(HttpServletRequest request, RequestContent content) {
+        Map<String, String> wrongValues = content.getWrongValues();
+        if ( !wrongValues.isEmpty()) {
+            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
+            request.setAttribute(REQUEST_VALUES_PARAM, content.getRequestParameters());
+            return new RequestResult(ProjectConstants.SIGN_UP_PAGE, NavigationType.FORWARD);
+        }
+        return new RequestResult(ProjectConstants.SIGN_IN_PAGE, NavigationType.REDIRECT);
     }
 }

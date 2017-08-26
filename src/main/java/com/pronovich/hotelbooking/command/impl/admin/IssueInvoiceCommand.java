@@ -23,12 +23,7 @@ public class IssueInvoiceCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
-        String roomOrderId = request.getParameter(ROOM_ORDER_ID);
-
-        HashMap<String, String> requestValues = new HashMap<>();
-        requestValues.put(ROOM_ORDER_ID, roomOrderId);
-
-        RequestContent content = new RequestContent(requestValues);
+        RequestContent content = putRequestParametersInRequestContent(request);
 
         getReceiver().action(CommandType.ISSUE_INVOICE, content);
 
@@ -36,5 +31,14 @@ public class IssueInvoiceCommand  extends AbstractCommand {
         request.setAttribute(DAYS_NUMBER_PARAM, content.getRequestAttributes().get(DAYS_NUMBER_PARAM));
 
         return new RequestResult(ProjectConstants.INVOICE_PAGE, NavigationType.FORWARD);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
+        String roomOrderId = request.getParameter(ROOM_ORDER_ID);
+
+        HashMap<String, String> requestValues = new HashMap<>();
+        requestValues.put(ROOM_ORDER_ID, roomOrderId);
+
+        return new RequestContent(requestValues);
     }
 }

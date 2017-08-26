@@ -34,7 +34,10 @@ public class ProjectController extends HttpServlet {
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AbstractCommand command = new CommandFactory().initCommand(request);
         RequestResult requestResult = command.execute(request);
+        navigateToPage(request, response, requestResult);
+    }
 
+    private void navigateToPage(HttpServletRequest request, HttpServletResponse response, RequestResult requestResult) throws ServletException, IOException {
         String page = requestResult.getPage();
         NavigationType navigationType = requestResult.getNavigationType();
 

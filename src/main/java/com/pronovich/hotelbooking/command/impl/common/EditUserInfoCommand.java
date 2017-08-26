@@ -33,26 +33,8 @@ public class EditUserInfoCommand extends AbstractCommand {
     @Override
     public RequestResult execute(HttpServletRequest request) {
         RequestContent content = putRequestParametersInRequestContent(request);
-
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(USER_PARAM);
-        content.addSessionAttribute(USER_PARAM, user);
-
         getReceiver().action(CommandType.EDIT_USER_INFO, content);
-
-        Map<String, String> wrongValues = content.getWrongValues();
-        if (!wrongValues.isEmpty()) {
-            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
-            return new RequestResult(ProjectConstants.EDIT_USER_INFO_PAGE, NavigationType.FORWARD);
-        }
-
-        User updatedUser = (User) content.getSessionAttributes().get(UPDATED_USER_PARAM);
-        session.setAttribute(USER_PARAM, updatedUser);
-
-        if (user.getRole() == Role.ADMIN) {
-            return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
-        }
-        return new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
+        return defineRequestResult(request, content);
     }
 
     private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
@@ -70,6 +52,26 @@ public class EditUserInfoCommand extends AbstractCommand {
         requestParameters.put(PHONE_NUMBER_PARAM, phoneNumber);
         requestParameters.put(PASSWORD_PARAM, password);
 
-        return new RequestContent(requestParameters);
+        RequestContent content = new RequestContent(requestParameters);
+
+        User user = (User) request.getSession().getAttribute(USER_PARAM);
+        content.addSessionAttribute(USER_PARAM, user);
+        return content;
+    }
+
+    private RequestResult defineRequestResult(HttpServletRequest request, RequestContent content) {
+        Map<String, String> wrongValues = content.getWrongValues();
+        if (!wrongValues.isEmpty()) {
+            request.setAttribute(WRONG_VALUES_PARAM, wrongValues);
+            return new RequestResult(ProjectConstants.EDIT_USER_INFO_PAGE, NavigationType.FORWARD);
+        }
+
+        User updatedUser = (User) content.getSessionAttributes().get(UPDATED_USER_PARAM);
+        request.getSession().setAttribute(USER_PARAM, updatedUser);
+
+        if (updatedUser.getRole() == Role.ADMIN) {
+            return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
+        }
+        return new RequestResult(ProjectConstants.FIND_INFO_FOR_CLIENT_ACCOUNT, NavigationType.REDIRECT);
     }
 }

@@ -25,14 +25,7 @@ public class CreateOrderCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
-        String roomId = request.getParameter(ROOM_ID_PARAM);
-        String requestId = request.getParameter(REQUEST_ID_PARAM);
-
-        HashMap<String, String> requestValues = new HashMap<>();
-        requestValues.put(ROOM_ID_PARAM, roomId);
-        requestValues.put(REQUEST_ID_PARAM, requestId);
-
-        RequestContent content = new RequestContent(requestValues);
+        RequestContent content = putRequestParametersInRequestContent(request);
 
         getReceiver().action(CommandType.CREATE_ORDER, content);
 
@@ -40,5 +33,16 @@ public class CreateOrderCommand  extends AbstractCommand {
         request.setAttribute(LIST_ROOM_REQUESTS, content.getRequestAttributes().get(LIST_ROOM_REQUESTS));
 
         return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
+        String roomId = request.getParameter(ROOM_ID_PARAM);
+        String requestId = request.getParameter(REQUEST_ID_PARAM);
+
+        HashMap<String, String> requestValues = new HashMap<>();
+        requestValues.put(ROOM_ID_PARAM, roomId);
+        requestValues.put(REQUEST_ID_PARAM, requestId);
+
+        return new RequestContent(requestValues);
     }
 }

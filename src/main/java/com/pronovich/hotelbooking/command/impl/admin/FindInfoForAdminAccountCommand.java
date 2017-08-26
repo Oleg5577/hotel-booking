@@ -21,7 +21,6 @@ public class FindInfoForAdminAccountCommand extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
-
         RequestContent content = new RequestContent();
 
         getReceiver().action(CommandType.FIND_INFO_FOR_ADMIN_ACCOUNT, content);

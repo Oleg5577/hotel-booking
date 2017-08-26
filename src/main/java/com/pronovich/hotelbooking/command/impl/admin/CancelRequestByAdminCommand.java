@@ -21,15 +21,17 @@ public class CancelRequestByAdminCommand  extends AbstractCommand {
 
     @Override
     public RequestResult execute(HttpServletRequest request) {
+        RequestContent content = putRequestParametersInRequestContent(request);
+        getReceiver().action(CommandType.CANCEL_REQUEST_BY_ADMIN, content);
+        return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
+    }
+
+    private RequestContent putRequestParametersInRequestContent(HttpServletRequest request) {
         String roomRequestId = request.getParameter(ROOM_REQUEST_ID);
 
         HashMap<String, String> requestValues = new HashMap<>();
         requestValues.put(ROOM_REQUEST_ID, roomRequestId);
 
-        RequestContent content = new RequestContent(requestValues);
-
-        getReceiver().action(CommandType.CANCEL_REQUEST_BY_ADMIN, content);
-
-        return new RequestResult(ProjectConstants.FIND_INFO_FOR_ADMIN_ACCOUNT, NavigationType.REDIRECT);
+        return new RequestContent(requestValues);
     }
 }
