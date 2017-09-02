@@ -22,7 +22,7 @@
             <input type="hidden" name="command" value="add_room_request">
             <div class="form-group">
                 <label class="control-label col-sm-4" for="checkInRequest">
-                    <fmt:message key="add-room-request.label.search-room" bundle="${ i18n }"/>:
+                    <fmt:message key="add-room-request.label.check-in" bundle="${ i18n }"/>:
                     <span class="asterisk"> *</span>
                 </label>
                 <div class="col-sm-4">

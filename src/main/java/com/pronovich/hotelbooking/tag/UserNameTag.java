@@ -11,6 +11,10 @@ public class UserNameTag extends TagSupport {
 
     private User user;
 
+    /**
+     * @param user
+     * Authorized user
+     */
     public void setUser(User user) {
         this.user = user;
     }

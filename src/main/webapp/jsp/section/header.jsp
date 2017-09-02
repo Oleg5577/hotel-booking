@@ -59,7 +59,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/controller?command=find_info_for_client_account"/>
+                            <a href="/controller?command=find_info_for_client_account">
                                 <fmt:message key="client.account.label" bundle="${ i18n }"/>
                             </a>
                         </li>

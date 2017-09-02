@@ -1,9 +1,6 @@
 package com.pronovich.hotelbooking.validator;
 
 import com.pronovich.hotelbooking.content.RequestContent;
-import com.pronovich.hotelbooking.entity.User;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.HashMap;

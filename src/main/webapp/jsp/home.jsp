@@ -61,8 +61,6 @@
             </div>
         </div>
     </div>
-
-
     <a href="#carousel" class="left carousel-control" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
     </a>

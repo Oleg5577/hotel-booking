@@ -6,7 +6,7 @@ import java.util.Map;
 public class RequestContent {
 
     private Map<String, String> requestParameters = new HashMap<>();
-    private HashMap<String, Object> requestAttributes = new HashMap<>();
+    private Map<String, Object> requestAttributes = new HashMap<>();
     private Map<String, Object> sessionAttributes = new HashMap<>();
     private Map<String, String> wrongValues = new HashMap<>();
 
@@ -21,7 +21,7 @@ public class RequestContent {
         return requestParameters;
     }
 
-    public HashMap<String, Object> getRequestAttributes() {
+    public Map<String, Object> getRequestAttributes() {
         return requestAttributes;
     }
 

@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
-    <title><fmt:message key="admin.account.button.find-room" bundle="${ i18n }" var="buttonValue"/> Find room by request</title>
+    <title><fmt:message key="admin.account.button.find-room" bundle="${ i18n }"/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
 </head>
@@ -19,10 +19,10 @@
 <div class="container col-md-8 col-md-offset-2">
     <table class="table vertical-align-table">
         <tr>
-            <th class="text-center">Room number</th>
-            <th class="text-center">Room size</th>
-            <th class="text-center">Price</th>
-            <th class="text-center">Room type</th>
+            <th class="text-center"><fmt:message key="admin.find-room.room-number" bundle="${ i18n }"/></th>
+            <th class="text-center"><fmt:message key="admin.find-room.room-size" bundle="${ i18n }"/></th>
+            <th class="text-center"><fmt:message key="admin.find-room.room-price" bundle="${ i18n }"/></th>
+            <th class="text-center"><fmt:message key="admin.find-room.room-type" bundle="${ i18n }"/></th>
             <th></th>
         </tr>
         <c:forEach items="${allRoomsAccordingRequest}" var="room">
@@ -43,6 +43,9 @@
             </tr>
         </c:forEach>
     </table>
+    <a href="/controller?command=find_info_for_admin_account" class="btn btn-default">
+        <span class="green"><fmt:message key="admin.account.label" bundle="${ i18n }"/></span>
+    </a>
 </div>
 </body>
 </html>

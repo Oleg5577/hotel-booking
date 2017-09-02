@@ -2,7 +2,6 @@ package com.pronovich.hotelbooking.validator;
 
 import com.pronovich.hotelbooking.content.RequestContent;
 import com.pronovich.hotelbooking.entity.User;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.time.LocalDate;
