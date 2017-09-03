@@ -14,10 +14,9 @@
     <link href="../../css/bootstrap.css" rel="stylesheet">
     <link href="../../css/font-awesome.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
-    <script src="../../js/jquery-1.12.4.min.js"></script>
+    <script src="../../js/jquery-3.2.1.js"></script>
     <script src="../../js/bootstrap.js"></script>
     <script src="../../js/main.js"></script>
-    <script src="../../js/jquery.popconfirm.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-static-top">
