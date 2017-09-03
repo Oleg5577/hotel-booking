@@ -31,12 +31,27 @@ public class ProjectController extends HttpServlet {
         handleRequest(request, response);
     }
 
+    /**
+     * Handle requests of doGet and doPost methods
+     * @param request -  HttpServletRequest object
+     * @param response - HttpServletResponse object
+     * @throws ServletException - if navigateToPage exception
+     * @throws IOException - if navigateToPage exception
+     */
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AbstractCommand command = new CommandFactory().initCommand(request);
         RequestResult requestResult = command.execute(request);
         navigateToPage(request, response, requestResult);
     }
 
+    /**
+     * Define and execute navigation type (forward or sendRedirect)
+     * @param request - HttpServletRequest object
+     * @param response - HttpServletResponse object
+     * @param requestResult - result of the command
+     * @throws ServletException - if exception in forward method
+     * @throws IOException - if exception in forward or sendRedirect method
+     */
     private void navigateToPage(HttpServletRequest request, HttpServletResponse response, RequestResult requestResult) throws ServletException, IOException {
         String page = requestResult.getPage();
         NavigationType navigationType = requestResult.getNavigationType();
@@ -51,6 +66,9 @@ public class ProjectController extends HttpServlet {
         }
     }
 
+    /**
+     * In the method, a servlet free resource (return and close all connections)
+     */
     @Override
     public void destroy() {
         ConnectionPool.getPool().closeAllConnections();

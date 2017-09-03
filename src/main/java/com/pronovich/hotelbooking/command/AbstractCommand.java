@@ -17,5 +17,10 @@ public  abstract class AbstractCommand {
         return receiver;
     }
 
+    /**
+     * Abstract method for execute all commands
+     * @param request - HttpServletRequest object
+     * @return - RequestResult object
+     */
     public abstract RequestResult execute(HttpServletRequest request);
 }

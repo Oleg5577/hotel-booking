@@ -8,10 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 
 public class CommandFactory {
 
+    /**
+     * Logger instance
+     */
     private static final Logger LOGGER = LogManager.getLogger(CommandFactory.class);
 
+    /**
+     * name of request parameter for getting command name from HttpServletRequest
+     */
     private final static String COMMAND_PARAMETER = "command";
 
+    /**
+     * Obtain command from HttpServletRequest
+     * @param request - HttpServletRequest instance
+     * @return concrete command implementing AbstractCommand
+     */
     public AbstractCommand initCommand(HttpServletRequest request) {
         String commandName = request.getParameter(COMMAND_PARAMETER);
         AbstractCommand command;
