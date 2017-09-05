@@ -12,6 +12,10 @@ public class PasswordUtility {
 
     private static final Logger LOGGER = LogManager.getLogger(PasswordUtility.class);
 
+    /**
+     * Random salt
+     * @return salt represented as byte[]
+     */
     public static byte[] getSalt() {
         SecureRandom sr;
         byte[] salt = new byte[16];
@@ -24,6 +28,12 @@ public class PasswordUtility {
         return salt;
     }
 
+    /**
+     * Hash of the password using "MD5" algorithm and Salt.
+     * @param passwordToHash unsecured password
+     * @param salt for deeper securing the password
+     * @return secured password represented as String
+     */
     public static String getSecurePassword(String passwordToHash, byte[] salt) {
         String generatedPassword = null;
         try {

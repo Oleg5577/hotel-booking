@@ -25,6 +25,7 @@ public class SecurityFilter implements Filter {
     private final ArrayList<String> adminCommands = new ArrayList<>();
 
     /**
+     * Initializing all commands
      * @param fConfig FilterConfig
      * @throws ServletException exception
      */
@@ -34,10 +35,16 @@ public class SecurityFilter implements Filter {
         initAdminCommands();
     }
 
+    /**
+     * Initializing common commands for all users
+     */
     private void initCommonUserCommands() {
         commonUserCommands.add("edit_user_info");
     }
 
+    /**
+     * Initializing commands for clients
+     */
     private void initClientCommands() {
         clientCommands.add("find_info_for_client_account");
         clientCommands.add("cancel_order_by_client");
@@ -48,6 +55,9 @@ public class SecurityFilter implements Filter {
         adminCommands.add("change_password");
     }
 
+    /**
+     * Initializing commands for administrator
+     */
     private void initAdminCommands() {
         adminCommands.add("find_info_for_admin_account");
         adminCommands.add("find_rooms_according_request");
@@ -60,13 +70,6 @@ public class SecurityFilter implements Filter {
         adminCommands.add("issue_invoice");
     }
 
-    /**
-     * @param request  ServletRequest
-     * @param response ServletResponse
-     * @param chain    FilterChain
-     * @throws IOException      exception
-     * @throws ServletException exception
-     */
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
 
@@ -96,6 +99,11 @@ public class SecurityFilter implements Filter {
     public void destroy() {
     }
 
+    /**
+     * Full url
+     * @param request HttpServletRequest instance
+     * @return full URL
+     */
     private static String getFullURL(HttpServletRequest request) {
         StringBuffer requestURL = request.getRequestURL();
         String queryString = request.getQueryString();

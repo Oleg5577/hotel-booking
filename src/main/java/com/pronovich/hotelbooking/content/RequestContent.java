@@ -14,14 +14,17 @@ public class RequestContent {
      * Map of requestParameters obtained from HttpServletRequest
      */
     private Map<String, String> requestParameters = new HashMap<>();
+
     /**
      * Map of requestAttributes which are added in the program
      */
     private Map<String, Object> requestAttributes = new HashMap<>();
+
     /**
      * Map of sessionAttributes which are added in the program
      */
     private Map<String, Object> sessionAttributes = new HashMap<>();
+
     /**
      * Map of wrongValues which are added in the program in validation
      */
