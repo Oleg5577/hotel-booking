@@ -45,7 +45,7 @@ public class ProjectController extends HttpServlet {
     }
 
     /**
-     * Define and execute navigation type (forward or sendRedirect)
+     * Define a navigation type (forward or sendRedirect) and navigate to page
      * @param request - HttpServletRequest object
      * @param response - HttpServletResponse object
      * @param requestResult - result of the command
@@ -67,7 +67,7 @@ public class ProjectController extends HttpServlet {
     }
 
     /**
-     * In the method, a servlet free resource (return and close all connections)
+     * In the method all connections are closed
      */
     @Override
     public void destroy() {

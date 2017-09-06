@@ -33,6 +33,11 @@ class ConnectionUtils {
         return connection;
     }
 
+    /**
+     * Define pool size using property file. If there is an error reading the property file,
+     * will set default pool size
+     * @return pool size
+     */
     static int definePoolSize() {
         int poolSize;
         try {

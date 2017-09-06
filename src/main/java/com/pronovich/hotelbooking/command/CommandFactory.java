@@ -30,7 +30,7 @@ public class CommandFactory {
             CommandType commandType = CommandType.valueOf(commandName.toUpperCase());
             command = commandType.getCommand();
         } catch (IllegalArgumentException e) {
-            LOGGER.error("The command [" + commandName + "] is not exists");
+            LOGGER.error("The command [" + commandName + "] does not exist");
             command = new DefaultCommand(null);
         }
         return command;
