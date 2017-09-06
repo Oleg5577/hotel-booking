@@ -211,7 +211,8 @@
                 <tbody>
                 <c:forEach items="${listRoomOrders}" var="roomOrder">
                     <tr <c:choose>
-                            <c:when test="${roomOrder.checkInDate == currentDate}">class="warning red font-bold"</c:when>
+                            <c:when test="${roomOrder.checkInDate == currentDate && roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
+                                class="warning red font-bold"</c:when>
                             <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">class="info"</c:when>
                             <c:when test="${roomOrder.orderStatus == 'CHECKED_IN'}">class="active"</c:when>
                             <c:when test="${roomOrder.orderStatus == 'CHECKED_OUT'}">class="success"</c:when>
