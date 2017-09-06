@@ -258,7 +258,8 @@
                         </td>
                         <td class="text-center">
                             <c:choose>
-                                <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL'}">
+                                <c:when test="${roomOrder.orderStatus == 'EXPECT_GUEST_ARRIVAL' &&
+                                        roomOrder.checkInDate <= currentDate && currentDate < roomOrder.checkOutDate}">
                                     <form action="/controller" method="post">
                                         <input type="hidden" name="command" value="change_order_status_to_checked_in">
                                         <input type="hidden" name="roomOrderId" value="${roomOrder.id}">
